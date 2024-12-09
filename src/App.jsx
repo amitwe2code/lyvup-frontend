@@ -3,8 +3,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import LoginForm from './components/login/LoginForm'
 import RegisterForm from './components/login/RegisterForm'
 import ForgetPasswordForm from './components/login/ForgetPasswordForm'
+import User from './components/other/User'
 
-
+                                                                                 
 export default function App() {
     return (
         <div>
@@ -15,6 +16,7 @@ export default function App() {
                     <Route path='/' element={<LoginForm />} />
                     <Route path='/sign' element={<RegisterForm />} />
                     <Route path='/forget' element={<ForgetPasswordForm />} />
+                    <Route path='/user' element={<User/>}/>
                     {/* </div> */}
                 </Routes>
             </BrowserRouter>

@@ -3,13 +3,14 @@ import { login } from '../../api/api'
 import { useDispatch } from 'react-redux'
 import { setToken } from '../../features/token/tokenSlice'
 // import { Link } from 'react-router'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 export default function LoginForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState({})
     const [loading, setloading] = useState(false)
-    const dispatch=useDispatch();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
     const validators = () => {
@@ -50,12 +51,13 @@ export default function LoginForm() {
             try {
                 const response = await login(email, password)
                 console.log('response =>', response)
-                const accessToken=response.data.data.access_token;
-                const refreshToken=response.data.data.refresh_token
-                dispatch(setToken({accessToken,refreshToken}))
+                const accessToken = response.data.data.access_token;
+                const refreshToken = response.data.data.refresh_token
+                dispatch(setToken({ accessToken, refreshToken }))
                 alert('login successful')
                 setEmail('')
                 setPassword('')
+                navigate('/user')
             } catch (error) {
                 console.error('Login failed:', error);
                 alert(error.response.data.message)
@@ -121,7 +123,7 @@ export default function LoginForm() {
                         </button>
                     </form>
                     <div className="mt-4 text-center">
-                     
+
                         <Link to='/forget' className="text-[#0095f6] hover:text-blue-700">
                             Forgot password?
                         </Link>
@@ -129,11 +131,11 @@ export default function LoginForm() {
                             <Link to='/sign' className="text-[#0095f6] hover:text-blue-700">
                                 Sign up
                             </Link>
-        
-                        </p> 
+
+                        </p>
                         <div>
-                        <input className='mr-1 mt-1 border-none ' type="checkbox" id="rememberMe" name="rememberMe"/>
-                        <label htmlFor="rememberMe">Remember Me</label><br></br>
+                            <input className='mr-1 mt-1 border-none ' type="checkbox" id="rememberMe" name="rememberMe" />
+                            <label htmlFor="rememberMe">Remember Me</label><br></br>
                         </div>
                     </div>
                 </div>
