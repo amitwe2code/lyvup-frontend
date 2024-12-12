@@ -12,6 +12,10 @@ const persistedReducer = persistReducer(persistConfig, tokenReducer)
 
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false // यहाँ serializableCheck को disable किया
+    })
 })
 
 export const persistor = persistStore(store) // Persistor export karna

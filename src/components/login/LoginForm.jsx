@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { login } from '../../api/api'
 import { useDispatch } from 'react-redux'
 import { setToken } from '../../features/token/tokenSlice'
-// import { Link } from 'react-router'
-import { Link, useNavigate } from 'react-router'
+import { useTranslation } from 'react-i18next'
+// import i18next from 'i18next'
+import { Link, useNavigate } from 'react-router-dom'
+import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher'
+
 export default function LoginForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -11,7 +14,7 @@ export default function LoginForm() {
     const [loading, setloading] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const { t } = useTranslation();
 
     const validators = () => {
         const formErrors = {
@@ -70,77 +73,70 @@ export default function LoginForm() {
 
 
     return (
-        <>
-            <div className="flex justify-center items-center p-4 min-h-screen bg-gray-100">
-                <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-                    <div className="logo text-center flex justify-center items-center">
-                        <img src="https://lyvup.com/hs-fs/hubfs/Tekengebied%201%20(2).jpg?width=211&height=149&name=Tekengebied%201%20(2).jpg" alt="Lyvup Logo" className="logo-img" />
+        <div className="flex justify-center items-center p-4 min-h-screen bg-gray-100">
+            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+                <div className="logo text-center flex justify-center items-center">
+                    <img 
+                        src="https://lyvup.com/hs-fs/hubfs/Tekengebied%201%20(2).jpg?width=211&height=149&name=Tekengebied%201%20(2).jpg" 
+                        alt="Lyvup Logo" 
+                        className="logo-img" 
+                    />
+                </div>
+                <h2 className="text-xl text-center font-semibold mb-4">{t('LOGIN')}</h2>
+                <form onSubmit={handleLoginSubmit}>
+                    <div className="mb-4">
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
+                            placeholder={t('Enter your username or email')}
+                            value={email}
+                            required
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        {errors?.email && (
+                            <p className="text-red-500 text-sm">{errors.email}</p>
+                        )}
                     </div>
-                    <h2 className="text-xl text-center font-semibold mb-4">Login</h2>
-                    <form onSubmit={handleLoginSubmit}>
-                        <div className="mb-4">
-                            {/* <label htmlFor="username" className="block text-gray-700 font-bold mb-2">
-                                Phone number, username, or email
-                            </label> */}
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
-                                placeholder="Enter your username or email"
-                                value={email}
-                                required
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            {errors?.email && (
-                                <p className="text-red-500 text-sm">{errors.email}</p>
-                            )}
-                        </div>
-                        <div className="mb-4">
-                            {/* <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
-                                Password
-                            </label> */}
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
-                                placeholder="Enter your password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            {errors?.password && (
-                                <p className="text-red-500 text-sm">{errors.password}</p>
-                            )}
-                        </div>
-                        <button
-                            type="submit"
-                            // onClick={handleSubmit()}
-                            className="bg-[#0095f6] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-full"
-                        >
-                            {loading ? 'Logging In...' : 'Log In'}
-                        </button>
-                    </form>
-                    <div className="mt-4 text-center">
-
-                        <Link to='/forget' className="text-[#0095f6] hover:text-blue-700">
-                            Forgot password?
+                    <div className="mb-4">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
+                            placeholder={t('Enter your password')}
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        {errors?.password && (
+                            <p className="text-red-500 text-sm">{errors.password}</p>
+                        )}
+                    </div>
+                    <button
+                        type="submit"
+                        className="bg-[#0095f6] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-full"
+                    >
+                        {loading ? t('Logging In...') : t('Log In')}
+                    </button>
+                </form>
+                <div className="mt-4 text-center">
+                    <Link to='/forget' className="text-[#0095f6] hover:text-blue-700">
+                        {t('Forgot password?')}
+                    </Link>
+                    <p className="text-gray-700">Dot have an account?{' '}
+                        <Link to='/sign' className="text-[#0095f6] hover:text-blue-700">
+                            {t('Sign up')}
                         </Link>
-                        <p className="text-gray-700">Dot have an account?{' '}
-                            <Link to='/sign' className="text-[#0095f6] hover:text-blue-700">
-                                Sign up
-                            </Link>
-
-                        </p>
-                        <div>
-                            <input className='mr-1 mt-1 border-none ' type="checkbox" id="rememberMe" name="rememberMe" />
-                            <label htmlFor="rememberMe">Remember Me</label><br></br>
-                        </div>
+                    </p>
+                    <div>
+                        <input className='mr-1 mt-1 border-none ' type="checkbox" id="rememberMe" name="rememberMe" />
+                        <label htmlFor="rememberMe">Remember Me</label><br></br>
                     </div>
                 </div>
+                <LanguageSwitcher/>
             </div>
-
-        </>
+        </div>
     )
 }
