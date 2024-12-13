@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react'
-import { login } from '../../api/api'
+import { useState } from 'react'
+import { login } from '../../../api/api'
 import { useDispatch } from 'react-redux'
-import { setToken } from '../../features/token/tokenSlice'
+import { setToken } from '../../../features/token/tokenSlice'
 import { useTranslation } from 'react-i18next'
-// import i18next from 'i18next'
 import { Link, useNavigate } from 'react-router-dom'
-import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher'
 
 export default function LoginForm() {
     const [email, setEmail] = useState('')
@@ -74,15 +72,15 @@ export default function LoginForm() {
 
     return (
         <div className="flex justify-center items-center p-4 min-h-screen bg-gray-100">
-            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-                <div className="logo text-center flex justify-center items-center">
-                    <img 
-                        src="https://lyvup.com/hs-fs/hubfs/Tekengebied%201%20(2).jpg?width=211&height=149&name=Tekengebied%201%20(2).jpg" 
-                        alt="Lyvup Logo" 
-                        className="logo-img" 
+            <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
+                <div className="logo   text-center flex justify-center items-center">
+                    <img
+                        src="https://lyvup.com/hs-fs/hubfs/Tekengebied%201%20(2).jpg?width=211&height=149&name=Tekengebied%201%20(2).jpg"
+                        alt="Lyvup Logo"
+                        className="logo-img w-30 h-20"
                     />
                 </div>
-                <h2 className="text-xl text-center font-semibold mb-4">{t('LOGIN')}</h2>
+                <h2 className="text-xl text-left mb-2 font-semibold ">{t('LOGIN')}</h2>
                 <form onSubmit={handleLoginSubmit}>
                     <div className="mb-4">
                         <input
@@ -135,7 +133,7 @@ export default function LoginForm() {
                         <label htmlFor="rememberMe">Remember Me</label><br></br>
                     </div>
                 </div>
-                <LanguageSwitcher/>
+
             </div>
         </div>
     )
