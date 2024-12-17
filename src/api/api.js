@@ -23,12 +23,57 @@ export const getUsers = async (accessToken) => {
       try {
             const response = await axios.get(`${API_URL}/user/`, {
                   headers: {
-                        // 'Content-Type': 'application/json',
+                        'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`
                   }
             })
             return response
       } catch (error) {
-            console.log(error)
+            return error
+      }
+}
+
+export const addUser = async (accessToken, data) => {
+      try {
+            const response = await axios.post(`${API_URL}/user/`, {
+                  headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                  },
+                  data
+            })
+            return response
+      } catch (error) {
+            return error
+      }
+}
+export const updateUser = async (accessToken, id, data) => {
+      try {
+            const response = await axios.put(`${API_URL}/user/${id}`, {
+                  headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                  },
+                  data
+            })
+            return response
+      } catch (error) {
+            return error
+      }
+}
+
+export const deleteUser = async (accessToken, id) => {
+      try {
+            const response = await axios.delete(`${API_URL}/user/${id}/`, {
+                  headers: {
+                        // 'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                  },
+
+            })
+            return response
+      } catch (error) {
+            console.log('error=>', error)
+            return error
       }
 }
