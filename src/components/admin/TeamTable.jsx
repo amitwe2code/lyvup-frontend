@@ -1,5 +1,6 @@
 import CustomButton from "../common/CustomButton";
 import { LetterText } from "lucide-react";
+import React from "react";
 
 export default function TeamTable() {
     return (

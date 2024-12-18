@@ -4,19 +4,28 @@ import BottomNavbar from '../../components/user/BottomNavbar'
 import TopBar from '../../components/admin/TobBar'
 import UserTable from '../../components/admin/UserTable'
 import { useSelector } from 'react-redux'
-import { deleteUser, getUsers } from '../../api/api'
+import { addUser, deleteUser, getUsers, updateUser } from '../../api/api'
 import CustomButton from '../../components/common/CustomButton'
 import CustomInput from '../../components/common/CustomInput'
+import UserRegistrationForm from '../../components/admin/UserRegistrationForm'
 
 export default function UserList() {
     // state
     const [users, setUsers] = useState([])
     const [render, setRender] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
     const accessToken = useSelector((state) => state.accessToken)
-
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        phone: '',
+        userType: 'PATIENT',
+        language_preference: 'en'
+    })
 
     //user list get/reterview fuction call
-    async function getUsersList(accessToken) {
+    async function getUserList(accessToken) {
         const response = await getUsers(accessToken)
         // console.log('res=>', response)
         setUsers(response.data.data)
@@ -30,14 +39,43 @@ export default function UserList() {
     }
 
     //user Update apiFunction Call
-    const handleUserUpdate = async (e) => {
-        console.log(`user update who id is ${e}`)
+    const handleUserUpdate = async (user) => {
+        setFormData({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: '',
+            phone: user.phone,
+            userType: user.user_type,
+            language_preference: user.language_preference,
+        });
+        setIsOpen(true)
+
     }
 
+    //newUser add apifunction Call
+    const handleUserAdd = async (e) => {
+        e.preventDefault()
+        console.log('id=', e.target.id);
+        console.log('user id is =>', e.target.id);
+        if (e.target.id == '' || e.target.id == 'undefined' || e.target.id == 'null') {
+            const response = await addUser(accessToken, formData)
+            console.log('response=', response)
+            alert('user add success')
+            setFormData('')
+        }
+        else {
+            const response = await updateUser(accessToken, formData, e.target.id)
+            console.log('response=', response)
+            alert('user update success')
+        }
+        setIsOpen(false)
+
+    }
 
     //useEffect
     useEffect(() => {
-        getUsersList(accessToken)
+        getUserList(accessToken)
         setRender(false)
     }, [render])
 
@@ -49,16 +87,16 @@ export default function UserList() {
             <div className="mt-14 mb-14 h-[calc(100vh-112px)] overflow-auto w-full border p-3 ">
                 <div className="flex w-full flex-col md:flex-row justify-between">
                     <div className="w-1/2">
-                        <h3 className="text-2xl  font-bold"> Manage Teams</h3>
+                        <h3 className="text-2xl  font-bold"> User List</h3>
                     </div>
                     <div className="w-1/2 text-right">
                         <CustomInput
-                            onChange={console.log("onchange call")}
+                            onChange={console.log('search')}
                             placeholder="search"
                             size="medium"
                             className="border m-1  rounded-md "
                         />
-                        <CustomButton onClick={console.log("add team click")}>
+                        <CustomButton onClick={() => setIsOpen(true)}>
                             Add User
                         </CustomButton>
                     </div>
@@ -69,10 +107,23 @@ export default function UserList() {
                         users={users}
                         handleUserDelete={handleUserDelete}
                         handleUserUpdate={handleUserUpdate}
+
                     />
                 </div>
 
             </div>
+
+            <UserRegistrationForm
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                formData={formData}
+                setFormData={setFormData}
+                handleUserAdd={handleUserAdd}
+            />
+
+
+
+
         </div>
     )
 }

@@ -42,7 +42,7 @@ export default function UserTable({ users, handleUserDelete, handleUserUpdate })
                             </th>
                         </tr>
                     </thead>
-                    <tbody className="">
+                    <tbody className="text-sm">
                         {users.map((user) => (
                             <tr key={user?.id} className="border-collapse">
                                 <td>{user?.id}</td>
@@ -59,7 +59,7 @@ export default function UserTable({ users, handleUserDelete, handleUserUpdate })
                                         id={user.id}
                                         variant="outline"
                                         size="small"
-                                        onClick={(e) => handleUserUpdate(e)}
+                                        onClick={() => handleUserUpdate(user)}
                                         className="border   border-r-0 rounded-none "
                                     >
                                         {" "}

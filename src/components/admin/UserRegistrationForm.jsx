@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import CustomButton from '../common/CustomButton';
 
-export default function UserRegistrationForm() {
-    const [isOpen, setIsOpen] = useState(false)
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        phone: '',
-        userType: '',
-        language: ''
-    })
+export default function UserRegistrationForm({ isOpen, setIsOpen, formData, setFormData, handleUserAdd }) {
+
+    // const [formData, setFormData] = useState({
+    //     name: '',
+    //     email: '',
+    //     password: '',
+    //     phone: '',
+    //     userType: '',
+    //     language: ''
+    // })
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -25,12 +25,12 @@ export default function UserRegistrationForm() {
 
     return (
         <div>
-            <button
+            {/* <button
                 onClick={() => setIsOpen(true)}
                 className="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
                 Register User
-            </button>
+            </button> */}
 
             {isOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -95,31 +95,31 @@ export default function UserRegistrationForm() {
                                 <div>
                                     <label htmlFor="userType" className="block text-xs font-medium text-gray-700 mb-1">User Type</label>
                                     <select
-                                        id="userType"
-                                        name="userType"
-                                        value={formData.userType}
+                                        id="user_type"
+                                        name="user_type"
+                                        value={formData.user_type}
                                         onChange={handleInputChange}
                                         required
                                         className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
                                     >
                                         <option value="">Select</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="patient">Patient</option>
+                                        <option value="ADMIN">Admin</option>
+                                        <option value="PATIENT">Patient</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label htmlFor="language" className="block text-xs font-medium text-gray-700 mb-1">Language</label>
                                     <select
                                         id="language"
-                                        name="language"
-                                        value={formData.language}
+                                        name="language_preference"
+                                        value={formData.language_preference}
                                         onChange={handleInputChange}
                                         required
                                         className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
                                     >
                                         <option value="">Select</option>
-                                        <option value="english">English</option>
-                                        <option value="dutch">Dutch</option>
+                                        <option value="en">English</option>
+                                        <option value="nl">Dutch</option>
                                     </select>
                                 </div>
                             </div>
@@ -133,6 +133,8 @@ export default function UserRegistrationForm() {
                                 </button>
                                 <CustomButton
                                     type="submit"
+                                    onClick={handleUserAdd}
+                                    id={formData?.id}
                                     variant='outline'
                                     className="px-3 py-1 text-xs   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
                                 >

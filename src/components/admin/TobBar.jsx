@@ -66,14 +66,14 @@ export default function TopBar() {
               <div>
                 <LanguageSwitcher />
               </div>
-              <div className="hidden md:flex flex-row items-center justify-center ">
+              <Link to='/profile' className="hidden md:flex flex-row items-center justify-center ">
                 <span className="pt-1 text-[#17686d] px-2 ">Amit</span>
                 <img
                   src="https://app.lyvup.com:8443/img/user.png"
                   className="w-8 h-8 mx-2 rounded-full"
                   alt=""
                 />
-              </div>
+              </Link>
               <div>
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}

@@ -7,7 +7,7 @@ export default function CustomButton({
     type = 'button',
     className = '',
     disabled = false,
-    id = 'button',
+    id = '',
     size = 'medium',
     variant = 'primary'
 }) {
