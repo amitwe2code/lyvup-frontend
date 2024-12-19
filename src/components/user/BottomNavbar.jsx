@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, ThumbsUp, Users, User, Settings, ShoppingCart, Menu } from 'lucide-react';
+import { Home, ThumbsUp, Users, User, Settings, ShoppingCart, Menu, Users2 } from 'lucide-react';
 
 export default function BottomNavbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,8 +18,8 @@ export default function BottomNavbar() {
             <nav className=" fixed h-14 bottom-0 left-0 right-0 bg-[#e8e8ed] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] py-2">
                 <div className="flex h-full justify-around items-center">
                     <NavItem icon={Home} label="Home" href="#home" />
-                    <NavItem icon={ThumbsUp} label='Feedback' href='/' />
-                    <NavItem icon={Users} label="Profile" href="#profile" />
+                    <NavItem icon={Users} label='Users' href='/users' />
+                    <NavItem icon={User} label="Profile" href="#profile" />
                     <div
                         className="flex flex-col items-center justify-center  text-black hover:text-[#17686d] transition-colors duration-200 cursor-pointer"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}

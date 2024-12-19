@@ -7,6 +7,7 @@ export default function CustomButton({
     type = 'button',
     className = '',
     disabled = false,
+    id = 'button',
     size = 'medium',
     variant = 'primary'
 }) {
@@ -29,6 +30,7 @@ export default function CustomButton({
         <button
             className={`${sizeClasses[size]} ${variantClasses[variant]} rounded-md font-semibold transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed ${className}`}
             onClick={onClick}
+            id={id}
             type={type}
             disabled={disabled}
         >

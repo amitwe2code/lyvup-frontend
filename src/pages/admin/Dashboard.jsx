@@ -14,7 +14,7 @@ export default function Dashboard() {
       <div className="mt-14 mb-14 h-[calc(100vh-112px)] overflow-auto w-full border p-3 ">
         <div className="flex w-full flex-col md:flex-row justify-between">
           <div className="w-1/2">
-            <h3 className="text-2xl p-1 font-bold"> Manage Teams</h3>
+            <h3 className="text-2xl  font-bold"> Manage Teams</h3>
           </div>
           <div className="w-1/2 text-right">
             <CustomInput

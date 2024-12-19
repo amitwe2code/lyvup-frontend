@@ -4,7 +4,9 @@ import LoginForm from "./pages/common/login/LoginForm";
 import RegisterForm from "./pages/common/login/RegisterForm";
 import ForgetPasswordForm from "./pages/common/login/ForgetPasswordForm";
 import Dashboard from "./pages/admin/Dashboard";
-import PatientPage from "./pages/common/Patient";
+import Profile from "./pages/common/profile/Profile";
+import UserList from "./pages/admin/UserList";
+import UserRegistrationForm from "./components/admin/UserRegistrationForm";
 // import User from './components/other/User'
 
 export default function App() {
@@ -17,7 +19,9 @@ export default function App() {
             <Route path="/sign" element={<RegisterForm />} />
             <Route path="/forget" element={<ForgetPasswordForm />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/patient" element={<PatientPage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/adduser" element={<UserRegistrationForm />} />
           </Routes>
         </BrowserRouter>
       </div>
