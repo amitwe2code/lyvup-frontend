@@ -1,7 +1,7 @@
 import CustomButton from "../common/CustomButton";
 import { Delete, LetterText, Trash } from "lucide-react";
 import DateFormat from "./DateFormat";
-
+import { Link } from "react-router-dom";
 export default function UserTable({ users, handleUserDelete, handleUserUpdate }) {
 
     return (
@@ -45,7 +45,7 @@ export default function UserTable({ users, handleUserDelete, handleUserUpdate })
                     <tbody className="text-sm">
                         {users.map((user) => (
                             <tr key={user?.id} className="border-collapse">
-                                <td>{user?.id}</td>
+                             <Link to=`/profile/${user?.id}`> <td>{user?.id}</td></Link>
                                 <td>{user?.name}</td>
                                 <td>{user?.email}</td>
                                 <td>{user?.phone}</td>

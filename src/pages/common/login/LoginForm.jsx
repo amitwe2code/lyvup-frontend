@@ -62,7 +62,7 @@ export default function LoginForm() {
         alert("login successful");
         setEmail("");
         setPassword("");
-        navigate("/users");
+        navigate("/profile");
       } catch (error) {
         console.error("Login failed:", error);
         alert(error.response.data.message);

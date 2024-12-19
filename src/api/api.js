@@ -3,13 +3,6 @@ import { data } from "react-router";
 const API_URL = 'http://127.0.0.1:8000';
 
 
-// Headers: {
-//       headers: {
-//         Content-Type: 'multipart/form-data',
-//         Authorization: `Bearer ${access_token}`
-//       }
-// }
-
 export const login = async (email, password) => {
       const response = await axios.post(`${API_URL}/login/`, { email, password });
       return response;
@@ -33,7 +26,19 @@ export const getUsers = async (accessToken) => {
             return error
       }
 }
-
+export const getUser = async(accessToken,id)=>{
+      try {
+            const response = await axios.get(`${API_URL}/user/${id}/`, {
+                  headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            })
+            return response
+      } catch (error) {
+            return error
+      }
+}
 // export const addUser = async (accessToken, formData) => {
 //       const Data = JSON.stringify(formData)
 //       console.log('data=', Data);
