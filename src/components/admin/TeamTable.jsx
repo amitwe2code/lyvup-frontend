@@ -4,7 +4,7 @@ import { LetterText } from "lucide-react";
 export default function TeamTable() {
   return (
     <>
-      <div className="  border-2 w-full overflow-auto ">
+      <div className="border-2 w-full overflow-auto ">
         <table className="table table-auto border-collapse">
           <thead className="bg-gray-100">
             <tr className="h-10">

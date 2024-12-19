@@ -73,7 +73,7 @@ export default function LoginForm() {
   return (
     <div className="flex justify-center items-center p-4 min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
-        <div className="logo   text-center flex justify-center items-center">
+        <div className="logo text-center flex justify-center items-center">
           <img
             src="https://lyvup.com/hs-fs/hubfs/Tekengebied%201%20(2).jpg?width=211&height=149&name=Tekengebied%201%20(2).jpg"
             alt="Lyvup Logo"
