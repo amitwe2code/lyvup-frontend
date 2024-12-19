@@ -12,6 +12,7 @@ import UserRegistrationForm from '../../components/admin/UserRegistrationForm'
 export default function UserList() {
     // state
     const [users, setUsers] = useState([])
+    const [isBoolean,setIsBoolean]=useState(true)
     const [render, setRender] = useState(true)
     const [isOpen, setIsOpen] = useState(false)
     const accessToken = useSelector((state) => state.accessToken)
@@ -20,8 +21,8 @@ export default function UserList() {
         email: '',
         password: '',
         phone: '',
-        userType: 'PATIENT',
-        language_preference: 'en'
+        userType: '',
+        language_preference: ''
     })
 
     //user list get/reterview fuction call
@@ -44,14 +45,13 @@ export default function UserList() {
             id: user.id,
             name: user.name,
             email: user.email,
-            password: '',
             phone: user.phone,
             userType: user.user_type,
             language_preference: user.language_preference,
         });
         setIsOpen(true)
-
     }
+  
 
     //newUser add apifunction Call
     const handleUserAdd = async (e) => {
@@ -65,6 +65,7 @@ export default function UserList() {
             setFormData('')
         }
         else {
+            console.log('passed data=>',formData)
             const response = await updateUser(accessToken, formData, e.target.id)
             console.log('response=', response)
             alert('user update success')
@@ -76,8 +77,8 @@ export default function UserList() {
     //useEffect
     useEffect(() => {
         getUserList(accessToken)
-        setRender(false)
-    }, [render])
+        setIsBoolean(false)
+    }, [isBoolean])
 
 
     return (
@@ -118,7 +119,7 @@ export default function UserList() {
                 setIsOpen={setIsOpen}
                 formData={formData}
                 setFormData={setFormData}
-                handleUserAdd={handleUserAdd}
+                handleFormSubmit={handleUserAdd}
             />
 
 

@@ -76,18 +76,17 @@ export const addUser = async (accessToken, form) => {
 export const updateUser = async (accessToken, form, id) => {
       const formData = new FormData();
       formData.append("email", form.email);
-      formData.append("password", form.password);
       formData.append("phone", form.phone);
       formData.append("language", form.language_preference);
       formData.append("name", form.name);
       formData.append("user_type", form.user_type);
       try {
-            const response = await axios.put(`${API_URL}/user/${id}/`, {
+            const response = await axios.put(`${API_URL}/user/${id}/`,formData, {
                   headers: {
                         // 'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`
                   },
-                  data
+               
             })
             return response
       } catch (error) {

@@ -13,7 +13,8 @@ import {
 export default function TopBar() {
   const [isOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
-  // const [isDarkMode, setIsDarkMode] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const id=user?.id
 
   const sidebarItems = [
     {
@@ -67,10 +68,10 @@ export default function TopBar() {
                 <LanguageSwitcher />
               </div>
               <Link
-                to="/profile"
+                to={`/profile/${id}`}
                 className="hidden md:flex flex-row items-center justify-center "
               >
-                <span className="pt-1 text-[#17686d] px-2 ">Amit</span>
+                <span className="pt-1 capitalize text-[#17686d] px-2 ">{user?.name}</span>
                 <img
                   src="https://app.lyvup.com:8443/img/user.png"
                   className="w-8 h-8 mx-2 rounded-full"

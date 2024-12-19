@@ -45,7 +45,7 @@ export default function UserTable({ users, handleUserDelete, handleUserUpdate })
                     <tbody className="text-sm">
                         {users.map((user) => (
                             <tr key={user?.id} className="border-collapse">
-                             <Link to=`/profile/${user?.id}`> <td>{user?.id}</td></Link>
+                             <Link to={`/profile/${user?.id}`}> <td>{user?.id}</td></Link>
                                 <td>{user?.name}</td>
                                 <td>{user?.email}</td>
                                 <td>{user?.phone}</td>
