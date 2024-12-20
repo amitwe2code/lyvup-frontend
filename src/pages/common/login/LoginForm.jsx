@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setToken } from "../../../features/token/tokenSlice";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
+import LanguageSwitcher from "../../../components/common/languageSwitcher/LanguageSwitcher";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -58,6 +59,8 @@ export default function LoginForm() {
         const refreshToken = response.data.data.refresh_token;
         const user = response.data.data.user
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
         dispatch(setToken({ accessToken, refreshToken, user }));
         alert("login successful");
         setEmail("");
@@ -82,7 +85,7 @@ export default function LoginForm() {
             className="logo-img w-30 h-20"
           />
         </div>
-        <h2 className="text-xl text-left mb-2 font-semibold ">{t("LOGIN")}</h2>
+        <h2 className="text-xl text-left mb-2 font-semibold ">{t("lg_LOGIN")}</h2>
         <form onSubmit={handleLoginSubmit}>
           <div className="mb-4">
             <input
@@ -90,7 +93,7 @@ export default function LoginForm() {
               id="email"
               name="email"
               className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
-              placeholder={t("Enter your username or email")}
+              placeholder={t("lg_Enter your username or email")}
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
@@ -105,7 +108,7 @@ export default function LoginForm() {
               id="password"
               name="password"
               className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
-              placeholder={t("Enter your password")}
+              placeholder={t("lg_Enter your password")}
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -118,28 +121,29 @@ export default function LoginForm() {
             type="submit"
             className="bg-[#0095f6] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-full"
           >
-            {loading ? t("Logging In...") : t("Log In")}
+            {loading ? t("lg_Logging In...") : t("lg_Log In")}
           </button>
         </form>
         <div className="mt-4 text-center">
           <Link to="/forget" className="text-[#0095f6] hover:text-blue-700">
-            {t("Forgot password?")}
+            {t("lg_Forgot password?")}
           </Link>
           <p className="text-gray-700">
-            Dot have an account?{" "}
+            {t("lg_Don't have an account?")}
             <Link to="/sign" className="text-[#0095f6] hover:text-blue-700">
-              {t("Sign up")}
+              {t("lg_Sign up")}
             </Link>
           </p>
           <div>
-            <input
+            {/* <input
               className="mr-1 mt-1 border-none "
               type="checkbox"
               id="rememberMe"
               name="rememberMe"
             />
             <label htmlFor="rememberMe">Remember Me</label>
-            <br></br>
+            <br></br> */}
+            <LanguageSwitcher/>
           </div>
         </div>
       </div>

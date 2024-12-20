@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../../../components/common/languageSwitcher/LanguageSwitcher';
 
-export default function RegisterForm() {
-    // State to manage form data
+export default function SignupForm() {
+    const { t } = useTranslation();
     const [user, setUser] = useState({
         name: '',
         email: '',
         phone: '',
         user_type: 'PATIENT',
         profile_picture: null,
-        language_preference: 'en',
+        language_preference: '',
         status: 'ACTIVE',
         password: '',
     });
@@ -49,9 +51,9 @@ export default function RegisterForm() {
                         className="logo-img"
                     />
                 </div>
-                <h2 className="text-2xl font-semibold mb-2 text-center">Sign Up</h2>
+                <h2 className="text-2xl font-semibold mb-2 text-center">{t("su_Sign up")}</h2>
                 <p className="text-gray-600 mb-4 text-center">
-                    Create an account to join our community.
+                    {t("su_Create an account to join out community")}
                 </p>
                 <form onSubmit={handleSubmit}>
                     {/* Name */}
@@ -63,7 +65,7 @@ export default function RegisterForm() {
                             value={user.name}
                             onChange={handleChange}
                             className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
-                            placeholder="Enter your name"
+                            placeholder={t("su_Enter your username")}
                             required
                         />
                     </div>
@@ -77,7 +79,7 @@ export default function RegisterForm() {
                             value={user.email}
                             onChange={handleChange}
                             className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
-                            placeholder="Enter your email"
+                            placeholder={t("su_Enter your email")}
                             required
                         />
                     </div>
@@ -91,10 +93,10 @@ export default function RegisterForm() {
                             value={user.phone}
                             onChange={handleChange}
                             className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
-                            placeholder="Enter your phone number"
+                            placeholder={t("su_Enter your phone number")}
                             required
                             pattern="\d{10}"
-                            title="Phone number must be exactly 10 digits"
+                            title={t("su_Phone number must be exactly 10 digits")}
                         />
                     </div>
 
@@ -107,11 +109,8 @@ export default function RegisterForm() {
                             onChange={handleChange}
                             className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
                         >
-                            <option value="SUPERADMIN">Superadmin</option>
-                            <option value="PATIENT">Patient</option>
-                            <option value="HEALTHCARE_PROVIDER">Healthcare Provider</option>
-                            <option value="TEAMLEAD">Teamlead</option>
-                            <option value="FRIEND">Friend</option>
+                            <option value="PATIENT">{t("su_Patient")}</option>
+                            <option value="TEAMLEAD">{t("su_Admin")}</option>
                         </select>
                     </div>
 
@@ -135,7 +134,7 @@ export default function RegisterForm() {
                             value={user.language_preference}
                             onChange={handleChange}
                             className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
-                            placeholder="Language Preference (e.g., 'en')"
+                            placeholder={t("su_Language prefrence English/Dutch")}
                         />
                     </div>
 
@@ -149,7 +148,7 @@ export default function RegisterForm() {
                             className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
                         >
                             <option value="ACTIVE">Active</option>
-                            <option value="INACTIVE">Inactive</option>
+                            <option value="INACTIVE">InActive</option>
                             <option value="SUSPENDED">Suspended</option>
                         </select>
                     </div>
@@ -163,7 +162,7 @@ export default function RegisterForm() {
                             value={user.password}
                             onChange={handleChange}
                             className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
-                            placeholder="Enter your password"
+                            placeholder={t("su_Enter your password")}
                             required
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$"
                             title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&#)"
@@ -175,17 +174,18 @@ export default function RegisterForm() {
                         type="submit"
                         className="bg-[#0095f6] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md w-full"
                     >
-                        Sign Up
+                        {t("su_Sign up")}
                     </button>
                 </form>
                 <div className="mt-1 text-center">
                     <p className="text-gray-700">
-                        Already have an account?{' '}
+                        {t("su_Already have an account?")}
                         <Link to="/" className="text-[#0095f6] hover:text-blue-700">
-                            Log In
+                            {t("su_Log In")}
                         </Link>
                     </p>
                 </div>
+                <LanguageSwitcher />
             </div>
         </div>
     );

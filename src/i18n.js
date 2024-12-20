@@ -21,10 +21,13 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    fallbackLng: 'en',
+    fallbackLng: '',
     debug: true,
     whitelist: availableLanguages,
     detection: options,
+    backend: {
+      loadPath: 'locales/{{lng}}/translation.json',
+    },
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },

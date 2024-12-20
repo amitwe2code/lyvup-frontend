@@ -55,13 +55,14 @@ export default function UserTable({ users, handleUserDelete, handleUserUpdate })
                                 <td><DateFormat updatedAt={user?.created_at} /></td>
                                 <td><DateFormat updatedAt={user.updated_at} /></td>
                                 <td className="flex h-auto w-auto ">
+                                <div className="inline-flex" role="group">
                                     <CustomButton
                                         id={user.id}
                                         variant="outline"
                                         size="small"
                                         onClick={() => handleUserUpdate(user)}
                                         className="border   border-r-0 rounded-none "
-                                    >
+                                        >
                                         {" "}
                                         <LetterText className="w-4 h-4 m-0" />
                                     </CustomButton>
@@ -71,10 +72,11 @@ export default function UserTable({ users, handleUserDelete, handleUserUpdate })
                                         size="small"
                                         onClick={(e) => handleUserDelete(e)}
                                         className="border border-r-0 rounded-none  "
-                                    >
+                                        >
                                         {" "}
                                         <Trash className="w-4 h-4 m-0" />
                                     </CustomButton>
+                                        </div>
                                 </td>
                             </tr>
                         ))}

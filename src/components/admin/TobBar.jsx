@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import LanguageSwitcher from "../common/languageSwitcher/LanguageSwitcher";
 import {
   Home,
@@ -8,13 +8,33 @@ import {
   Settings,
   FileText,
   MessageSquare,
+  User,
 } from "lucide-react";
+import Logout from "../../pages/common/login/Logout";
 
 export default function TopBar() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
   const user = JSON.parse(localStorage.getItem("user"));
-  const id=user?.id
+  const id = user?.id;
+  const dropdownRef = useRef(null)
+  const navigate=useNavigate()
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  
 
   const sidebarItems = [
     {
@@ -67,32 +87,51 @@ export default function TopBar() {
               <div>
                 <LanguageSwitcher />
               </div>
-              <Link
-                to={`/profile/${id}`}
-                className="hidden md:flex flex-row items-center justify-center "
-              >
-                <span className="pt-1 capitalize text-[#17686d] px-2 ">{user?.name}</span>
-                <img
-                  src="https://app.lyvup.com:8443/img/user.png"
-                  className="w-8 h-8 mx-2 rounded-full"
-                  alt=""
-                />
-              </Link>
-              <div>
+              <div className="relative">
                 <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center justify-center space-x-2"
+                >
+                  <span className="pt-1 capitalize text-[#17686d] px-2">
+                    hey {user?.name}
+                  </span>
+                  <img
+                    src="https://app.lyvup.com:8443/img/user.png"
+                    className="w-8 h-8 mx-2 rounded-full"
+                    alt=""
+                  />
+                </button>
+
+                {/* ड्रॉपडाउन मेनू */}
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                    <Link
+                      to={`/profile/${id}`}
+                      className="flex items-center gap-2 px-4 text-lg  py-2 hover:text-[#039a77]   hover:bg-gray-100"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                     <User/> Profile
+                    </Link>
+                    <Logout/>
+                  </div>
+                )}
+              </div>
+              
+              <div>
+                {/* <button
                   onClick={() => setIsExpanded(!isExpanded)}
                   className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                   aria-expanded={isOpen}
                 >
                   {isOpen ? "Close" : "Menu"}
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
         </div>
       </nav>
       <div
-        className={`transition-all block  h-[calc(100vh-7rem)] duration-300 mb-14 mt-14  ease-in-out hidden bg-[#f5f5f5] ${
+        className={`transition-all   h-[calc(100vh-7rem)] duration-300 mb-14 mt-14  ease-in-out hidden bg-[#f5f5f5] ${
           isExpanded ? "w-64" : "w-20"
         }`}
       >

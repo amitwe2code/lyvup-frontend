@@ -13,9 +13,18 @@ export const register = async () => {
       return response;
 }
 
-export const getUsers = async (accessToken) => {
+export const logout=async(accessToken,refreshToken)=>{
       try {
-            const response = await axios.get(`${API_URL}/user/`, {
+            const response=await axios.post(`${API_URL}/logout/`,{accessToken,refreshToken})
+            return response      
+      } catch (error) {
+          alert(error.response.data.message)  
+      }
+}
+
+export const getUsers = async (accessToken,search,userType,ordering) => {
+      try {
+            const response = await axios.get(`${API_URL}/user/?search=${search}&user_type=${userType}&ordering=${ordering}`, {
                   headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`
