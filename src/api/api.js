@@ -146,7 +146,7 @@ export const deleteUser = async (accessToken, id) => {
 
 export const addAccount = async (accessToken, form) => {
       try {
-            const response = await axios.post(`${API_URL}/account/create/`, form, {
+            const response = await axios.post(`${API_URL}/account/`, form, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -159,7 +159,7 @@ export const addAccount = async (accessToken, form) => {
 
 export const getSingleAccountDetail = async (accessToken, id) => {
       try {
-            const response = await axios.get(`${API_URL}/account/accounts/${id}/`, {
+            const response = await axios.get(`${API_URL}/account/${id}/`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -172,7 +172,7 @@ export const getSingleAccountDetail = async (accessToken, id) => {
 
 export const getAllAccountDetail = async (accessToken, search, currentPage, pageSize, ordering) => {
       try {
-            const response = await axios.get(`${API_URL}/account/accounts/`, {
+            const response = await axios.get(`${API_URL}/account/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -186,7 +186,7 @@ export const getAllAccountDetail = async (accessToken, search, currentPage, page
 export const updateAccount = async (accessToken, form, id) => {
       console.log('in update account',form,id)
       try {
-            const response = await axios.put(`${API_URL}/account/accounts/${id}/`, form, {
+            const response = await axios.put(`${API_URL}/account/${id}/`, form, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }

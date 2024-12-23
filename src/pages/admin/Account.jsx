@@ -21,7 +21,7 @@ export default function Account() {
   const [accounts, setAccounts] = useState([]);
   const [isBoolean, setIsBoolean] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(2);
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState("");
   const [ordering, setOrdering] = useState("");
@@ -38,11 +38,11 @@ export default function Account() {
 
   const getAccounts = async () => {
     console.log("accessToken=>", accessToken);
-    const response = await getAllAccountDetail(accessToken,search,ordering,currentPage, pageSize);
+    const response = await getAllAccountDetail(accessToken,search,currentPage, pageSize,ordering);
     console.log("response=>", response);
-    setAccounts(response.data.results);
-    setTotalPage(response.data.pagination.total_pages);
-    setCount(response.data.pagination.count);
+     setAccounts(response.data.data.results);
+     setTotalPage(response.data.data.pagination.total_pages);
+     setCount(response.data.data.pagination.count);
   };
   const handleAccountUpdate = async (account) => {
     setFormData({

@@ -34,21 +34,21 @@ export default function App() {
                         <Route path="/reset" element={<ResetPassword />} />
 
 
-                        {user?.user_type === 'PATIENT' && token !== "" && token !== null && token !== undefined ? (
+                        {user?.user_type === 'PATIENT' || user?.user_type==='patient' && token !== "" && token !== null && token !== undefined ? (
                             <>
                                 <Route path='/profile/:id' element={<Profile />} />
 
                             </>
                         ) : (<></>)}
 
-                        {user?.user_type === 'Admin' && token !== "" && token !== null && token !== undefined ? (
+                        {user?.user_type === 'Admin' || user?.user_type==='admin' && token !== "" && token !== null && token !== undefined ? (
                             <>
                                 <Route path='/profile/:id' element={<Profile />} />
                             </>
                         ) : (<></>)}
 
 
-                        {user?.user_type === 'SUPERADMIN' && token !== "" && token !== null && token !== undefined ? (
+                        {user?.user_type === 'superadmin' || user?.user_type === 'superadmin' && token !== "" && token !== null && token !== undefined ? (
                             <>
                                 <Route path='/dashboard' element={<Dashboard />} />
                                 <Route path='/users' element={<UserList />} />

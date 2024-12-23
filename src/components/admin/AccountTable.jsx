@@ -27,13 +27,13 @@ export default function AccountTable({ accounts, setOrdering, handleAccountDelet
                         className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
                         onClick={() => handleSort(field, 'asc')}
                     >
-                        {t('At_ascending')}
+                        'At_ascending'
                     </button>
                     <button 
                         className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
                         onClick={() => handleSort(field, 'desc')}
                     >
-                        {t('At_descending')}   
+                        'At_descending'
                     </button>
                 </div>
             )}
