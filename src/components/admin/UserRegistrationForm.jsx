@@ -94,8 +94,8 @@ export default function UserRegistrationForm({
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
                   >
                     <option value="">Select</option>
-                    <option value="english">English</option>
-                    <option value="dutch">Dutch</option>
+                    <option value="English">English</option>
+                    <option value="Dutch">Dutch</option>
                   </select>
                 </div>
               </div>

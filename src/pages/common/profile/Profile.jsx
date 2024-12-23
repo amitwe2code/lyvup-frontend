@@ -13,9 +13,9 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [Boolean, setBoolean] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const accessToken = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.token.accessToken);
   const { id } = useParams();
-
+  console.log('access token=>',accessToken)
   //open updateform and set formdata
   const handleEditFormOpen = () => {
     setFormData({

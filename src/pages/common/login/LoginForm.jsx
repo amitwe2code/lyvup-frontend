@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "../../../api/api";
+import {  loginUser } from "../../../api/api";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../../features/token/tokenSlice";
 import { useTranslation } from "react-i18next";
@@ -43,7 +43,7 @@ export default function LoginForm() {
     setErrors(formErrors);
     return formErrors.email === "" && formErrors.password === "";
   };
-  // FUNTION FOR LOGIN
+  // FUNTION FOR LOGIN 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     console.log("email=", email);
@@ -53,7 +53,7 @@ export default function LoginForm() {
     if (validators()) {
       setloading(true);
       try {
-        const response = await login(email, password);
+        const response = await loginUser(email, password);
         console.log("response =>", response);
         const accessToken = response.data.data.access_token;
         const refreshToken = response.data.data.refresh_token;
@@ -98,7 +98,7 @@ export default function LoginForm() {
               required
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors?.email && (
+            {errors?.email && (                                     
               <p className="text-red-500 text-sm">{errors.email}</p>
             )}
           </div>

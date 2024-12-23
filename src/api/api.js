@@ -3,28 +3,48 @@ import { data } from "react-router";
 const API_URL = 'http://127.0.0.1:8000';
 
 
-export const login = async (email, password) => {
+export const loginUser = async (email, password) => {
       const response = await axios.post(`${API_URL}/login/`, { email, password });
       return response;
 }
 
-export const register = async () => {
+export const signupUser = async () => {
       const response = await axios.post(`${API_URL}/user/`, {})
       return response;
 }
 
-export const logout=async(accessToken,refreshToken)=>{
+export const forgetPassword =async (email)=>{
+      const response=await axios.post(`${API_URL}/forgot/`,{
+            email:email
+      })
+      return response
+}
+
+
+export const resetPassword = async (userId,token,password,confermPassword) => {
+      console.log('in reset',userId,token)
+      const response = await axios.post(`${API_URL}/reset/${userId}/${token}/`, {
+        password: password,
+        confirm_password:confermPassword
+      });
+      return response;
+    };
+
+export const logoutUser=async(accessToken,refreshToken)=>{
       try {
-            const response=await axios.post(`${API_URL}/logout/`,{accessToken,refreshToken})
+            const response=await axios.post(`${API_URL}/logout/`,{
+                  access_token:accessToken,
+                  refresh_token:refreshToken
+            })
             return response      
       } catch (error) {
-          alert(error.response.data.message)  
+            console.log(error)  
       }
 }
 
-export const getUsers = async (accessToken,search,userType,ordering) => {
+export const getUsers = async (accessToken,search,userType,page,pageSize,ordering) => {
       try {
-            const response = await axios.get(`${API_URL}/user/?search=${search}&user_type=${userType}&ordering=${ordering}`, {
+            const response = await axios.get(`${API_URL}/user/?search=${search}&page=${page}&page_size=${pageSize}&user_type=${userType}&ordering=${ordering}`, {
                   headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`
@@ -36,6 +56,7 @@ export const getUsers = async (accessToken,search,userType,ordering) => {
       }
 }
 export const getUser = async(accessToken,id)=>{
+      console.log('in get user',accessToken,id)
       try {
             const response = await axios.get(`${API_URL}/user/${id}/`, {
                   headers: {
@@ -99,7 +120,8 @@ export const updateUser = async (accessToken, form, id) => {
             })
             return response
       } catch (error) {
-            return error
+            alert(error.message)
+            throw error
       }
 }
 

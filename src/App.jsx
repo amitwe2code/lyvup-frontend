@@ -8,6 +8,7 @@ import UserList from './pages/admin/UserList'
 import NotFound from './pages/common/NotFound'
 import SignupForm from './pages/common/login/SignupForm'
 import Logout from './pages/common/login/Logout'
+import ResetPassword from './pages/common/login/ResetPassword'
 
 // import UserRegistrationForm from './components/admin/UserRegistrationForm'
 // import User from './components/other/User'
@@ -28,7 +29,7 @@ export default function App() {
                         <Route path='/sign' element={<SignupForm />} />
                         <Route path='/forget' element={<ForgetPasswordForm />} />
                         <Route path='/logout' element={<Logout />} />
-                       
+                        <Route path="/reset" element={<ResetPassword />} />
 
 
                         {user?.user_type === 'PATIENT' && token !== "" && token !== null && token !== undefined ? (

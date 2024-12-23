@@ -8,31 +8,41 @@ import { addUser, deleteUser, getUsers, updateUser } from "../../api/api";
 import CustomButton from "../../components/common/CustomButton";
 import CustomInput from "../../components/common/CustomInput";
 import UserRegistrationForm from "../../components/admin/UserRegistrationForm";
+import Pagination from "../../components/common/Pagination";
 
 export default function UserList() {
   // state
   const [search, setSearch] = useState("");
   const [userType, setUserType] = useState("");
-//   const [ordering, setOrdering] = useState("name");
+  const [count,setCount]=useState(0)
+  const [totalPage,setTotalPage]=useState(0)
+  const [ordering, setOrdering] = useState("name");
+  const [pageSize,setPageSize]=useState(10)
+  const [currentPage,setCurrentPage]=useState(1)
+  // const nPages = Math.ceil(count / pageSize);
   const [users, setUsers] = useState([]);
   const [isBoolean, setIsBoolean] = useState(true);
   const [render, setRender] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const accessToken = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.token.accessToken);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     phone: "",
-    userType: "",
+    user_type: "",
     language_preference: "",
   });
-  
+  console.log('pageSize=>',pageSize)
   //user list get/reterview fuction call
   async function getUserList(accessToken) {
-    const response = await getUsers(accessToken, search, userType);
+    const response = await getUsers(accessToken, search, userType,currentPage,pageSize,ordering);
     console.log('res=>', response)
     setUsers(response.data.data.results);
+    setCount(response.data.data.pagination.count)
+    setTotalPage(response.data.data.pagination.total_pages)
+    // setPageSize(response.data.data.pagination.page_size)
+    setCurrentPage(response.data.data.pagination.current_page)
   }
 
   //user delete apiFunction Call
@@ -49,8 +59,9 @@ export default function UserList() {
       name: user.name,
       email: user.email,
       phone: user.phone,
-      userType: user.user_type,
+      user_type: user.user_type,
       language_preference: user.language_preference,
+      
     });
     setIsOpen(true);
   };
@@ -75,6 +86,7 @@ export default function UserList() {
       console.log("response=", response);
       alert("user update success");
     }
+    setIsBoolean(true)
     setIsOpen(false);
   };
 
@@ -82,7 +94,7 @@ export default function UserList() {
   useEffect(() => {
     getUserList(accessToken);
     setIsBoolean(false);
-  }, [isBoolean, search, userType]);
+  }, [isBoolean, search, userType,currentPage,pageSize,ordering]);
 
   return (
     <div className="flex">
@@ -108,7 +120,7 @@ export default function UserList() {
               <option value="-email">email_desc</option>
             </select> */}
             <CustomInput
-              onChange={(e) => setSe(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               placeholder="search"
               size="medium"
               className="border m-1  rounded-md "
@@ -120,17 +132,17 @@ export default function UserList() {
         </div>
 
 
-        <div className="flex justify-start my-2 items-center">
+        <div className=" flex justify-start my-2 items-center">
             <div className="inline-flex rounded-md" role="group">
                 <CustomButton 
-                    className={`w-40 px-10 capitalize rounded-none border-r-0 ${userType === 'admin' ? 'bg-[#039a77] text-white' : ''}`} 
+                    className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === 'admin' ? 'bg-[#039a77] text-white' : ''}`} 
                     variant="outline" 
                     onClick={() => setUserType("admin")}
                 >
                     admin
                 </CustomButton>
                 <CustomButton 
-                    className={`w-40 px-10 capitalize rounded-none ${userType === 'patient' ? 'bg-[#039a77] text-white' : ''}`} 
+                    className={`sm:w-40 px-10 capitalize rounded-none ${userType === 'patient' ? 'bg-[#039a77] text-white' : ''}`} 
                     variant="outline" 
                     onClick={() => setUserType("patient")}
                 >
@@ -141,8 +153,17 @@ export default function UserList() {
         <div className="my-1">
           <UserTable
             users={users}
+            setOrdering={setOrdering}
             handleUserDelete={handleUserDelete}
             handleUserUpdate={handleUserUpdate}
+          />
+          <Pagination
+            nPages={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            total={count}
+            count={pageSize}
+            setPageSize={setPageSize}
           />
         </div>
       </div>

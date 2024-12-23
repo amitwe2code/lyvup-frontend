@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-
-
 const initialState = {
-    accessToken: '',
-    refreshToken: '',
-    user: {}
+    accessToken: localStorage.getItem('accessToken') || '',
+    refreshToken: localStorage.getItem('refreshToken') || '',
+    user: JSON.parse(localStorage.getItem('user')) || {}
 }
 
 export const tokenSlice = createSlice({
@@ -13,16 +11,26 @@ export const tokenSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state, action) => {
-            console.log(action)
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
             state.user = action.payload.user;
-            console.log('in store access', state.accessToken);
-            console.log('in store refresh', state.refreshToken)
-
+            // localStorage में भी store करें
+            localStorage.setItem('accessToken', action.payload.accessToken);
+            localStorage.setItem('refreshToken', action.payload.refreshToken);
+            localStorage.setItem('user', JSON.stringify(action.payload.user));
+        },
+        clearToken: (state) => {
+            state.accessToken = '';
+            state.refreshToken = '';
+            state.user = {};
+            
+            // localStorage से भी clear करें
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('user');
         }
     }
 })
-export const { setToken } = tokenSlice.actions;
 
+export const { setToken, clearToken } = tokenSlice.actions;
 export default tokenSlice.reducer;

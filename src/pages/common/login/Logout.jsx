@@ -1,7 +1,7 @@
 
 import { LogOut } from 'lucide-react'
 import { useNavigate } from 'react-router'
-import { logout } from '../../../api/api'
+import { logoutUser } from '../../../api/api'
 
 export default function Logout() {
     const navigate=useNavigate()
@@ -9,11 +9,11 @@ export default function Logout() {
     const refreshToken=localStorage.getItem('refreshToken')
 
     const handleLogOut=async()=>{
-    // const response=await logout(accessToken,refreshToken)
+    const response=await logoutUser(accessToken,refreshToken)
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
     localStorage.removeItem('user')
-    // console.log(response)
+    console.log(response)
     navigate('/')
     }
 

@@ -1,9 +1,20 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router'
+import { forgetPassword } from '../../../api/api'
 
 export default function ForgetPasswordForm() {
-    const { t } = useTranslation();
+    const[email,setEmail]=useState('')
+    const navigate=useNavigate()
+    // forgetapicall
+    const handleForgot=async(e)=>{
+        e.preventDefault()
+        console.log('forget call')
+       const response= await forgetPassword(email)
+       if(response){
+           alert('message is send one your mail')
+       }
+       alert('forgot call')
+    }
     return (
         <>
             <div className="flex justify-center items-center p-4 h-screen bg-gray-100">
@@ -11,9 +22,9 @@ export default function ForgetPasswordForm() {
                     <div className="logo text-center flex justify-center items-center">
                         <img src="https://lyvup.com/hs-fs/hubfs/Tekengebied%201%20(2).jpg?width=211&height=149&name=Tekengebied%201%20(2).jpg" alt="Lyvup Logo" className="logo-img" />
                     </div>
-                    <h2 className="text-2xl font-semibold text-center mb-2">{t("fp_Forgot Password")}</h2>
+                    <h2 className="text-2xl font-semibold text-center mb-2">Forgot Password</h2>
                     <p className="text-gray-600 mb-4 text-center">
-                        {t("fp_Enter your email to reset your password.")}
+                        Enter your email to reset your password.
                     </p>
                     <form>
                         <div className="mb-4">
@@ -24,20 +35,22 @@ export default function ForgetPasswordForm() {
                                 type="email"
                                 id="email"
                                 name="email"
+                                onChange={(e)=>setEmail(e.target.value)}
                                 className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder={t("fp_Enter your email")}
+                                placeholder="Enter your email"
                             />
                         </div>
                         <button
                             type="submit"
+                            onClick={(e)=>handleForgot(e)}
                             className="bg-[#0095f6] hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-md w-full"
                         >
-                            {t("fp_Reset Password")}
+                            Reset Password
                         </button>
                     </form>
                     <div className="pl-2">
                         <Link to="/" className="text-[#0095f6] hover:text-blue-700">
-                            {t("fp_Go to Login")}
+                            Go to Login
                         </Link>
                     </div>
                 </div>

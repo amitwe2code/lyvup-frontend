@@ -1,41 +1,77 @@
 import CustomButton from "../common/CustomButton";
-import { Delete, LetterText, Trash } from "lucide-react";
+import { Delete, LetterText, Trash, ChevronDown } from "lucide-react";
 import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
-export default function UserTable({ users, handleUserDelete, handleUserUpdate }) {
+import { useState } from "react";
+
+export default function UserTable({ users, setOrdering, handleUserDelete, handleUserUpdate }) {
+    const [openDropdown, setOpenDropdown] = useState(null);
+
+    const handleSort = (field, direction) => {
+        setOrdering(direction === 'asc' ? field : `-${field}`);
+        setOpenDropdown(null);
+    };
+
+    const SortDropdown = ({ field }) => (
+        <div className="relative inline-block">
+            <button 
+                onClick={() => setOpenDropdown(openDropdown === field ? null : field)}
+                className="inline-flex items-center"
+            >
+                {field} <ChevronDown className="w-4 h-4 ml-1" />
+            </button>
+            
+            {openDropdown === field && (
+                <div className="absolute z-10 mt-1 bg-white border rounded-md shadow-lg">
+                    <button 
+                        className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
+                        onClick={() => handleSort(field, 'asc')}
+                    >
+                        Ascending
+                    </button>
+                    <button 
+                        className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
+                        onClick={() => handleSort(field, 'desc')}
+                    >
+                        Descending
+                    </button>
+                </div>
+            )}
+        </div>
+    );
 
     return (
         <>
-            <div className="  border-2 w-full overflow-auto ">
+            <div className="  border-2 w-full my-1 overflow-auto ">
                 <table className="table table-auto border-collapse">
                     <thead className="">
                         <tr className="h-10">
                             <th className="leading-none text-sm" scope="col">
-                                ID
+                                <SortDropdown field="id" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                Username
+                                <SortDropdown field="name" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                Email
+                                <SortDropdown field="email" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                Phone
+                                <SortDropdown field="phone" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                User_type
+                                <SortDropdown field="user_type" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                Language
+                                <SortDropdown field="language" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                is_active
+                                <SortDropdown field="is_active" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                Create_on
+                                <SortDropdown field="created_at" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                Updated_on
+                                <SortDropdown field="updated_at" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
                                 setting
@@ -83,57 +119,7 @@ export default function UserTable({ users, handleUserDelete, handleUserUpdate })
                     </tbody>
                 </table>
             </div >
-            <div className="flex justify-start my-2">
-                <CustomButton
-                    variant="outline"
-                    size="small"
-                    className="rounded-none border px-3  "
-                >
-                    at_first page
-                </CustomButton>
-                <CustomButton
-                    variant="outline"
-                    size="small"
-                    className="rounded-none border px-3  "
-                >
-                    previous
-                </CustomButton>
-                <CustomButton
-                    variant="outline"
-                    size="small"
-                    className="rounded-none border px-3  "
-                >
-                    1
-                </CustomButton>
-                <CustomButton
-                    variant="outline"
-                    size="small"
-                    className="rounded-none border px-3  "
-                >
-                    2
-                </CustomButton>
-                <CustomButton
-                    variant="outline"
-                    size="small"
-                    className="rounded-none border px-3  "
-                >
-                    ...
-                </CustomButton>
-                <CustomButton
-                    variant="outline"
-                    size="small"
-                    className="rounded-none border px-3  "
-                >
-                    last
-                </CustomButton>
-                <CustomButton
-                    variant="outline"
-                    size="small"
-                    className="rounded-none border px-3  "
-                >
-                    next
-                </CustomButton>
-            </div>
+            
         </>
     );
 }
