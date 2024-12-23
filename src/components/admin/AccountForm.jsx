@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CustomButton from "../common/CustomButton";
 import { updateUser } from "../../api/api";
 
-export default function UserRegistrationForm({
+export default function AccountForm({
   isOpen,
   setIsOpen,
   formData,
@@ -21,22 +21,22 @@ export default function UserRegistrationForm({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
             <div className="p-4 border-b">
-              <h2 className="text-lg font-semibold">User Registration</h2>
+              <h2 className="text-lg font-semibold">Account Registration</h2>
             </div>
             <form className="p-4 space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="account_name"
                     className="block text-xs font-medium text-gray-700 mb-1"
                   >
-                    Name
+                    account_name
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="account_name"
+                    name="account_name"
+                    value={formData.account_name}
                     onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -44,16 +44,16 @@ export default function UserRegistrationForm({
                 </div>
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="account_type"
                     className="block text-xs font-medium text-gray-700 mb-1"
                   >
-                    Email
+                    account_type
                   </label>
                   <input
                     type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    id="account_type"
+                    name="account_type"
+                    value={formData.account_type}
                     onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -63,16 +63,16 @@ export default function UserRegistrationForm({
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label
-                    htmlFor="phone"
+                    htmlFor="team_leader_id"
                     className="block text-xs font-medium text-gray-700 mb-1"
                   >
-                    Phone
+                   team_leader_id
                   </label>
                   <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
+                    type="number"
+                    id="team_leader_id"
+                    name="team_leader_id"
+                    value={formData.team_leader_id}
                     onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -83,12 +83,12 @@ export default function UserRegistrationForm({
                     htmlFor="language"
                     className="block text-xs font-medium text-gray-700 mb-1"
                   >
-                    Language
+               language
                   </label>
                   <select
                     id="language"
-                    name="language_preference"
-                    value={formData.language_preference}
+                    name="language"
+                    value={formData.language}
                     onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
@@ -102,45 +102,25 @@ export default function UserRegistrationForm({
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label
-                    htmlFor="userType"
+                    htmlFor="organization_id"
                     className="block text-xs font-medium text-gray-700 mb-1"
                   >
-                    User Type
+                   organization_id
                   </label>
                   <select
-                    id="user_type"
-                    name="user_type"
-                    value={formData.user_type}
+                    id="organization_id"
+                    name="organization_id"
+                    value={formData.organization_id}
                     onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
                   >
                     <option value="">Select</option>
-                    <option value="admin">Admin</option>
-                    <option value="patient">Patient</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
                   </select>
                 </div>
-                {!formData.id ? (
-                  <>
-                    <div>
-                      <label
-                        htmlFor="password"
-                        className="block text-xs font-medium text-gray-700 mb-1"
-                      >
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                      />
-                    </div>
-                  </>
-                ) : null}
+               
               </div>
               <div className="flex justify-end space-x-2 mt-4">
                 <CustomButton

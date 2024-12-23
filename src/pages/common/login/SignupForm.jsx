@@ -9,10 +9,10 @@ export default function SignupForm() {
         name: '',
         email: '',
         phone: '',
-        user_type: 'PATIENT',
+        user_type: 'patient',
         profile_picture: null,
         language_preference: '',
-        status: 'ACTIVE',
+        status: 'active',
         password: '',
     });
 
@@ -35,10 +35,11 @@ export default function SignupForm() {
     };
 
     // Form submit handler
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        // Submit form data to the backend (e.g., via an API call)
-        console.log(user);
+        const response = await signupUser(user);
+        alert(response.data.data.message)
+        console.log(response);
     };
 
     return (
@@ -147,9 +148,9 @@ export default function SignupForm() {
                             onChange={handleChange}
                             className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
                         >
-                            <option value="ACTIVE">Active</option>
-                            <option value="INACTIVE">InActive</option>
-                            <option value="SUSPENDED">Suspended</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">InActive</option>
+                            <option value="suspended">Suspended</option>
                         </select>
                     </div>
 

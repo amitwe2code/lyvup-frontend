@@ -19,7 +19,7 @@ export default function BottomNavbar() {
                 <div className="flex h-full justify-around items-center">
                     <NavItem icon={Home} label="Home" href="#home" />
                     <NavItem icon={Users} label='Users' href='/users' />
-                    <NavItem icon={User} label="Profile" href="#profile" />
+                    <NavItem icon={Users2} label="Accounts" href="/accounts" />
                     <div
                         className="flex flex-col items-center justify-center  text-black hover:text-[#17686d] transition-colors duration-200 cursor-pointer"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}

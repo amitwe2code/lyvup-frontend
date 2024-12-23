@@ -29,5 +29,7 @@
     "fp_Enter your email to reset your password.": "Enter your email to reset your password.",
     "fp_Enter your email": "Enter your email",
     "fp_Reset Password": "Reset Password",
-    "fp_Go to Login": "Go to Login"
+    "fp_Go to Login": "Go to Login",
+    "At_ascending": "Ascending",   //all table sorting
+    "At_descending": "Descending"
 }

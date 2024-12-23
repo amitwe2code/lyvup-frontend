@@ -1,10 +1,10 @@
 import CustomButton from "../common/CustomButton";
-import { Delete, LetterText, Trash, ChevronDown } from "lucide-react";
+import { LetterText, Trash, ChevronDown } from "lucide-react";
 import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export default function UserTable({ users, setOrdering, handleUserDelete, handleUserUpdate }) {
+export default function AccountTable({ accounts, setOrdering, handleAccountDelete, handleAccountUpdate }) {
     const [openDropdown, setOpenDropdown] = useState(null);
 
     const handleSort = (field, direction) => {
@@ -27,13 +27,13 @@ export default function UserTable({ users, setOrdering, handleUserDelete, handle
                         className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
                         onClick={() => handleSort(field, 'asc')}
                     >
-                        Ascending
+                        {t('At_ascending')}
                     </button>
                     <button 
                         className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
                         onClick={() => handleSort(field, 'desc')}
                     >
-                        Descending
+                        {t('At_descending')}   
                     </button>
                 </div>
             )}
@@ -49,24 +49,24 @@ export default function UserTable({ users, setOrdering, handleUserDelete, handle
                             <th className="leading-none text-sm" scope="col">
                                 <SortDropdown field="id" />
                             </th>
+                            {/* <th className="leading-none text-sm" scope="col">
+                                <SortDropdown field="organization_id" />
+                            </th> */}
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="name" />
+                                <SortDropdown field="account_type" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="email" />
+                                <SortDropdown field="account_name" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="phone" />
-                            </th>
-                            <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="user_type" />
+                                <SortDropdown field="team_leader_id" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
                                 <SortDropdown field="language" />
                             </th>
-                            <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="status" />
-                            </th>
+                            {/* <th className="leading-none text-sm" scope="col">
+                                <SortDropdown field="is_active" />
+                            </th> */}
                             {/* <th className="leading-none text-sm" scope="col">
                                 <SortDropdown field="created_at" />
                             </th>
@@ -79,40 +79,41 @@ export default function UserTable({ users, setOrdering, handleUserDelete, handle
                         </tr>
                     </thead>
                     <tbody className="text-sm">
-                        {users.map((user) => (
-                            <tr key={user?.id} className="border-collapse">
-                             <Link to={`/profile/${user?.id}`}> <td>{user?.id}</td></Link>
-                                <td>{user?.name}</td>
-                                <td>{user?.email}</td>
-                                <td>{user?.phone}</td>
-                                <td>{user?.user_type}</td>
-                                <td>{user?.language_preference}</td>
-                                <td>{user?.status}</td>
-                                
-                                {/* <td><DateFormat updatedAt={user?.created_at} /></td>
-                                <td><DateFormat updatedAt={user.updated_at} /></td> */}
+                        {accounts.map((account) => (
+                            <tr key={account?.id} className="border-collapse">
+                             <Link to={`/account/${account?.id}`}> <td>{account?.id}</td></Link>
+                                {/* <td>{account?.organization_id}</td> */}
+                                <td>{account?.account_type}</td>
+                                <td>{account?.account_name}</td>
+                                <td>{account?.team_leader_id}</td>
+                                <td>{account?.language}</td>
+                                {/* <td>{account?.is_active}</td> */}
+                               
+                                {/* <td><DateFormat updatedAt={account?.created_at} /></td>
+                                <td><DateFormat updatedAt={account.updated_at} /></td> */}
                                 <td className="flex h-auto w-auto ">
                                 <div className="inline-flex" role="group">
                                     <CustomButton
-                                        id={user.id}
+                                        id={account.id}
                                         variant="outline"
                                         size="small"
-                                        onClick={() => handleUserUpdate(user)}
+                                        onClick={() => handleAccountUpdate(account)}
                                         className="border   border-r-0 rounded-none "
                                         >
                                         {" "}
                                         <LetterText className="w-4 h-4 m-0" />
                                     </CustomButton>
                                     <CustomButton
-                                        id={user.id}
+                                        id={account.id}
                                         variant="outline"
                                         size="small"
-                                        onClick={(e) => handleUserDelete(e)}
+                                        onClick={(e) => handleAccountDelete(e)}
                                         className="border border-r-0 rounded-none  "
                                         >
                                         {" "}
                                         <Trash className="w-4 h-4 m-0" />
                                     </CustomButton>
+                                  
                                         </div>
                                 </td>
                             </tr>

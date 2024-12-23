@@ -140,3 +140,74 @@ export const deleteUser = async (accessToken, id) => {
             return error
       }
 }
+
+
+//account api
+
+export const addAccount = async (accessToken, form) => {
+      try {
+            const response = await axios.post(`${API_URL}/account/create/`, form, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const getSingleAccountDetail = async (accessToken, id) => {
+      try {
+            const response = await axios.get(`${API_URL}/account/accounts/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const getAllAccountDetail = async (accessToken, search, currentPage, pageSize, ordering) => {
+      try {
+            const response = await axios.get(`${API_URL}/account/accounts/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const updateAccount = async (accessToken, form, id) => {
+      console.log('in update account',form,id)
+      try {
+            const response = await axios.put(`${API_URL}/account/accounts/${id}/`, form, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const deleteAccount = async (accessToken, id) => {
+      console.log('in delete account',id)
+      try {
+            const response = await axios.delete(`${API_URL}/account/accounts/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            console.log('error=>', error)
+            throw error;
+      }
+}

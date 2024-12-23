@@ -9,6 +9,8 @@ import NotFound from './pages/common/NotFound'
 import SignupForm from './pages/common/login/SignupForm'
 import Logout from './pages/common/login/Logout'
 import ResetPassword from './pages/common/login/ResetPassword'
+import Account from './pages/admin/Account'
+import AccountDetail from './components/admin/AccountDetail'
 
 // import UserRegistrationForm from './components/admin/UserRegistrationForm'
 // import User from './components/other/User'
@@ -51,6 +53,8 @@ export default function App() {
                                 <Route path='/dashboard' element={<Dashboard />} />
                                 <Route path='/users' element={<UserList />} />
                                 <Route path='/profile/:id' element={<Profile />} />
+                                <Route path='/accounts' element={<Account />} />
+                                <Route path='/account/:id' element={<AccountDetail />} />
                             </>
                         ) : (<>
                             <Route path='/' element={<LoginForm />} />
