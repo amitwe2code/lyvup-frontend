@@ -14,16 +14,16 @@ export default function AccountDetail() {
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
   const { id } = useParams();
-  console.log('access token=>',accessToken)
+  console.log("access token=>", accessToken);
   //open updateform and set formdata
   const handleEditFormOpen = () => {
     setFormData({
-        id: account.id,
-        organization_id: account.organization_id,
-        account_name: account.account_name,
-        account_type: account.account_type,
-        team_leader_id: account.team_leader_id,
-        language: account.language,
+      id: account.id,
+      organization_id: account.organization_id,
+      account_name: account.account_name,
+      account_type: account.account_type,
+      team_leader_id: account.team_leader_id,
+      language: account.language,
     });
     setIsOpen(true);
   };
@@ -57,85 +57,87 @@ export default function AccountDetail() {
       {account ? (
         <>
           <div className="mt-14 mb-14 h-[calc(100vh-112px)] overflow-auto w-full border p-3 ">
-            <div className="text-right">
-              <CustomButton
-                onClick={handleEditFormOpen}
-                className="bg-[#039a77]"
-              >
-                Edit
-              </CustomButton>
+            <div className="flex justify-between mb-4 ">
+              <h1 className="text-2xl md:px-10 font-bold">Account Details</h1>
+              <div className="text-right">
+                <CustomButton
+                  onClick={handleEditFormOpen}
+                  className="bg-[#039a77]"
+                >
+                  Edit
+                </CustomButton>
+              </div>
             </div>
-            <div className="md:my-10">
-                <h1 className="text-2xl md:px-10 font-bold">Account Details</h1>
-            </div>
-            <div className="my-3">
-
-            <div className="grid md:grid-cols-2  md:mb-6 gap-4 md:gap-10">
+            <div className="my-3 flex flex-col  justify-center border ">
+              <div className="grid md:grid-cols-2   md:mb-6 gap-4 md:gap-10">
                 <div className="flex  md:ml-10 space-x-3">
-                 <span className="text-lg text-[#039a77] text-bold">Account Name :</span>
-                  <p className="text-lg text-gray-700">
+                  <span className="text-lg text-[#039a77] text-bold">
+                    Account Name :
+                  </span>
+                  <p className="text-lg text-gray-700"> 
                     {account.account_name}
                   </p>
                 </div>
                 <div className="flex items-center space-x-3">
-                <span className="text-lg text-[#039a77] text-bold">Account type :</span>
-                  <p className="text-gray-700">
-                    {account.account_type}
-                  </p>
+                  <span className="text-lg text-[#039a77] text-bold">
+                    Account type :
+                  </span>
+                  <p className="text-gray-700">{account.account_type}</p>
                 </div>
-            </div>
-            
-            <div className="grid md:grid-cols-2  mb-6 gap-4 md:gap-10">
+              </div>
+
+              <div className="grid md:grid-cols-2  mb-6 gap-4 md:gap-10">
                 <div className="flex  md:ml-10 space-x-3">
-                 <span className="text-lg text-[#039a77] text-bold">Organization Id :</span>
-                  <p className="text-gray-700">
-                    {account.organization_id}
-                  </p>
+                  <span className="text-lg text-[#039a77] text-bold">
+                    Organization Id :
+                  </span>
+                  <p className="text-gray-700">{account.organization_id}</p>
                 </div>
                 <div className="flex space-x-3">
-                <span className="text-lg text-[#039a77] text-bold">Language :</span>
-                  <p className="text-gray-700">
-                    {account.language}
-                  </p>
+                  <span className="text-lg text-[#039a77] text-bold">
+                    Language :
+                  </span>
+                  <p className="text-gray-700">{account.language}</p>
                 </div>
-            </div>
-            <div className="grid md:grid-cols-2  md:mb-6 gap-4 md:gap-10">
+              </div>
+              <div className="grid md:grid-cols-2  md:mb-6 gap-4 md:gap-10">
                 <div className="flex  md:ml-10 space-x-3">
-                 <span className="text-lg text-[#039a77] text-bold">Team Leader Id :</span>
+                  <span className="text-lg text-[#039a77] text-bold">
+                    Team Leader Id :
+                  </span>
                   <p className="text-lg text-gray-700">
                     {account.team_leader_id}
                   </p>
                 </div>
                 <div className="flex  space-x-3">
-                 <span className="text-lg text-[#039a77] text-bold">Created At :</span>
+                  <span className="text-lg text-[#039a77] text-bold">
+                    Created At :
+                  </span>
                   <p className="text-gray-700">
                     {<DateFormat updatedAt={account.created_at} />}
                   </p>
                 </div>
-            </div>
-                
-            <div className="grid md:grid-cols-2  mb-6 gap-4 md:gap-10">
-               
+              </div>
+
+              <div className="grid md:grid-cols-2  mb-6 gap-4 md:gap-10">
                 <div className="flex md:ml-10 space-x-3">
-                <span className="text-lg text-[#039a77] text-bold">Updated At :</span>
+                  <span className="text-lg text-[#039a77] text-bold">
+                    Updated At :
+                  </span>
                   <p className="text-gray-700">
                     {<DateFormat updatedAt={account.updated_at} />}
                   </p>
                 </div>
+              </div>
             </div>
-              
-        </div>
-
-          
-        
           </div>
-            <AccountForm
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              formData={formData}
-              setFormData={setFormData}
-              handleFormSubmit={handleAccountUpdate}
-            />
+          <AccountForm
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            formData={formData}
+            setFormData={setFormData}
+            handleFormSubmit={handleAccountUpdate}
+          />
         </>
       ) : (
         <>
@@ -143,6 +145,5 @@ export default function AccountDetail() {
         </>
       )}
     </div>
-  
   );
 }

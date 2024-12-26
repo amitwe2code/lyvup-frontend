@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../../../components/common/languageSwitcher/LanguageSwitcher';
+import { signupUser } from '../../../api/api';
 
 export default function SignupForm() {
     const { t } = useTranslation();
@@ -110,8 +111,8 @@ export default function SignupForm() {
                             onChange={handleChange}
                             className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
                         >
-                            <option value="PATIENT">{t("su_Patient")}</option>
-                            <option value="TEAMLEAD">{t("su_Admin")}</option>
+                            <option value="patient">{t("su_Patient")}</option>
+                            <option value="admin">{t("su_Admin")}</option>
                         </select>
                     </div>
 

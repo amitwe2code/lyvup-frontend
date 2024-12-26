@@ -6,8 +6,13 @@
   box-sizing: border-box;
   padding: 0px;
   margin: 0px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'poppins', sans-serif;
 }
 
 
-/* BUTTON */
+
+/*  select button arrow  */
+.css-1xc3v61-indicatorContainer{
+  color: #039a77 !important;
+
+}

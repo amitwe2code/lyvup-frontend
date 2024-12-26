@@ -4,13 +4,19 @@ const API_URL = 'http://127.0.0.1:8000';
 
 
 export const loginUser = async (email, password) => {
-      const response = await axios.post(`${API_URL}/login/`, { email, password });
-      return response;
+      try {
+            const response = await axios.post(`${API_URL}/login/`, { email, password });
+            return response;
+      } catch (error) {
+            throw error;
+      }
 }
 
-export const signupUser = async () => {
-      const response = await axios.post(`${API_URL}/user/`, {})
+export const signupUser = async (user) => {
+      const response = await axios.post(`${API_URL}/signup/`, user)
+      console.log('response',response);
       return response;
+
 }
 
 export const forgetPassword =async (email)=>{
@@ -208,6 +214,37 @@ export const deleteAccount = async (accessToken, id) => {
             return response;
       } catch (error) {
             console.log('error=>', error)
+            throw error;
+      }
+}
+
+//user account api
+export const getAccountUsers = async (id) => {
+      try {
+            const response = await axios.get(`${API_URL}/useraccount/account/${id}/`);
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const RemoveUserAccount = async (id) => {
+      try {
+            const response = await axios.delete(`${API_URL}/useraccount/delete/${id}/`);
+            console.log('response in delete user account=>',response);
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+export const AddUserAccount = async (accountId,userIds) => {
+      try {
+            const response = await axios.post(`${API_URL}/useraccount/create/`,{
+                  users:userIds,
+                  account:accountId
+            });
+            return response;
+      } catch (error) {
             throw error;
       }
 }

@@ -11,6 +11,8 @@ import Logout from './pages/common/login/Logout'
 import ResetPassword from './pages/common/login/ResetPassword'
 import Account from './pages/admin/Account'
 import AccountDetail from './components/admin/AccountDetail'
+import Activity from './pages/admin/Activity'
+import ActivityDetail from './components/admin/ActivityDetail'
 
 // import UserRegistrationForm from './components/admin/UserRegistrationForm'
 // import User from './components/other/User'
@@ -45,7 +47,9 @@ export default function App() {
                             <>
                                 <Route path='/profile/:id' element={<Profile />} />
                             </>
-                        ) : (<></>)}
+                        ) : (<>
+                            {/* <Route path='/profile/:id' element={<Profile />} /> */}
+                        </>)}
 
 
                         {user?.user_type === 'superadmin' || user?.user_type === 'superadmin' && token !== "" && token !== null && token !== undefined ? (
@@ -55,6 +59,8 @@ export default function App() {
                                 <Route path='/profile/:id' element={<Profile />} />
                                 <Route path='/accounts' element={<Account />} />
                                 <Route path='/account/:id' element={<AccountDetail />} />
+                                <Route path='/activity' element={<Activity/>}/>
+                                <Route path='/activity/detail'element={<ActivityDetail/>}/>
                             </>
                         ) : (<>
                             <Route path='/' element={<LoginForm />} />

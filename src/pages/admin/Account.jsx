@@ -21,7 +21,7 @@ export default function Account() {
   const [accounts, setAccounts] = useState([]);
   const [isBoolean, setIsBoolean] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(10);
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState("");
   const [ordering, setOrdering] = useState("");
