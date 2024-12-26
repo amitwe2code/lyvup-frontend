@@ -58,7 +58,7 @@ export default function AccountDetail() {
         <>
           <div className="mt-14 mb-14 h-[calc(100vh-112px)] overflow-auto w-full border p-3 ">
             <div className="flex justify-between mb-4 ">
-              <h1 className="text-2xl md:px-10 font-bold">Account Details</h1>
+              <h1 className="text-2xl  font-bold">Account Details</h1>
               <div className="text-right">
                 <CustomButton
                   onClick={handleEditFormOpen}
@@ -68,69 +68,34 @@ export default function AccountDetail() {
                 </CustomButton>
               </div>
             </div>
-            <div className="my-3 flex flex-col  justify-center border ">
-              <div className="grid md:grid-cols-2   md:mb-6 gap-4 md:gap-10">
-                <div className="flex  md:ml-10 space-x-3">
-                  <span className="text-lg text-[#039a77] text-bold">
-                    Account Name :
-                  </span>
-                  <p className="text-lg text-gray-700"> 
-                    {account.account_name}
-                  </p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-lg text-[#039a77] text-bold">
-                    Account type :
-                  </span>
-                  <p className="text-gray-700">{account.account_type}</p>
-                </div>
-              </div>
-
+            <div className="my-3 flex flex-col  justify-center  ">
               <div className="grid md:grid-cols-2  mb-6 gap-4 md:gap-10">
-                <div className="flex  md:ml-10 space-x-3">
-                  <span className="text-lg text-[#039a77] text-bold">
-                    Organization Id :
-                  </span>
-                  <p className="text-gray-700">{account.organization_id}</p>
+                <div className="flex items-center  md:ml-10 space-x-3">
+                  <span className=" text-[#039a77] flex-shrink-0">Account Name :</span>
+                  <p className="text-gray-700">{account.account_name}</p>
                 </div>
-                <div className="flex space-x-3">
-                  <span className="text-lg text-[#039a77] text-bold">
-                    Language :
-                  </span>
+                <div className="flex items-center md:ml-10 space-x-3">
+                  <span className=" text-[#039a77] flex-shrink-0" >Account Type</span>
+                  <p className="text-gray-700 bg-gray-200">{account.account_type}</p>
+                </div>
+                <div className="flex items-center md:ml-10 space-x-3">
+                  <span className=" text-[#039a77] flex-shrink-0">Language</span>
                   <p className="text-gray-700">{account.language}</p>
                 </div>
-              </div>
-              <div className="grid md:grid-cols-2  md:mb-6 gap-4 md:gap-10">
-                <div className="flex  md:ml-10 space-x-3">
-                  <span className="text-lg text-[#039a77] text-bold">
-                    Team Leader Id :
-                  </span>
-                  <p className="text-lg text-gray-700">
-                    {account.team_leader_id}
-                  </p>
+                <div className="flex items-center md:ml-10  space-x-3">
+                  <span className=" text-[#039a77] flex-shrink-0">Organization ID</span>
+                  <p className="text-gray-700">{account.organization_id}</p>
                 </div>
-                <div className="flex  space-x-3">
-                  <span className="text-lg text-[#039a77] text-bold">
-                    Created At :
-                  </span>
-                  <p className="text-gray-700">
-                    {<DateFormat updatedAt={account.created_at} />}
-                  </p>
+                <div className="flex items-center md:ml-10 space-x-3">
+                  <span className=" text-[#039a77] flex-shrink-0">Team leader ID</span>
+                  <p className="text-gray-700">{account.team_leader_id}</p>
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2  mb-6 gap-4 md:gap-10">
-                <div className="flex md:ml-10 space-x-3">
-                  <span className="text-lg text-[#039a77] text-bold">
-                    Updated At :
-                  </span>
-                  <p className="text-gray-700">
-                    {<DateFormat updatedAt={account.updated_at} />}
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
+
+
           <AccountForm
             isOpen={isOpen}
             setIsOpen={setIsOpen}
@@ -143,7 +108,8 @@ export default function AccountDetail() {
         <>
           <h1 className="mt-16">loading....</h1>
         </>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }

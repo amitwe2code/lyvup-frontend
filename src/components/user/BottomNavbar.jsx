@@ -16,7 +16,7 @@ export default function BottomNavbar() {
     return (
         <div>
             <nav className=" fixed h-14 bottom-0 left-0 right-0 bg-[#e8e8ed] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] py-2">
-                <div className="flex h-full font-semibold justify-around items-center">
+                <div className="flex h-full justify-around items-center">
                     <NavItem icon={Users} label='Users' href='/users' />
                     <NavItem icon={Users2} label="Accounts" href="/accounts" />
                     <NavItem icon={ActivityIcon} label="Activity" href="/activity" />
@@ -42,7 +42,7 @@ export default function BottomNavbar() {
                         className="absolute bottom-0 left-0 right-0 bg-white rounded-t-xl p-6 space-y-4"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h2 className="text-xl font-bold mb-4">Menu</h2>
+                        <h2 className="text-xl  mb-4">Menu</h2>
                         <div className="grid grid-cols-3 gap-4">
                             <NavItem icon={Home} label="Home" href="#home" />
                             <NavItem icon={Users} label="Profile" href="#profile" />
