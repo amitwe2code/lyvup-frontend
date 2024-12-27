@@ -39,7 +39,7 @@ export default function SignupForm() {
     const handleSubmit = async(e) => {
         e.preventDefault();
         const response = await signupUser(user);
-        alert(response.data.data.message)
+        alert(response.data.message)
         console.log(response);
     };
 
