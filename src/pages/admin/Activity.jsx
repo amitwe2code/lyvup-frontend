@@ -46,7 +46,6 @@ export default function Activity() {
   const handleUserDelete = async (e) => {
     const response = await deleteUser(accessToken, e.target.id);
     console.log("res=>", response);
-    alert("delete user with id ", e.target.id);
   };
 
   //user Update apiFunction Call

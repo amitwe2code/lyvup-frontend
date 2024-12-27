@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../../../components/common/languageSwitcher/LanguageSwitcher';
 import { signupUser } from '../../../api/api';
+import { Navigate } from 'react-router';
 
 export default function SignupForm() {
     const { t } = useTranslation();
@@ -16,6 +17,7 @@ export default function SignupForm() {
         status: 'active',
         password: '',
     });
+    const navigate=useNavigate();
 
     // Handle input changes
     const handleChange = (e) => {
@@ -39,8 +41,8 @@ export default function SignupForm() {
     const handleSubmit = async(e) => {
         e.preventDefault();
         const response = await signupUser(user);
-        alert(response.data.message)
-        console.log(response);
+        navigate('/')
+     
     };
 
     return (

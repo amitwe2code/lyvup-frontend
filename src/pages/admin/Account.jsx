@@ -59,7 +59,7 @@ export default function Account() {
   const handleAccountDelete = async (e) => {
     const response = await deleteAccount(accessToken, e.currentTarget.id);
     console.log("res=>", response);
-    alert("delete user with id ", e.target.id);
+    
     setIsBoolean(true);
   };
 
@@ -80,7 +80,7 @@ export default function Account() {
       console.log("passed data=>", formData);
       const response = await updateAccount(accessToken, formData, e.target.id);
       console.log("response=", response);
-      alert("user update success");
+   
     }
     setIsBoolean(true);
     setIsOpen(false);

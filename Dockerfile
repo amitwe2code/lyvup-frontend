@@ -4,6 +4,6 @@ WORKDIR /frontend
 
 COPY . .
 RUN npm install
-EXPOSE 8080
+EXPOSE 5050
 
 CMD ["npm","run","dev"]

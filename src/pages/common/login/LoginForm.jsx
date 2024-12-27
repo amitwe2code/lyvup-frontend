@@ -54,7 +54,6 @@ export default function LoginForm() {
       setloading(true);
       try {
         const response = await loginUser(email, password);
-        console.log("response =>", response);
         const accessToken = response.data.data.access_token;
         const refreshToken = response.data.data.refresh_token;
         const user = response.data.data.user
@@ -66,9 +65,9 @@ export default function LoginForm() {
         setEmail("");
         setPassword("");
         navigate(`/profile/${user?.id}`);
+        window.location.reload()
       } catch (error) {
         console.error("Login failed:", error);
-        alert(error.response.data.message);
       } finally {
         setloading(false);
       }

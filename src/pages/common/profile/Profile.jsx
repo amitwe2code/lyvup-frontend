@@ -33,7 +33,7 @@ export default function Profile() {
   const handleUserUpdate = async (e) => {
     e.preventDefault();
     const response = await updateUser(accessToken, formData, id);
-    alert("user update success");
+    
     setIsOpen(false);
     setBoolean(true);
   };
@@ -68,13 +68,14 @@ export default function Profile() {
             </div>
             <div className="grid md:grid-cols-2 gap-4 md:gap-10">
               {/* Left Column - Profile Photo */}
-              <div className="md:col-span-1 flex items-center md:ml-10">
+              <div className="md:col-span-1  flex items-center md:ml-10">
                 <img
-                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  className="w-48 h-48    rounded-full object-cover"
+                  src={user?.profile_picture}
+                  className="w-48 h-48  bg-gray-100 p-4  rounded-full object-cover"
+                  alt="img.jpg"
                 />
               </div>
-              <div className="flex flex-col justify-center">
+              <div className="flex flex-col  justify-center">
                 <h2 className="text-2xl md:text-4xl text-[#039a77] capitalize  sm:text-left font-bold">
                   {user?.name}
                 </h2>
@@ -107,20 +108,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2  mb-6 gap-4 md:gap-10">
-                <div className="flex items-center md:ml-10 space-x-3">
-                  <Phone className=" text-[#039a77] flex-shrink-0" />
-                  <p className="text-gray-700">
-                    {<DateFormat updatedAt={user.created_at} />}
-                  </p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin className=" text-[#039a77] flex-shrink-0" />
-                  <p className="text-gray-700">
-                    {<DateFormat updatedAt={user.updated_at} />}
-                  </p>
-                </div>
-              </div>
+             
             </div>
             <UserRegistrationForm
               isOpen={isOpen}

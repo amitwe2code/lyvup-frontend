@@ -9,6 +9,7 @@ import CustomButton from "../../components/common/CustomButton";
 import CustomInput from "../../components/common/CustomInput";
 import UserRegistrationForm from "../../components/admin/UserRegistrationForm";
 import Pagination from "../../components/common/Pagination";
+import { useNavigate } from 'react-router-dom';
 
 export default function UserList() {
   // state
@@ -19,12 +20,15 @@ export default function UserList() {
   const [ordering, setOrdering] = useState("name");
   const [pageSize,setPageSize]=useState(10)
   const [currentPage,setCurrentPage]=useState(1)
+  const [loginUser, setLoginUser] = useState(null);
   // const nPages = Math.ceil(count / pageSize);
   const [users, setUsers] = useState([]);
   const [isBoolean, setIsBoolean] = useState(true);
   const [render, setRender] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,16 +37,23 @@ export default function UserList() {
     user_type: "",
     language_preference: "",
   });
-  console.log('pageSize=>',pageSize)
+  
   //user list get/reterview fuction call
   async function getUserList(accessToken) {
-    const response = await getUsers(accessToken, search, userType,currentPage,pageSize,ordering);
-    console.log('res=>', response)
-    setUsers(response.data.data.results);
-    setCount(response.data.data.pagination.count)
-    setTotalPage(response.data.data.pagination.total_pages)
-    // setPageSize(response.data.data.pagination.page_size)
-    setCurrentPage(response.data.data.pagination.current_page)
+    try {
+      const response = await getUsers(accessToken, search, userType, currentPage, pageSize, ordering);
+      let filteredUsers = response.data.data.results;
+      
+      // अगर logged in user admin है तो superadmin को filter out करें
+     
+
+      setUsers(filteredUsers);
+      setCount(response.data.data.pagination.count);
+      setTotalPage(response.data.data.pagination.total_pages);
+      setCurrentPage(response.data.data.pagination.current_page);
+    } catch (error) {
+      
+    }
   }
 
   //user delete apiFunction Call
@@ -69,8 +80,7 @@ export default function UserList() {
   //newUser add apifunction Call
   const handleUserAdd = async (e) => {
     e.preventDefault();
-    console.log("id=", e.target.id);
-    console.log("user id is =>", e.target.id);
+    
     if (
       e.target.id == "" ||
       e.target.id == "undefined" ||
@@ -78,8 +88,7 @@ export default function UserList() {
     ) {
       const response = await addUser(accessToken, formData);
       console.log("response=", response);
-      alert("user add success");
-      setFormData("");
+      
     } else {
       console.log("passed data=>", formData);
       const response = await updateUser(accessToken, formData, e.target.id);
@@ -92,9 +101,32 @@ export default function UserList() {
 
   //useEffect
   useEffect(() => {
+    const userdata = JSON.parse(localStorage.getItem('user'));
+    if (userdata) {
+      setLoginUser(userdata);
+      // अगर user patient है तो homepage पर redirect करें
+      if (userdata.user_type === 'patient') {
+        navigate('/');
+        return;
+      }
+      // अगर admin है तो userType को patient पर set करें
+      if (userdata.user_type === 'admin') {
+        setUserType('patient');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (loginUser?.user_type === '') {
+      setUserType('user');
+    }
     getUserList(accessToken);
     setIsBoolean(false);
-  }, [isBoolean, search, userType,currentPage,pageSize,ordering]);
+  }, [isBoolean, search, userType, currentPage, pageSize, ordering]);
+
+  if (!loginUser || loginUser.user_type === 'patient') {
+    return null; // या loading indicator
+  }
 
   return (
     <div className="flex">
@@ -131,16 +163,19 @@ export default function UserList() {
           </div>
         </div>
 
-
+        
         <div className=" flex justify-start my-2 items-center">
             <div className="inline-flex rounded-md" role="group">
+              {(loginUser?.user_type === 'superadmin') && (
                 <CustomButton 
-                    className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === 'admin' ? 'bg-[#039a77] text-white' : ''}`} 
-                    variant="outline" 
-                    onClick={() => setUserType("admin")}
+                  className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === 'admin' ? 'bg-[#039a77] text-white' : ''}`} 
+                  variant="outline" 
+                  onClick={() => setUserType("admin")}
                 >
-                    admin
+                  admin
                 </CustomButton>
+              )}
+               
                 <CustomButton 
                     className={`sm:w-40 px-10 capitalize rounded-none ${userType === 'patient' ? 'bg-[#039a77] text-white' : ''}`} 
                     variant="outline" 
