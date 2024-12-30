@@ -56,8 +56,8 @@ export default function LoginForm() {
         console.log("response =>", response);
         const accessToken = response.data.data.access_token;
         const refreshToken = response.data.data.refresh_token;
-        const user = response.data.data.user
-        localStorage.setItem('user', JSON.stringify(user));
+        const user = response.data.data.user;
+        localStorage.setItem("user", JSON.stringify(user));
         dispatch(setToken({ accessToken, refreshToken, user }));
         alert("login successful");
         setEmail("");
