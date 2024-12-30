@@ -1,77 +1,78 @@
 import { useState } from "react";
-import {  loginUser } from "../../../api/api";
+import { loginUser } from "../../../api/api";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../../features/token/tokenSlice";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import LanguageSwitcher from "../../../components/common/languageSwitcher/LanguageSwitcher";
+import useValidation from "../../../components/common/UseValidation";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
   const [loading, setloading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const initialFormState = {
+    email: "",
+    password: "",
+  }
 
-  const validators = () => {
-    const formErrors = {
-      email: "",
-      password: "",
-    };
-
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!email) {
-      formErrors.email = "Email is required";
-      console.log("error in email");
-    } else if (!emailRegex.test(email)) {
-      formErrors.email = "Please enter a valid email address";
-      console.log("error in email regex");
-    }
-
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!password) {
-      formErrors.password = "Password is required";
-      console.log("error in password");
-    } else if (!passwordRegex.test(password)) {
-      formErrors.password =
-        "Password must be at least 8 characters, with one uppercase, one lowercase, one number, and one special character";
-      console.log("error in password regex");
-    }
-    setErrors(formErrors);
-    return formErrors.email === "" && formErrors.password === "";
+  const validators = {
+    email: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "email is required"
+          : !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
+            ? "Please enter a valid email address"
+            : null,
+    ],
+    password: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "password is required"
+          : /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
+            ? "at least one speacial character one number and one upper and lower case letter"
+            : null,
+    ],
   };
-  // FUNTION FOR LOGIN 
+  /*----LOGIN ONCHANGE FuNCTION----*/
+  const { state, setState, onInputChange, errors, setErrors, validate } = useValidation(initialFormState, validators);
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    console.log("email=", email);
+    console.log("email=", state);
     console.log("password=", password);
-    setEmail("");
-    setPassword("");
-    if (validators()) {
+
+
+    if (validate()) {
+      console.log("validation error =>", validate())
       setloading(true);
       try {
-        const response = await loginUser(email, password);
+        const response = await loginUser(state.email, state.password);
         console.log("response =>", response);
         const accessToken = response.data.data.access_token;
         const refreshToken = response.data.data.refresh_token;
         const user = response.data.data.user
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('refreshToken', refreshToken);
         dispatch(setToken({ accessToken, refreshToken, user }));
         alert("login successful");
         setEmail("");
         setPassword("");
+        // setErrors({ ...errors, password: ["invalid crendentials"] })
         navigate(`/profile/${user?.id}`);
       } catch (error) {
         console.error("Login failed:", error);
-        alert(error.response.data.message);
       } finally {
         setloading(false);
       }
+    }
+    else {
+      console.log("validation error =>", validate())
     }
   };
 
@@ -92,14 +93,22 @@ export default function LoginForm() {
               type="email"
               id="email"
               name="email"
-              className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
+              className={` border ${errors.email ? " border-danger" : ""} rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
               placeholder={t("lg_Enter your username or email")}
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
+              value={state.email}
+              onChange={onInputChange}
             />
-            {errors?.email && (                                     
+            {/* {errors?.email && (                                     
               <p className="text-red-500 text-sm">{errors.email}</p>
+            )} */}
+            {/*----ERROR MESSAGE FOR email----*/}
+            {errors.email && (
+              <span
+                key={errors.email}
+                className="text-danger font-size-3"
+              >
+                {errors.email}
+              </span>
             )}
           </div>
           <div className="mb-4">
@@ -107,15 +116,24 @@ export default function LoginForm() {
               type="password"
               id="password"
               name="password"
-              className="border rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]"
+              className={` border ${errors.email ? " border-danger" : ""} rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
               placeholder={t("lg_Enter your password")}
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              // required
+              value={state.password}
+              onChange={onInputChange}
             />
-            {errors?.password && (
-              <p className="text-red-500 text-sm">{errors.password}</p>
+            {/*----ERROR MESSAGE FOR password----*/}
+            {errors.password && (
+              <span
+                key={errors.password}
+                className="text-danger font-size-3"
+              >
+                {errors.password}
+              </span>
             )}
+            {/* {errors?.password && (
+              <p className="text-red-500 text-sm">{errors.password}</p>
+            )} */}
           </div>
           <button
             type="submit"
@@ -143,7 +161,7 @@ export default function LoginForm() {
             />
             <label htmlFor="rememberMe">Remember Me</label>
             <br></br> */}
-            <LanguageSwitcher/>
+            <LanguageSwitcher />
           </div>
         </div>
       </div>

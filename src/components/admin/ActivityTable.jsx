@@ -90,7 +90,7 @@ export default function ActivityTable({ users, setOrdering, handleUserDelete, ha
                     <tbody className="text-sm">
                         {users.map((user) => (
                             <tr key={user?.id} className="border-collapse">
-                                <Link to={`/profile/${user?.id}`}> <td>1</td></Link>
+                                <td><Link to={`/profile/${user?.id}`}>1</Link></td>
                                 <td>Gll master test</td>
                                 <td>survey</td>
                                 <td>GLI</td>

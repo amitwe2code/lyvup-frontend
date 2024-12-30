@@ -4,6 +4,7 @@ import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import AccountSidebar from "./AccountSidebar";
+import Loader from "../common/Loader";
 
 export default function AccountTable({
   accounts,
@@ -81,7 +82,7 @@ export default function AccountTable({
                             <th className="leading-none text-sm" scope="col">
                                 <SortDropdown field="updated_at" />
                             </th> */}
-           
+
               <th className="leading-none text-sm" scope="col">
                 setting
               </th>
@@ -90,10 +91,10 @@ export default function AccountTable({
           <tbody className="text-sm">
             {accounts.map((account) => (
               <tr key={account?.id} className="border-collapse">
-                <Link to={`/account/${account?.id}`}>
-                  {" "}
-                  <td>{account?.id}</td>
-                </Link>
+
+                <td> <Link to={`/account/${account?.id}`}>
+                  {" "}   {account?.id} </Link>    </td>
+
                 {/* <td>{account?.organization_id}</td> */}
                 <td>{account?.account_type}</td>
                 <td>{account?.account_name}</td>
@@ -103,7 +104,7 @@ export default function AccountTable({
 
                 {/* <td><DateFormat updatedAt={account?.created_at} /></td>
                                 <td><DateFormat updatedAt={account.updated_at} /></td> */}
-                
+
                 <td className="flex h-auto w-auto ">
                   <div className="inline-flex" role="group">
                     <CustomButton
@@ -127,22 +128,23 @@ export default function AccountTable({
                       <Trash className="w-4 h-4 m-0" />
                     </CustomButton>
                     <CustomButton
-                    variant="outline"
-                    size="small"
-                    onClick={() => {
-                      setSelectedAccount(account);
-                      setIsSidebarOpen(true);
-                    }}
-                    className="border rounded-none"
-                  >
-                    <Users className="w-4 h-4 m-0" />
-                  </CustomButton>
+                      variant="outline"
+                      size="small"
+                      onClick={() => {
+                        setSelectedAccount(account);
+                        setIsSidebarOpen(true);
+                      }}
+                      className="border rounded-none"
+                    >
+                      <Users className="w-4 h-4 m-0" />
+                    </CustomButton>
                   </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
       </div>
 
       <AccountSidebar

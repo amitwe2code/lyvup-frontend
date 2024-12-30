@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import BottomNavbar from "../../components/user/BottomNavbar";
 import TopBar from "../../components/admin/TobBar";
 import { useSelector } from "react-redux";
-import { addUser, deleteUser, getUsers, updateUser } from "../../api/api";
+import { addUser, deleteUser, getActivity, getUsers, updateUser } from "../../api/api";
 import CustomButton from "../../components/common/CustomButton";
 import CustomInput from "../../components/common/CustomInput";
 import Pagination from "../../components/common/Pagination";
@@ -24,34 +24,35 @@ export default function Activity() {
   const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(1)
   // const nPages = Math.ceil(count / pageSize);
-  const [users, setUsers] = useState([]);
+  const [activity, setActivity] = useState([]);
   const [isBoolean, setIsBoolean] = useState(true);
-  const [render, setRender] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
   const [formData, setFormData] = useState({
 
   });
   console.log('pageSize=>', pageSize)
-  //user list get/reterview fuction call
-  async function getUserList(accessToken) {
-    const response = await getUsers(accessToken, search, userType, currentPage, pageSize, ordering);
+
+
+  //Activity list get/reterview fuction call
+  async function getActivityList(accessToken) {
+    const response = await getActivity(accessToken, search, currentPage, pageSize, ordering);
     console.log('res=>', response)
-    setUsers(response.data.data.results);
+    setActivity(response.data.data.results);
     setCount(response.data.data.pagination.count)
     setTotalPage(response.data.data.pagination.total_pages)
-    // setPageSize(response.data.data.pagination.page_size)
+    setPageSize(response.data.data.pagination.page_size)
     setCurrentPage(response.data.data.pagination.current_page)
   }
 
-  //user delete apiFunction Call
+  //Activity delete apiFunction Call
   const handleUserDelete = async (e) => {
-    const response = await deleteUser(accessToken, e.target.id);
+    const response = await deleteActivity(accessToken, e.target.id);
     console.log("res=>", response);
-    alert("delete user with id ", e.target.id);
+
   };
 
-  //user Update apiFunction Call
+  //Activity Update apiFunction Call
   const handleUserUpdate = async (user) => {
     setFormData({
       id: user.id,
@@ -60,12 +61,11 @@ export default function Activity() {
       phone: user.phone,
       user_type: user.user_type,
       language_preference: user.language_preference,
-
     });
     setIsOpen(true);
   };
 
-  //newUser add apifunction Call
+  //newActivity add apifunction Call
   const handleUserAdd = async (e) => {
     e.preventDefault();
     console.log("id=", e.target.id);
@@ -96,7 +96,7 @@ export default function Activity() {
 
   //useEffect
   useEffect(() => {
-    getUserList(accessToken);
+    getActivityList(accessToken);
     setIsBoolean(false);
   }, [isBoolean, search, userType, currentPage, pageSize, ordering]);
 

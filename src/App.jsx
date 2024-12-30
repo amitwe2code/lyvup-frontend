@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useState } from 'react'
+import { ToastContainer } from 'react-toastify';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import LoginForm from './pages/common/login/LoginForm'
 import ForgetPasswordForm from './pages/common/login/ForgetPasswordForm'
@@ -39,6 +40,7 @@ export default function App() {
     <Suspense fallback={<div>Loading...</div>}>
       <div className='box-border'>
         <BrowserRouter>
+          <ToastContainer />
           <Routes>
             {/* Login routes with redirect */}
             <Route path='/' element={

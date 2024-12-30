@@ -250,3 +250,45 @@ export const AddUserAccount = async (accountId, userIds) => {
             throw error;
       }
 }
+
+
+export const getActivity = async (accessToken, search, currentPage, pageSize, ordering) => {
+      try {
+            const response = await axios.get(`${API_URL}/survey/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+
+export const getSingleActivity = async (accessToken, id) => {
+      try {
+            const response = await axios.get(`${API_URL}/account/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const deleteActivity = async (accessToken, id) => {
+      try {
+            const response = await axios.delete(`${API_URL}/account/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+

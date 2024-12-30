@@ -9,7 +9,8 @@ const Loader = ({ size = "40px", color = "#3498db", speed = "1s" }) => {
     };
 
     return (
-        <div className="loader-overlay">
+        <div className="fixed inset-0 flex justify-center items-center bg-white/50"
+            style={{ top: '56px', bottom: '56px', zIndex: 50 }}>
             <div className="loader" style={loaderStyle}></div>
         </div>
     );
