@@ -18,59 +18,66 @@ import ActivityDetail from './components/admin/ActivityDetail'
 // import User from './components/other/User'
 
 export default function App() {
-    const [user,setUser]=useState(null)
-    const token=localStorage.getItem('accessToken')
-    useEffect(()=>{
-        const userdata = JSON.parse(localStorage.getItem('user'));
-        setUser(userdata)
-    },[])
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div className='box-border '>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path='/' element={<LoginForm />} />
-                        <Route path='/sign' element={<SignupForm />} />
-                        <Route path='/forget' element={<ForgetPasswordForm />} />
-                        <Route path='/logout' element={<Logout />} />
-                        <Route path="/reset" element={<ResetPassword />} />
+  const [user, setUser] = useState(null)
+  const token = localStorage.getItem('accessToken')
 
+  useEffect(() => {
+    const userdata = JSON.parse(localStorage.getItem('user'));
+    setUser(userdata)
+  }, [])
 
-                        {user?.user_type === 'PATIENT' || user?.user_type==='patient' && token !== "" && token !== null && token !== undefined ? (
-                            <>
-                                <Route path='/profile/:id' element={<Profile />} />
+  // अगर user logged in है तो उसे profile पर redirect करें
+  const RedirectToProfile = () => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData && token) {
+      return <Navigate to={`/profile/${userData.id}`} />;
+    }
+    return null;
+  };
 
-                            </>
-                        ) : (<></>)}
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className='box-border'>
+        <BrowserRouter>
+          <Routes>
+            {/* Login routes with redirect */}
+            <Route path='/' element={
+              token && user ? <RedirectToProfile /> : <LoginForm />
+            } />
+            <Route path='/sign' element={
+              token && user ? <RedirectToProfile /> : <SignupForm />
+            } />
+            <Route path='/forget' element={
+              token && user ? <RedirectToProfile /> : <ForgetPasswordForm />
+            } />
+            <Route path='/reset' element={
+              token && user ? <RedirectToProfile /> : <ResetPassword />
+            } />
+            <Route path='/logout' element={<Logout />} />
 
-                        {user?.user_type === 'Admin' || user?.user_type==='admin' && token !== "" && token !== null && token !== undefined ? (
-                            <>
-                                <Route path='/profile/:id' element={<Profile />} />
-                            </>
-                        ) : (<>
-                            {/* <Route path='/profile/:id' element={<Profile />} /> */}
-                        </>)}
+            {/* Existing routes */}
+            {user?.user_type === 'PATIENT' || user?.user_type === 'patient' && token ? (
+              <>
+                <Route path='/profile/:id' element={<Profile />} />
+              </>
+            ) : null}
 
+            {(user?.user_type === 'SUPERADMIN' || user?.user_type === 'superadmin' || user?.user_type === 'Admin' || user?.user_type === 'admin') && token ? (
+              <>
+                <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/users' element={<UserList />} />
+                <Route path='/profile/:id' element={<Profile />} />
+                <Route path='/accounts' element={<Account />} />
+                <Route path='/account/:id' element={<AccountDetail />} />
+                <Route path='/activity' element={<Activity />} />
+                <Route path='/activity/detail' element={<ActivityDetail />} />
+              </>
+            ) : null}
 
-                        {user?.user_type === 'superadmin' || user?.user_type === 'superadmin' && token !== "" && token !== null && token !== undefined ? (
-                            <>
-                                <Route path='/dashboard' element={<Dashboard />} />
-                                <Route path='/users' element={<UserList />} />
-                                <Route path='/profile/:id' element={<Profile />} />
-                                <Route path='/accounts' element={<Account />} />
-                                <Route path='/account/:id' element={<AccountDetail />} />
-                                <Route path='/activity' element={<Activity/>}/>
-                                <Route path='/activity/detail'element={<ActivityDetail/>}/>
-                            </>
-                        ) : (<>
-                            <Route path='/' element={<LoginForm />} />
-                        </>)}
-                        <Route path='*' element={<NotFound/>} />
-
-
-                    </Routes>
-                </BrowserRouter>
-            </div>
-        </Suspense>
-    )
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </Suspense>
+  )
 }

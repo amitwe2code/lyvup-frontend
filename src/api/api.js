@@ -1,5 +1,5 @@
+/* eslint-disable no-useless-catch */
 import axios from "axios";
-import { data } from "react-router";
 const API_URL = 'http://127.0.0.1:8000';
 
 
@@ -14,41 +14,41 @@ export const loginUser = async (email, password) => {
 
 export const signupUser = async (user) => {
       const response = await axios.post(`${API_URL}/signup/`, user)
-      console.log('response',response);
+      console.log('response', response);
       return response;
 
 }
 
-export const forgetPassword =async (email)=>{
-      const response=await axios.post(`${API_URL}/forgot/`,{
-            email:email
+export const forgetPassword = async (email) => {
+      const response = await axios.post(`${API_URL}/forgot/`, {
+            email: email
       })
       return response
 }
 
 
-export const resetPassword = async (userId,token,password,confermPassword) => {
-      console.log('in reset',userId,token)
+export const resetPassword = async (userId, token, password, confermPassword) => {
+      console.log('in reset', userId, token)
       const response = await axios.post(`${API_URL}/reset/${userId}/${token}/`, {
-        password: password,
-        confirm_password:confermPassword
+            password: password,
+            confirm_password: confermPassword
       });
       return response;
-    };
+};
 
-export const logoutUser=async(accessToken,refreshToken)=>{
+export const logoutUser = async (accessToken, refreshToken) => {
       try {
-            const response=await axios.post(`${API_URL}/logout/`,{
-                  access_token:accessToken,
-                  refresh_token:refreshToken
+            const response = await axios.post(`${API_URL}/logout/`, {
+                  access_token: accessToken,
+                  refresh_token: refreshToken
             })
-            return response      
+            return response
       } catch (error) {
-            console.log(error)  
+            console.log(error)
       }
 }
 
-export const getUsers = async (accessToken,search,userType,page,pageSize,ordering) => {
+export const getUsers = async (accessToken, search, userType, page, pageSize, ordering) => {
       try {
             const response = await axios.get(`${API_URL}/user/?search=${search}&page=${page}&page_size=${pageSize}&user_type=${userType}&ordering=${ordering}`, {
                   headers: {
@@ -61,8 +61,8 @@ export const getUsers = async (accessToken,search,userType,page,pageSize,orderin
             return error
       }
 }
-export const getUser = async(accessToken,id)=>{
-      console.log('in get user',accessToken,id)
+export const getUser = async (accessToken, id) => {
+      console.log('in get user', accessToken, id)
       try {
             const response = await axios.get(`${API_URL}/user/${id}/`, {
                   headers: {
@@ -117,12 +117,12 @@ export const updateUser = async (accessToken, form, id) => {
       formData.append("name", form.name);
       formData.append("user_type", form.user_type);
       try {
-            const response = await axios.put(`${API_URL}/user/${id}/`,formData, {
+            const response = await axios.put(`${API_URL}/user/${id}/`, formData, {
                   headers: {
                         // 'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`
                   },
-               
+
             })
             return response
       } catch (error) {
@@ -177,6 +177,7 @@ export const getSingleAccountDetail = async (accessToken, id) => {
 }
 
 export const getAllAccountDetail = async (accessToken, search, currentPage, pageSize, ordering) => {
+      // eslint-disable-next-line no-useless-catch
       try {
             const response = await axios.get(`${API_URL}/account/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
                   headers: {
@@ -190,7 +191,8 @@ export const getAllAccountDetail = async (accessToken, search, currentPage, page
 }
 
 export const updateAccount = async (accessToken, form, id) => {
-      console.log('in update account',form,id)
+      console.log('in update account', form, id)
+      // eslint-disable-next-line no-useless-catch
       try {
             const response = await axios.put(`${API_URL}/account/${id}/`, form, {
                   headers: {
@@ -204,9 +206,9 @@ export const updateAccount = async (accessToken, form, id) => {
 }
 
 export const deleteAccount = async (accessToken, id) => {
-      console.log('in delete account',id)
+      console.log('in delete account', id)
       try {
-            const response = await axios.delete(`${API_URL}/account/accounts/${id}/`, {
+            const response = await axios.delete(`${API_URL}/account/${id}/`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -231,17 +233,17 @@ export const getAccountUsers = async (id) => {
 export const RemoveUserAccount = async (id) => {
       try {
             const response = await axios.delete(`${API_URL}/useraccount/delete/${id}/`);
-            console.log('response in delete user account=>',response);
+            console.log('response in delete user account=>', response);
             return response;
       } catch (error) {
             throw error;
       }
 }
-export const AddUserAccount = async (accountId,userIds) => {
+export const AddUserAccount = async (accountId, userIds) => {
       try {
-            const response = await axios.post(`${API_URL}/useraccount/create/`,{
-                  users:userIds,
-                  account:accountId
+            const response = await axios.post(`${API_URL}/useraccount/create/`, {
+                  users: userIds,
+                  account: accountId
             });
             return response;
       } catch (error) {
