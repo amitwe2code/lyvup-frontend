@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import BottomNavbar from "../../components/user/BottomNavbar";
 import TopBar from "../../components/admin/TobBar";
 import { useSelector } from "react-redux";
-import { addUser, deleteUser, getActivity, getUsers, updateUser } from "../../api/api";
+import { addUser, deleteActivity, deleteUser, getActivity, getUsers, updateUser } from "../../api/api";
 import CustomButton from "../../components/common/CustomButton";
 import CustomInput from "../../components/common/CustomInput";
 import Pagination from "../../components/common/Pagination";
@@ -17,19 +17,38 @@ export default function Activity() {
   // state
   const [filter, setFilter] = useState('')
   const [search, setSearch] = useState("");
-  const [userType, setUserType] = useState("");
+
   const [count, setCount] = useState(0)
   const [totalPage, setTotalPage] = useState(0)
   const [ordering, setOrdering] = useState("name");
   const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(1)
-  // const nPages = Math.ceil(count / pageSize);
-  const [activity, setActivity] = useState([]);
+  const [activitys, setActivitys] = useState([]);
   const [isBoolean, setIsBoolean] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
   const [formData, setFormData] = useState({
-
+    activity: "",
+    intervetion_name: "",
+    intervention_type: "",
+    intervention_description: "",
+    brand: "",
+    coach_type: "",
+    costs: "",
+    location: "",
+    user_duration: "",
+    duration_coach: "",
+    duration_teamlead: "",
+    file: "",
+    indicate_when_completed: "",
+    language: "",
+    price: "",
+    send_reminder: "",
+    show_in_task: "",
+    travel_time: "",
+    upload_possible: "",
+    url: "",
+    who: "",
   });
   console.log('pageSize=>', pageSize)
 
@@ -37,8 +56,8 @@ export default function Activity() {
   //Activity list get/reterview fuction call
   async function getActivityList(accessToken) {
     const response = await getActivity(accessToken, search, currentPage, pageSize, ordering);
-    console.log('res=>', response)
-    setActivity(response.data.data.results);
+    console.log('activity res=>', response)
+    setActivitys(response.data.data.results);
     setCount(response.data.data.pagination.count)
     setTotalPage(response.data.data.pagination.total_pages)
     setPageSize(response.data.data.pagination.page_size)
@@ -46,14 +65,13 @@ export default function Activity() {
   }
 
   //Activity delete apiFunction Call
-  const handleUserDelete = async (e) => {
+  const handleActivityDelete = async (e) => {
     const response = await deleteActivity(accessToken, e.target.id);
     console.log("res=>", response);
-
   };
 
   //Activity Update apiFunction Call
-  const handleUserUpdate = async (user) => {
+  const handleActivityUpdate = async (user) => {
     setFormData({
       id: user.id,
       name: user.name,
@@ -66,7 +84,7 @@ export default function Activity() {
   };
 
   //newActivity add apifunction Call
-  const handleUserAdd = async (e) => {
+  const handleActivityAdd = async (e) => {
     e.preventDefault();
     console.log("id=", e.target.id);
     console.log("user id is =>", e.target.id);
@@ -75,7 +93,7 @@ export default function Activity() {
       e.target.id == "undefined" ||
       e.target.id == "null"
     ) {
-      const response = await addUser(accessToken, formData);
+      const response = await addActivity(accessToken, formData);
       console.log("response=", response);
       alert("user add success");
       setFormData("");
@@ -89,16 +107,13 @@ export default function Activity() {
     setIsOpen(false);
   };
 
-  const handleFilter = (selectionOption) => {
-    setFilter(selectionOption.value)
-  }
 
 
-  //useEffect
+  // //useEffect
   useEffect(() => {
     getActivityList(accessToken);
     setIsBoolean(false);
-  }, [isBoolean, search, userType, currentPage, pageSize, ordering]);
+  }, []);
 
   return (
     <div className="flex">
@@ -123,7 +138,7 @@ export default function Activity() {
         </div>
 
 
-        <div className=" flex h-auto justify-start my-2 items-center">
+        {/* <div className=" flex h-auto justify-start my-2 items-center">
           <div className="inline-flex gap-3 rounded-md" role="group">
             <Select
 
@@ -143,14 +158,14 @@ export default function Activity() {
               isClearable
             />
           </div>
-        </div>
+        </div> */}
         <div className="my-1 h-full flex-grow flex gap-1 ">
           <div className="w-3/5 h-full overflow-y-scroll">
             <ActivityTable
-              users={users}
+              activitys={activitys}
               setOrdering={setOrdering}
-              handleUserDelete={handleUserDelete}
-              handleUserUpdate={handleUserUpdate}
+              handleActivityDelete={handleActivityDelete}
+              handleActivityUpdate={handleActivityUpdate}
             />
             <Pagination
               nPages={totalPage}
@@ -161,10 +176,10 @@ export default function Activity() {
               setPageSize={setPageSize}
             />
           </div>
-          <div className="w-2/5 max-h-full overflow-y-scroll">
+          {/* <div className="w-2/5 max-h-full overflow-y-scroll">
             <ActivityDetail />
 
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -173,8 +188,10 @@ export default function Activity() {
         setIsOpen={setIsOpen}
       // formData={formData}
       // setFormData={setFormData}
-      // handleFormSubmit={handleUserAdd}
+      // handleFormSubmit={handleActivityAdd}
       />
+
+      {/* </div> */}
     </div>
   );
 }

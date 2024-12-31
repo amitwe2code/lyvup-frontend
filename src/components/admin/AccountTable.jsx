@@ -58,9 +58,6 @@ export default function AccountTable({
               <th className="leading-none text-sm" scope="col">
                 <SortDropdown field="id" />
               </th>
-              {/* <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="organization_id" />
-                            </th> */}
               <th className="leading-none text-sm" scope="col">
                 <SortDropdown field="account_type" />
               </th>
@@ -73,16 +70,6 @@ export default function AccountTable({
               <th className="leading-none text-sm" scope="col">
                 <SortDropdown field="language" />
               </th>
-              {/* <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="is_active" />
-                            </th> */}
-              {/* <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="created_at" />
-                            </th>
-                            <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="updated_at" />
-                            </th> */}
-
               <th className="leading-none text-sm" scope="col">
                 setting
               </th>
@@ -94,17 +81,10 @@ export default function AccountTable({
 
                 <td> <Link to={`/account/${account?.id}`}>
                   {" "}   {account?.id} </Link>    </td>
-
-                {/* <td>{account?.organization_id}</td> */}
                 <td>{account?.account_type}</td>
                 <td>{account?.account_name}</td>
                 <td>{account?.team_leader_id}</td>
                 <td>{account?.language}</td>
-                {/* <td>{account?.is_active}</td> */}
-
-                {/* <td><DateFormat updatedAt={account?.created_at} /></td>
-                                <td><DateFormat updatedAt={account.updated_at} /></td> */}
-
                 <td className="flex h-auto w-auto ">
                   <div className="inline-flex" role="group">
                     <CustomButton

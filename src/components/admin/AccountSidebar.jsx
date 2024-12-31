@@ -25,10 +25,10 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
   /*Function to redender the data in the option of the select box*/
   useEffect(() => {
     const options = (unSelectedUsers || []).map((option) => ({
-      value: option.id  ,
+      value: option.id,
       label: option.name,
     }));
-    console.log( "options =>", options);
+    console.log("options =>", options);
     setUnSelectedUsersList(options);
     // eslint-disable-next-line
   }, [unSelectedUsers]);
@@ -62,7 +62,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
   };
 
   const handleSelectChange = (selectedOption) => {
-    console.log('select option ----------',selectedOption)
+    console.log('select option ----------', selectedOption)
     if (selectedOption) {
       const values = selectedOption.map(option => option.value);
       setSelectedOptions(values);
@@ -70,7 +70,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
       setSelectedOptions([]);
     }
   };
-  console.log('selected option ',selectedOptions)
+  console.log('selected option ', selectedOptions)
 
   const handleAddUsers = () => {
     if (selectedOptions.length > 0) {
@@ -82,9 +82,8 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
 
   return (
     <div
-      className={`fixed inset-y-0 right-0 w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
-        isOpen ? "translate-x-0" : "translate-x-full"
-      }`}
+      className={`fixed inset-y-0 right-0 w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
     >
       <div className="p-4">
         <div className="flex justify-between items-center mb-4">
@@ -109,30 +108,30 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
 
           <div className="border rounded-md p-2">
             <h4 className="font-semibold mb-2">Add New User</h4>
-          
-    
+
+
             <div className="flex gap-2 ">
 
-            <Select
-              ref={selectRef}
-              options={unSelectedUsersList}
-              name="unSlectedUser"
-              id="unSlectedUser"
-              onChange={handleSelectChange}
-              className="text-capitalize w-100"
-              isMulti
-              isClearable
-            />
-            <CustomButton
-              size="small"
-              variant="outline"
-              className="px-3"
-              onClick={handleAddUsers}
-            >
-              add
-            </CustomButton>
+              <Select
+                ref={selectRef}
+                options={unSelectedUsersList}
+                name="unSlectedUser"
+                id="unSlectedUser"
+                onChange={handleSelectChange}
+                className="text-capitalize w-100"
+                isMulti
+                isClearable
+              />
+              <CustomButton
+                size="small"
+                variant="outline"
+                className="px-3"
+                onClick={handleAddUsers}
+              >
+                add
+              </CustomButton>
             </div>
-                
+
           </div>
           {/* User List */}
           <div className="border rounded-md  p-2">

@@ -14,6 +14,7 @@ import Account from './pages/admin/Account'
 import AccountDetail from './components/admin/AccountDetail'
 import Activity from './pages/admin/Activity'
 import ActivityDetail from './components/admin/ActivityDetail'
+import ActivityActionType from './pages/admin/ActivityActionType';
 
 // import UserRegistrationForm from './components/admin/UserRegistrationForm'
 // import User from './components/other/User'
@@ -72,6 +73,7 @@ export default function App() {
                 <Route path='/accounts' element={<Account />} />
                 <Route path='/account/:id' element={<AccountDetail />} />
                 <Route path='/activity' element={<Activity />} />
+                <Route path='/activitytype' element={<ActivityActionType />} />
                 <Route path='/activity/detail' element={<ActivityDetail />} />
               </>
             ) : null}

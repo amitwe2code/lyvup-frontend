@@ -1,15 +1,23 @@
 import CustomButton from "../common/CustomButton";
-import { Delete, LetterText, Trash, ChevronDown } from "lucide-react";
+import { LetterText, Trash, ChevronDown, Users } from "lucide-react";
 import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import AccountSidebar from "./AccountSidebar";
+import Loader from "../common/Loader";
 
-export default function ActivityTable({ activitys, setOrdering, handleActivityDelete, handleActivityUpdate }) {
+export default function ActivityActionTypeTable({
+    accounts,
+    setOrdering,
+    handleActivityActionTypeDelete,
+    handleActivityActionTypeUpdate,
+}) {
     const [openDropdown, setOpenDropdown] = useState(null);
-    console.log("activity =>", activitys);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [selectedAccount, setSelectedAccount] = useState(null);
 
     const handleSort = (field, direction) => {
-        setOrdering(direction === 'asc' ? field : `-${field}`);
+        setOrdering(direction === "asc" ? field : `-${field}`);
         setOpenDropdown(null);
     };
 
@@ -19,22 +27,22 @@ export default function ActivityTable({ activitys, setOrdering, handleActivityDe
                 onClick={() => setOpenDropdown(openDropdown === field ? null : field)}
                 className="inline-flex items-center"
             >
-                {field} <ChevronDown className="w-4 h-4 " />
+                {field} <ChevronDown className="w-4 h-4 ml-1" />
             </button>
 
             {openDropdown === field && (
                 <div className="absolute z-10 mt-1 bg-white border rounded-md shadow-lg">
                     <button
                         className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
-                        onClick={() => handleSort(field, 'asc')}
+                        onClick={() => handleSort(field, "asc")}
                     >
-                        Ascending
+                        'At_ascending'
                     </button>
                     <button
                         className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
-                        onClick={() => handleSort(field, 'desc')}
+                        onClick={() => handleSort(field, "desc")}
                     >
-                        Descending
+                        'At_descending'
                     </button>
                 </div>
             )}
@@ -44,71 +52,76 @@ export default function ActivityTable({ activitys, setOrdering, handleActivityDe
     return (
         <>
             <div className="  border-2 w-full my-1 overflow-auto ">
-                <table className=" table table-auto border-collapse">
+                <table className="table table-auto border-collapse">
                     <thead className="">
                         <tr className="h-10">
                             <th className="leading-none text-sm" scope="col">
                                 <SortDropdown field="id" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="Intervention name" />
+                                <SortDropdown field="account_type" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="Intervention Type" />
+                                <SortDropdown field="account_name" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="label" />
+                                <SortDropdown field="team_leader_id" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="Intervention Description" />
+                                <SortDropdown field="language" />
                             </th>
-
                             <th className="leading-none text-sm" scope="col">
-                                Action
+                                setting
                             </th>
                         </tr>
                     </thead>
                     <tbody className="text-sm">
-                        {(activitys || []).map((activity) => (
-                            <tr key={activity.activity} className="border-collapse">
-                                <td><Link to={`/activity/${activity?.id}`}>1</Link></td>
-                                <td>{activity?.intervention_name}</td>
-                                <td>{activity?.intervention_type}</td>
-                                <td>{activity?.brand}</td>
-                                <td>{activity?.intervention_description}</td>
+                        {accounts.map((account) => (
+                            <tr key={account?.id} className="border-collapse">
+
+                                <td> <Link to={`/account/${account?.id}`}>
+                                    {" "}   {account?.id} </Link>    </td>
+                                <td>{account?.activity_type}</td>
+                                <td>{account?.activity}</td>
+                                <td>{account?.amount}</td>
+                                <td>{account?.key_activity}</td>
                                 <td className="flex h-auto w-auto ">
                                     <div className="inline-flex" role="group">
                                         <CustomButton
-                                            id={activity?.id}
+                                            id={account.id}
                                             variant="outline"
                                             size="small"
-                                            onClick={() => handleActivityUpdate(user)}
+                                            onClick={() => handleActivityActionTypeUpdate(account)}
                                             className="border   border-r-0 rounded-none "
                                         >
                                             {" "}
                                             <LetterText className="w-4 h-4 m-0" />
                                         </CustomButton>
                                         <CustomButton
-                                            id={activity?.id}
+                                            id={account.id}
                                             variant="outline"
                                             size="small"
-                                            onClick={(e) => handleActivityDelete(e)}
+                                            onClick={(e) => handleActivityActionTypeDelete(e)}
                                             className="border border-r-0 rounded-none  "
                                         >
                                             {" "}
                                             <Trash className="w-4 h-4 m-0" />
                                         </CustomButton>
+
                                     </div>
                                 </td>
                             </tr>
                         ))}
-
                     </tbody>
                 </table>
-            </div >
 
+            </div>
+
+            <AccountSidebar
+                isOpen={isSidebarOpen}
+                onClose={() => setIsSidebarOpen(false)}
+                selectedAccount={selectedAccount}
+            />
         </>
     );
 }
-
-

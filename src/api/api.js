@@ -254,7 +254,7 @@ export const AddUserAccount = async (accountId, userIds) => {
 
 export const getActivity = async (accessToken, search, currentPage, pageSize, ordering) => {
       try {
-            const response = await axios.get(`${API_URL}/survey/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
+            const response = await axios.get(`${API_URL}/survey/`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -279,9 +279,35 @@ export const getSingleActivity = async (accessToken, id) => {
       }
 }
 
+export const addActivity = async (accessToken, data) => {
+      try {
+            const response = await axios.post(`${API_URL}/survey/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const updateActivity = async (accessToken, data, id) => {
+      try {
+            const response = await axios.put(`${API_URL}/survey/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
 export const deleteActivity = async (accessToken, id) => {
       try {
-            const response = await axios.delete(`${API_URL}/account/${id}/`, {
+            const response = await axios.delete(`${API_URL}/survey/${id}/`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }

@@ -139,22 +139,24 @@ export default function Account() {
             <div className="flex justify-center items-center h-64">
               <Loader />
             </div>
-          ) : (
+          ) : (<>
             <AccountTable
               accounts={accounts}
               setOrdering={setOrdering}
               handleAccountDelete={handleAccountDelete}
               handleAccountUpdate={handleAccountUpdate}
             />
+
+            <Pagination
+              nPages={totalPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              total={count}
+              count={pageSize}
+              setPageSize={setPageSize}
+            />
+          </>
           )}
-          <Pagination
-            nPages={totalPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            total={count}
-            count={pageSize}
-            setPageSize={setPageSize}
-          />
         </div>
       </div>
 
