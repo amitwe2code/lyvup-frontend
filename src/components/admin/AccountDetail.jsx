@@ -32,7 +32,6 @@ export default function AccountDetail() {
   const handleAccountUpdate = async (e) => {
     e.preventDefault();
     const response = await updateAccount(accessToken, formData, id);
-    alert("user update success");
     setIsOpen(false);
     setBoolean(true);
   };

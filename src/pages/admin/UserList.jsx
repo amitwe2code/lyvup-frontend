@@ -68,7 +68,7 @@ export default function UserList() {
       setLoading(true);
       const response = await deleteUser(accessToken, e.target.id);
       console.log("res=>", response);
-      alert("delete user with id ", e.target.id);
+      // alert("delete user with id ", e.target.id);
       setIsBoolean(true); // यह list को refresh करेगा
     } catch (error) {
       console.log(error);
@@ -108,7 +108,7 @@ export default function UserList() {
         console.log("passed data=>", formData);
         const response = await updateUser(accessToken, formData, e.target.id);
         console.log("response=", response);
-        alert("user update success");
+        // alert("user update success");
       }
       setIsBoolean(true);
       setIsOpen(false);

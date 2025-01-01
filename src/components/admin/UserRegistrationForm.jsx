@@ -10,53 +10,53 @@ export default function UserRegistrationForm({
   handleFormSubmit,
 }) {
   const initialFormState = formData;
-  const validators = {
-    email: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "email is required"
-          : !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
-            ? "Please enter a valid email address"
-            : null,
-    ],
-    name: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "Name is required" : null,
-    ],
-    phone: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "Phone Number is required"
-          : !/^\d{10}$/.test(value) ?
-            "Phone number is 10 digit number"
-            : null,
-    ],
-    user_type: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "User_type  is required" : null,
-    ],
-    language_preference: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "language  is required" : null,
-    ],
+  // const validators = {
+  //   email: [
+  //     (value) =>
+  //       value === null || value.trim() === ""
+  //         ? "email is required"
+  //         : !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
+  //           ? "Please enter a valid email address"
+  //           : null,
+  //   ],
+  //   name: [
+  //     (value) =>
+  //       value === null || value.trim() === ""
+  //         ? "Name is required" : null,
+  //   ],
+  //   phone: [
+  //     (value) =>
+  //       value === null || value.trim() === ""
+  //         ? "Phone Number is required"
+  //         : !/^\d{10}$/.test(value) ?
+  //           "Phone number is 10 digit number"
+  //           : null,
+  //   ],
+  //   user_type: [
+  //     (value) =>
+  //       value === null || value.trim() === ""
+  //         ? "User_type  is required" : null,
+  //   ],
+  //   language_preference: [
+  //     (value) =>
+  //       value === null || value.trim() === ""
+  //         ? "language  is required" : null,
+  //   ],
 
-    password: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "password is required"
-          : /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
-            ? "at least one speacial character one number and one upper and lower case letter"
-            : null,
-    ],
-
-
+  //   password: [
+  //     (value) =>
+  //       value === null || value.trim() === ""
+  //         ? "password is required"
+  //         : /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
+  //           ? "at least one speacial character one number and one upper and lower case letter"
+  //           : null,
+  //   ],
 
 
-  };
-  const { state, setState, onInputChange, errors, setErrors, validate } = useValidation(initialFormState, validators);
+
+
+  // };
+  // const { state, setState, onInputChange, errors, setErrors, validate } = useValidation(initialFormState, validators);
 
 
 
@@ -88,19 +88,19 @@ export default function UserRegistrationForm({
                     type="text"
                     id="name"
                     name="name"
-                    value={state.name}
-                    onChange={onInputChange}
+                    value={formData.name}
+                    onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
-                  {errors.name && (
+                  {/* {errors.name && (
                     <span
                       key={errors.name}
                       className="text-danger font-size-3"
                     >
                       {errors.name}
                     </span>
-                  )}
+                  )} */}
                 </div>
                 <div>
                   <label
@@ -113,19 +113,19 @@ export default function UserRegistrationForm({
                     type="email"
                     id="email"
                     name="email"
-                    value={state.email}
-                    onChange={onInputChange}
+                    value={formData.email}
+                    onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
-                  {errors.email && (
+                  {/* {errors.email && (
                     <span
                       key={errors.email}
                       className="text-danger font-size-3"
                     >
                       {errors.email}
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -140,19 +140,19 @@ export default function UserRegistrationForm({
                     type="tel"
                     id="phone"
                     name="phone"
-                    value={state.phone}
-                    onChange={onInputChange}
+                    value={formData.phone}
+                    onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
-                  {errors.phone && (
+                  {/* {errors.phone && (
                     <span
                       key={errors.phone}
                       className="text-danger font-size-3"
                     >
                       {errors.phone}
                     </span>
-                  )}
+                  )} */}
                 </div>
                 <div>
                   <label
@@ -164,8 +164,8 @@ export default function UserRegistrationForm({
                   <select
                     id="language"
                     name="language_preference"
-                    value={state.language_preference}
-                    onChange={onInputChange}
+                    value={formData.language_preference}
+                    onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
                   >
@@ -173,14 +173,14 @@ export default function UserRegistrationForm({
                     <option value="English">English</option>
                     <option value="Dutch">Dutch</option>
                   </select>
-                  {errors.language_preference && (
+                  {/* {errors.language_preference && (
                     <span
                       key={errors.language_preference}
                       className="text-danger font-size-3"
                     >
                       {errors.language_preference}
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -194,8 +194,8 @@ export default function UserRegistrationForm({
                   <select
                     id="user_type"
                     name="user_type"
-                    value={state.user_type}
-                    onChange={onInputChange}
+                    value={formData.user_type}
+                    onChange={handleInputChange}
                     required
                     className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
                   >
@@ -203,14 +203,14 @@ export default function UserRegistrationForm({
                     <option value="admin">Admin</option>
                     <option value="patient">Patient</option>
                   </select>
-                  {errors.user_type && (
+                  {/* {errors.user_type && (
                     <span
                       key={errors.user_type}
                       className="text-danger font-size-3"
                     >
                       {errors.user_type}
                     </span>
-                  )}
+                  )} */}
                 </div>
                 {!formData.id ? (
                   <>
@@ -225,19 +225,19 @@ export default function UserRegistrationForm({
                         type="password"
                         id="password"
                         name="password"
-                        value={state.password}
-                        onChange={onInputChange}
+                        value={formData.password}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
                       />
-                      {errors.password && (
+                      {/* {errors.password && (
                         <span
                           key={errors.password}
                           className="text-danger font-size-3"
                         >
                           {errors.password}
                         </span>
-                      )}
+                      )} */}
                     </div>
                   </>
                 ) : null}

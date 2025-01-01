@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import BottomNavbar from "../../components/user/BottomNavbar";
 import TopBar from "../../components/admin/TobBar";
 import { useSelector } from "react-redux";
-import { addUser, deleteActivity, deleteUser, getActivity, getUsers, updateUser } from "../../api/api";
+import { addActivity, deleteActivity,  getActivity, updateUser } from "../../api/api";
 import CustomButton from "../../components/common/CustomButton";
 import CustomInput from "../../components/common/CustomInput";
 import Pagination from "../../components/common/Pagination";
@@ -17,7 +17,6 @@ export default function Activity() {
   // state
   const [filter, setFilter] = useState('')
   const [search, setSearch] = useState("");
-
   const [count, setCount] = useState(0)
   const [totalPage, setTotalPage] = useState(0)
   const [ordering, setOrdering] = useState("name");
@@ -26,31 +25,10 @@ export default function Activity() {
   const [activitys, setActivitys] = useState([]);
   const [isBoolean, setIsBoolean] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedActivity,setSelectedActivity]=useState();
   const accessToken = useSelector((state) => state.token.accessToken);
-  const [formData, setFormData] = useState({
-    activity: "",
-    intervetion_name: "",
-    intervention_type: "",
-    intervention_description: "",
-    brand: "",
-    coach_type: "",
-    costs: "",
-    location: "",
-    user_duration: "",
-    duration_coach: "",
-    duration_teamlead: "",
-    file: "",
-    indicate_when_completed: "",
-    language: "",
-    price: "",
-    send_reminder: "",
-    show_in_task: "",
-    travel_time: "",
-    upload_possible: "",
-    url: "",
-    who: "",
-  });
-  console.log('pageSize=>', pageSize)
+  const [formData, setFormData] = useState({});
+  
 
 
   //Activity list get/reterview fuction call
@@ -65,9 +43,11 @@ export default function Activity() {
   }
 
   //Activity delete apiFunction Call
-  const handleActivityDelete = async (e) => {
-    const response = await deleteActivity(accessToken, e.target.id);
+  const handleActivityDelete = async (id) => {
+    console.log("activity id =>",id)
+    const response = await deleteActivity(accessToken, id);
     console.log("res=>", response);
+    // alert("response.data.message")
   };
 
   //Activity Update apiFunction Call
@@ -82,12 +62,13 @@ export default function Activity() {
     });
     setIsOpen(true);
   };
-
   //newActivity add apifunction Call
   const handleActivityAdd = async (e) => {
     e.preventDefault();
-    console.log("id=", e.target.id);
-    console.log("user id is =>", e.target.id);
+
+    console.log("form data in activity =>",formData)
+    
+   
     if (
       e.target.id == "" ||
       e.target.id == "undefined" ||
@@ -95,13 +76,12 @@ export default function Activity() {
     ) {
       const response = await addActivity(accessToken, formData);
       console.log("response=", response);
-      alert("user add success");
       setFormData("");
     } else {
       console.log("passed data=>", formData);
       const response = await updateUser(accessToken, formData, e.target.id);
       console.log("response=", response);
-      alert("user update success");
+      // alert("user update success");
     }
     setIsBoolean(true)
     setIsOpen(false);
@@ -138,14 +118,14 @@ export default function Activity() {
         </div>
 
 
-        {/* <div className=" flex h-auto justify-start my-2 items-center">
+        <div className=" flex h-auto justify-start my-2 items-center">
           <div className="inline-flex gap-3 rounded-md" role="group">
             <Select
 
               name="label"
               placeholder='-label- '
               id="label"
-              onChange={handleFilter}
+              // onChange={handleFilter}
               className=" rounded-none border-none sm:w-48"
               isClearable
             />
@@ -153,12 +133,12 @@ export default function Activity() {
               placeholder='-type-'
               name="type"
               id="type"
-              onChange={handleFilter}
+              // onChange={handleFilter}
               className="text-capitalize  sm:w-48"
               isClearable
             />
           </div>
-        </div> */}
+        </div>
         <div className="my-1 h-full flex-grow flex gap-1 ">
           <div className="w-3/5 h-full overflow-y-scroll">
             <ActivityTable
@@ -166,6 +146,7 @@ export default function Activity() {
               setOrdering={setOrdering}
               handleActivityDelete={handleActivityDelete}
               handleActivityUpdate={handleActivityUpdate}
+              setSelectedActivity={setSelectedActivity}
             />
             <Pagination
               nPages={totalPage}
@@ -177,7 +158,7 @@ export default function Activity() {
             />
           </div>
           {/* <div className="w-2/5 max-h-full overflow-y-scroll">
-            <ActivityDetail />
+            <ActivityDetail activity={selectedActivity} />
 
           </div> */}
         </div>
@@ -186,9 +167,8 @@ export default function Activity() {
       <ActivityForm
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-      // formData={formData}
-      // setFormData={setFormData}
-      // handleFormSubmit={handleActivityAdd}
+        setFormData={setFormData}
+        handleFormSubmit={handleActivityAdd}
       />
 
       {/* </div> */}

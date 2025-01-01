@@ -38,7 +38,7 @@ export default function Profile() {
       e.preventDefault();
       setLoading(true);
       const response = await updateUser(accessToken, formData, id);
-      alert("user update success");
+      // alert("user update success");
       setIsOpen(false);
       setBoolean(true);
     } catch (error) {

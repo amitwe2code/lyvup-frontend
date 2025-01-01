@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 import axios from "axios";
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = '128.199.55.101:8000';
 
 
 export const loginUser = async (email, password) => {
@@ -126,7 +126,7 @@ export const updateUser = async (accessToken, form, id) => {
             })
             return response
       } catch (error) {
-            alert(error.message)
+            // alert(error.message)/
             throw error
       }
 }
@@ -281,7 +281,8 @@ export const getSingleActivity = async (accessToken, id) => {
 
 export const addActivity = async (accessToken, data) => {
       try {
-            const response = await axios.post(`${API_URL}/survey/`, {
+            console.log('data=>',data)
+            const response = await axios.post(`${API_URL}/survey/`,data, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -308,6 +309,73 @@ export const updateActivity = async (accessToken, data, id) => {
 export const deleteActivity = async (accessToken, id) => {
       try {
             const response = await axios.delete(`${API_URL}/survey/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+
+export const getActivityTypes = async (accessToken, search, currentPage, pageSize, ordering) => {
+      try {
+            const response = await axios.get(`${API_URL}/activityapp/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+
+export const getSingleActivityType = async (accessToken, id) => {
+      try {
+            const response = await axios.get(`${API_URL}/activityapp/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const addActivityType = async (accessToken, data) => {
+      try {
+            const response = await axios.post(`${API_URL}/activityapp/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const updateActivityType = async (accessToken, data, id) => {
+      try {
+            const response = await axios.put(`${API_URL}/activityapp/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const deleteActivityType = async (accessToken, id) => {
+      try {
+            const response = await axios.delete(`${API_URL}/activityapp/${id}/`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }

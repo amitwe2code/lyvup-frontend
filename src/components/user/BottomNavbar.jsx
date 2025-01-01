@@ -34,8 +34,8 @@ export default function BottomNavbar() {
                 <div className="flex h-full font-semibold justify-around items-center">
                     <NavItem icon={Users} label='Users' href='/users' />
                     <NavItem icon={Users2} label="Accounts" href="/accounts" />
-                    <NavItem icon={TypeIcon} label="ActivityType" href="/activitytype" />
-                    <NavItem icon={ActivityIcon} label="Activity" href="/activity" />
+                    {/* <NavItem icon={TypeIcon} label="ActivityType" href="/activitytype" />
+                    <NavItem icon={ActivityIcon} label="Activity" href="/activity" /> */}
                 </div>
             </nav>
         </div>

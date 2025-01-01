@@ -17,7 +17,7 @@ const navigate=useNavigate()
 const handleReset=async()=>{
 const response= await resetPassword(userId,token,password,confermPassword)
 console.log('response password updated',response)
-alert('response update')
+// alert('response update')
 navigate('/')
 }
 

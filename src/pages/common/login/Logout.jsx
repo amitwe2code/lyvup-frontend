@@ -15,6 +15,7 @@ export default function Logout() {
     localStorage.removeItem('user')
     console.log(response)
     navigate('/')
+    window.location.reload()
     }
 
     return(

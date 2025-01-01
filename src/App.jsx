@@ -28,7 +28,7 @@ export default function App() {
     setUser(userdata)
   }, [])
 
-  // अगर user logged in है तो उसे profile पर redirect करें
+  // if user logged in 
   const RedirectToProfile = () => {
     const userData = JSON.parse(localStorage.getItem('user'));
     if (userData && token) {

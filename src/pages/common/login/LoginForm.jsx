@@ -60,11 +60,11 @@ export default function LoginForm() {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         dispatch(setToken({ accessToken, refreshToken, user }));
-        alert("login successful");
         setEmail("");
         setPassword("");
         // setErrors({ ...errors, password: ["invalid crendentials"] })
         navigate(`/profile/${user?.id}`);
+        window.location.reload()
       } catch (error) {
         console.error("Login failed:", error);
       } finally {

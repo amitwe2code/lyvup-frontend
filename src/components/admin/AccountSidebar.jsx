@@ -46,7 +46,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
 
   const handleRemoveUserFromAccount = async (id) => {
     const response = await RemoveUserAccount(id);
-    alert(response.data.message);
+    // alert(response.data.message);
     setBoolean(true);
   };
   useEffect(() => {

@@ -15,24 +15,12 @@ export default function ActivityDetail() {
   const accessToken = useSelector((state) => state.token.accessToken);
   const { id } = useParams();
   console.log("access token=>", accessToken);
-  //open updateform and set formdata
-  const handleEditFormOpen = () => {
-    setFormData({
-      id: account.id,
-      organization_id: account.organization_id,
-      account_name: account.account_name,
-      account_type: account.account_type,
-      team_leader_id: account.team_leader_id,
-      language: account.language,
-    });
-    setIsOpen(true);
-  };
-
+  
   //updateUser apicall Function
   const handleAccountUpdate = async (e) => {
     e.preventDefault();
     const response = await updateAccount(accessToken, formData, id);
-    alert("user update success");
+    // alert("user update success");
     setIsOpen(false);
     setBoolean(true);
   };
@@ -61,7 +49,7 @@ export default function ActivityDetail() {
               <h1 className="text-2xl  font-bold">Activity Details</h1>
               <div className="text-right">
                 <CustomButton
-                  onClick={handleEditFormOpen}
+                  // onClick={handleEditFormOpen}
                   className="bg-[#039a77]"
                 >
                   Edit

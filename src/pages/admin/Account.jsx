@@ -68,7 +68,7 @@ export default function Account() {
       setLoading(true);
       const response = await deleteAccount(accessToken, e.currentTarget.id);
       console.log("res=>", response);
-      alert("delete user with id ", e.target.id);
+      // alert("delete user with id ", e.target.id);
       setIsBoolean(true);
     } catch (error) {
       console.log(error);
@@ -85,12 +85,12 @@ export default function Account() {
       if (e.target.id == "" || e.target.id == "undefined" || e.target.id == "null") {
         const response = await addAccount(accessToken, formData);
         console.log("response=", response);
-        alert("user add success");
+        // alert("user add success");
         setFormData("");
       } else {
         const response = await updateAccount(accessToken, formData, e.target.id);
         console.log("response=", response);
-        alert("user update success");
+        // alert("user update success");
       }
       setIsBoolean(true);
       setIsOpen(false);

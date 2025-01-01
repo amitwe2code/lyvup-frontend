@@ -4,9 +4,8 @@ import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export default function ActivityTable({ activitys, setOrdering, handleActivityDelete, handleActivityUpdate }) {
+export default function ActivityTable({ activitys, setOrdering, handleActivityDelete, handleActivityUpdate,setSelectedActivity }) {
     const [openDropdown, setOpenDropdown] = useState(null);
-    console.log("activity =>", activitys);
 
     const handleSort = (field, direction) => {
         setOrdering(direction === 'asc' ? field : `-${field}`);
@@ -70,8 +69,8 @@ export default function ActivityTable({ activitys, setOrdering, handleActivityDe
                     </thead>
                     <tbody className="text-sm">
                         {(activitys || []).map((activity) => (
-                            <tr key={activity.activity} className="border-collapse">
-                                <td><Link to={`/activity/${activity?.id}`}>1</Link></td>
+                            <tr key={activity.id} className="border-collapse" onClick={()=>setSelectedActivity(activity)} >
+                                <td>{activity?.id}</td>
                                 <td>{activity?.intervention_name}</td>
                                 <td>{activity?.intervention_type}</td>
                                 <td>{activity?.brand}</td>
@@ -92,9 +91,9 @@ export default function ActivityTable({ activitys, setOrdering, handleActivityDe
                                             id={activity?.id}
                                             variant="outline"
                                             size="small"
-                                            onClick={(e) => handleActivityDelete(e)}
+                                            onClick={(e) => handleActivityDelete(activity?.id)}
                                             className="border border-r-0 rounded-none  "
-                                        >
+                                        >                           
                                             {" "}
                                             <Trash className="w-4 h-4 m-0" />
                                         </CustomButton>
