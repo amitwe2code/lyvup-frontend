@@ -13,9 +13,9 @@ const LanguageSwitcher = () => {
   return (
     <div className=" flex items-center justify-center gap-2">
       <select name="language" className='border  rounded-md py-1 px-2' onChange={(e) => changeLanguage(e.target.value)} id="">
-        <option className='text-gray-200' value="" defaultChecked>language</option>
-        <option className='text-gray-200' value="en">English</option>
-        <option className='text-gray-200' value="nl">dutch</option>
+        <option className='text-black' value="" defaultChecked>language</option>
+        <option className='text-black' value="en">English</option>
+        <option className='text-black' value="nl">dutch</option>
       </select>
     </div>
   );

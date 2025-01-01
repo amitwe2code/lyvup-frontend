@@ -4,6 +4,7 @@ import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import AccountSidebar from "./AccountSidebar";
+import Loader from "../common/Loader";
 
 export default function AccountTable({
   accounts,
@@ -57,9 +58,6 @@ export default function AccountTable({
               <th className="leading-none text-sm" scope="col">
                 <SortDropdown field="id" />
               </th>
-              {/* <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="organization_id" />
-                            </th> */}
               <th className="leading-none text-sm" scope="col">
                 <SortDropdown field="account_type" />
               </th>
@@ -72,16 +70,6 @@ export default function AccountTable({
               <th className="leading-none text-sm" scope="col">
                 <SortDropdown field="language" />
               </th>
-              {/* <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="is_active" />
-                            </th> */}
-              {/* <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="created_at" />
-                            </th>
-                            <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="updated_at" />
-                            </th> */}
-           
               <th className="leading-none text-sm" scope="col">
                 setting
               </th>
@@ -90,20 +78,13 @@ export default function AccountTable({
           <tbody className="text-sm">
             {accounts.map((account) => (
               <tr key={account?.id} className="border-collapse">
-                <Link to={`/account/${account?.id}`}>
-                  {" "}
-                  <td>{account?.id}</td>
-                </Link>
-                {/* <td>{account?.organization_id}</td> */}
+
+                <td> <Link to={`/account/${account?.id}`}>
+                  {" "}   {account?.id} </Link>    </td>
                 <td>{account?.account_type}</td>
                 <td>{account?.account_name}</td>
                 <td>{account?.team_leader_id}</td>
                 <td>{account?.language}</td>
-                {/* <td>{account?.is_active}</td> */}
-
-                {/* <td><DateFormat updatedAt={account?.created_at} /></td>
-                                <td><DateFormat updatedAt={account.updated_at} /></td> */}
-                
                 <td className="flex h-auto w-auto ">
                   <div className="inline-flex" role="group">
                     <CustomButton
@@ -127,22 +108,23 @@ export default function AccountTable({
                       <Trash className="w-4 h-4 m-0" />
                     </CustomButton>
                     <CustomButton
-                    variant="outline"
-                    size="small"
-                    onClick={() => {
-                      setSelectedAccount(account);
-                      setIsSidebarOpen(true);
-                    }}
-                    className="border rounded-none"
-                  >
-                    <Users className="w-4 h-4 m-0" />
-                  </CustomButton>
+                      variant="outline"
+                      size="small"
+                      onClick={() => {
+                        setSelectedAccount(account);
+                        setIsSidebarOpen(true);
+                      }}
+                      className="border rounded-none"
+                    >
+                      <Users className="w-4 h-4 m-0" />
+                    </CustomButton>
                   </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
       </div>
 
       <AccountSidebar

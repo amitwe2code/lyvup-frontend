@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import AccountTable from "../../components/admin/AccountTable";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,7 @@ import {
   updateAccount,
 } from "../../api/api";
 import AccountForm from "../../components/admin/AccountForm";
+import Loader from "../../components/common/Loader";
 
 export default function Account() {
   const { t } = useTranslation();
@@ -35,14 +36,20 @@ export default function Account() {
     language: "",
   });
   const accessToken = useSelector((state) => state.token.accessToken);
+  const [loading, setLoading] = useState(false);
 
   const getAccounts = async () => {
-    console.log("accessToken=>", accessToken);
-    const response = await getAllAccountDetail(accessToken,search,currentPage, pageSize,ordering);
-    console.log("response=>", response);
-     setAccounts(response.data.data.results);
-     setTotalPage(response.data.data.pagination.total_pages);
-     setCount(response.data.data.pagination.count);
+    try {
+      setLoading(true);
+      const response = await getAllAccountDetail(accessToken, search, currentPage, pageSize, ordering);
+      setAccounts(response.data.data.results);
+      setTotalPage(response.data.data.pagination.total_pages);
+      setCount(response.data.data.pagination.count);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
   const handleAccountUpdate = async (account) => {
     setFormData({
@@ -57,40 +64,48 @@ export default function Account() {
   };
 
   const handleAccountDelete = async (e) => {
-    const response = await deleteAccount(accessToken, e.currentTarget.id);
-    console.log("res=>", response);
-    
-    setIsBoolean(true);
+    try {
+      setLoading(true);
+      const response = await deleteAccount(accessToken, e.currentTarget.id);
+      console.log("res=>", response);
+      // alert("delete user with id ", e.target.id);
+      setIsBoolean(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAccountAdd = async (e) => {
-    e.preventDefault();
-    console.log("id=", e.target.id);
-    console.log("account id is =>", e.target.id);
-    if (
-      e.target.id == "" ||
-      e.target.id == "undefined" ||
-      e.target.id == "null"
-    ) {
-      const response = await addAccount(accessToken, formData);
-      console.log("response=", response);
-      alert("user add success");
-      setFormData("");
-    } else {
-      console.log("passed data=>", formData);
-      const response = await updateAccount(accessToken, formData, e.target.id);
-      console.log("response=", response);
-   
+    try {
+      e.preventDefault();
+      setLoading(true);
+
+      if (e.target.id == "" || e.target.id == "undefined" || e.target.id == "null") {
+        const response = await addAccount(accessToken, formData);
+        console.log("response=", response);
+        // alert("user add success");
+        setFormData("");
+      } else {
+        const response = await updateAccount(accessToken, formData, e.target.id);
+        console.log("response=", response);
+        // alert("user update success");
+      }
+      setIsBoolean(true);
+      setIsOpen(false);
+      setFormData({
+        organization_id: "",
+        account_name: "",
+        account_type: "",
+        team_leader_id: "",
+        language: "",
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-    setIsBoolean(true);
-    setIsOpen(false);
-    setFormData({
-      organization_id: "",
-      account_name: "",
-      account_type: "",
-      team_leader_id: "",
-      language: "",
-    });
   };
 
   useEffect(() => {
@@ -119,41 +134,29 @@ export default function Account() {
             </CustomButton>
           </div>
         </div>
-
-        {/* 
-      <div className=" flex justify-start my-2 items-center">
-          <div className="inline-flex rounded-md" role="group">
-              <CustomButton 
-                  className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === 'admin' ? 'bg-[#039a77] text-white' : ''}`} 
-                  variant="outline" 
-                  onClick={() => setUserType("admin")}
-              >
-                  admin
-              </CustomButton>
-              <CustomButton 
-                  className={`sm:w-40 px-10 capitalize rounded-none ${userType === 'patient' ? 'bg-[#039a77] text-white' : ''}`} 
-                  variant="outline" 
-                  onClick={() => setUserType("patient")}
-              >
-                  patient
-              </CustomButton>
-          </div>
-      </div> */}
         <div className="my-1">
-          <AccountTable
-            accounts={accounts}
-            setOrdering={setOrdering}
-            handleAccountDelete={handleAccountDelete}
-            handleAccountUpdate={handleAccountUpdate}
-          />
-          <Pagination
-          nPages={totalPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          total={count}
-          count={pageSize}
-          setPageSize={setPageSize}
-        />
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <Loader />
+            </div>
+          ) : (<>
+            <AccountTable
+              accounts={accounts}
+              setOrdering={setOrdering}
+              handleAccountDelete={handleAccountDelete}
+              handleAccountUpdate={handleAccountUpdate}
+            />
+
+            <Pagination
+              nPages={totalPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              total={count}
+              count={pageSize}
+              setPageSize={setPageSize}
+            />
+          </>
+          )}
         </div>
       </div>
 

@@ -8,6 +8,8 @@ import { getUser, updateUser } from "../../../api/api";
 import DateFormat from "../../../components/admin/DateFormat";
 import CustomButton from "../../../components/common/CustomButton";
 import UserRegistrationForm from "../../../components/admin/UserRegistrationForm";
+import Loader from "../../../components/common/Loader";
+
 export default function Profile() {
   const [user, setUser] = useState({});
   const [formData, setFormData] = useState({});
@@ -15,6 +17,7 @@ export default function Profile() {
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
   const { id } = useParams();
+  const [loading, setLoading] = useState(false);
 
   //open updateform and set formdata
   const handleEditFormOpen = () => {
@@ -31,18 +34,39 @@ export default function Profile() {
 
   //updateUser apicall Function
   const handleUserUpdate = async (e) => {
+<<<<<<< HEAD
     e.preventDefault();
     const response = await updateUser(accessToken, formData, id);
     
     setIsOpen(false);
     setBoolean(true);
+=======
+    try {
+      e.preventDefault();
+      setLoading(true);
+      const response = await updateUser(accessToken, formData, id);
+      // alert("user update success");
+      setIsOpen(false);
+      setBoolean(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+>>>>>>> ad3977e62997ad9948378d63bd910f6994423f2e
   };
 
   //getUser apicall Function
   const getuser = async () => {
-    const response = await getUser(accessToken, id);
-    console.log("get user response in profile =>", response);
-    setUser(response.data.data);
+    try {
+      setLoading(true);
+      const response = await getUser(accessToken, id);
+      setUser(response.data.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   //useEffect Call
@@ -52,12 +76,14 @@ export default function Profile() {
   }, [Boolean]);
 
   return (
-    <div className="flex ">
+    <div className="flex">
       <TopBar />
       <BottomNavbar />
-      {user ? (
-        <>
-          <div className="mt-14 mb-14 h-[calc(100vh-112px)] overflow-auto w-full border p-3 ">
+      <div className="mt-14 mb-14 h-[calc(100vh-112px)] w-full">
+        {loading ? (
+          <Loader />
+        ) : user ? (
+          <div className="overflow-auto w-full  p-3">
             <div className="text-right">
               <CustomButton
                 onClick={handleEditFormOpen}
@@ -119,12 +145,12 @@ export default function Profile() {
               handleFormSubmit={handleUserUpdate}
             />
           </div>
-        </>
-      ) : (
-        <>
-          <h1 className="mt-16">loading....</h1>
-        </>
-      )}
+        ) : (
+          <div className="w-full flex justify-center items-center">
+            <h1>No user data found</h1>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

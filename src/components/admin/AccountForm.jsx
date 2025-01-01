@@ -66,7 +66,7 @@ export default function AccountForm({
                     htmlFor="team_leader_id"
                     className="block text-xs font-medium text-gray-700 mb-1"
                   >
-                   team_leader_id
+                    team_leader_id
                   </label>
                   <input
                     type="number"
@@ -83,7 +83,7 @@ export default function AccountForm({
                     htmlFor="language"
                     className="block text-xs font-medium text-gray-700 mb-1"
                   >
-               language
+                    language
                   </label>
                   <select
                     id="language"
@@ -105,7 +105,7 @@ export default function AccountForm({
                     htmlFor="organization_id"
                     className="block text-xs font-medium text-gray-700 mb-1"
                   >
-                   organization_id
+                    organization_id
                   </label>
                   <select
                     id="organization_id"
@@ -120,7 +120,7 @@ export default function AccountForm({
                     <option value={2}>2</option>
                   </select>
                 </div>
-               
+
               </div>
               <div className="flex justify-end space-x-2 mt-4">
                 <CustomButton

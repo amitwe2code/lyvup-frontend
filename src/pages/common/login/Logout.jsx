@@ -25,6 +25,17 @@ export default function Logout() {
       localStorage.removeItem('user')
       setBoolean(true)
 
+<<<<<<< HEAD
+=======
+    const handleLogOut=async()=>{
+    const response=await logoutUser(accessToken,refreshToken)
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('user')
+    console.log(response)
+    navigate('/')
+    window.location.reload()
+>>>>>>> ad3977e62997ad9948378d63bd910f6994423f2e
     }
   }
 

@@ -8,31 +8,19 @@ import AccountForm from "./AccountForm";
 import CustomButton from "../common/CustomButton";
 import DateFormat from "./DateFormat";
 export default function ActivityDetail() {
-  const [activity, setActivity] = useState({});
+  const [account, setAccount] = useState({});
   const [formData, setFormData] = useState({});
   const [Boolean, setBoolean] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
   const { id } = useParams();
   console.log("access token=>", accessToken);
-  //open updateform and set formdata
-  const handleEditFormOpen = () => {
-    setFormData({
-      id: account.id,
-      organization_id: account.organization_id,
-      account_name: account.account_name,
-      account_type: account.account_type,
-      team_leader_id: account.team_leader_id,
-      language: account.language,
-    });
-    setIsOpen(true);
-  };
-
+  
   //updateUser apicall Function
   const handleAccountUpdate = async (e) => {
     e.preventDefault();
     const response = await updateAccount(accessToken, formData, id);
-    alert("user update success");
+    // alert("user update success");
     setIsOpen(false);
     setBoolean(true);
   };
@@ -50,96 +38,79 @@ export default function ActivityDetail() {
     setBoolean(false);
   }, [Boolean]);
 
-  const accountDetails = [
-    [
-      { label: "Account Name", value: "John Doe" },
-      { label: "Account Number", value: "ACCT-2024-001" },
-    ],
-    [
-      { label: "Email Address", value: "john.doe@example.com" },
-      { label: "Phone Number", value: "+1 (555) 123-4567" },
-    ],
-    [
-      { label: "Account Type", value: "Premium" },
-      { label: "Date Created", value: "January 15, 2024" },
-    ],
-    [
-      { label: "Account Status", value: "Active" },
-      { label: "Last Updated", value: "March 20, 2024" },
-    ],
-  ];
-
   return (
     <div className="flex ">
       <TopBar />
       <BottomNavbar />
-
-      <>
-        <div className="mt-14 mb-14 h-[calc(100vh-112px)] overflow-auto w-full border p-3 ">
-          <div className="flex justify-between items-center mb-4 ">
-            <h1 className="text-2xl  text-[#039a77] font-bold">
-              Account Details
-            </h1>
-            <div className="text-right">
-              <CustomButton
-                onClick={handleEditFormOpen}
-                className="bg-[#039a77]"
-              >
-                Edit
-              </CustomButton>
-            </div>
-          </div>
-          <div className="h-full">
-            <div className="w-80vw mx-auto">
-
-                {/* Card Header */}
-                <div className="p-3 bg-[#039a77]">
-                  <div className="flex items-center">
-                    <div className="ml-4">
-                      <h2 className="text-white text-lg font-semibold">
-                        Account Information
-                      </h2>
-                      <p className="text-white opacity-80 text-sm">
-                        View and manage your details
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Details Grid */}
-                <div className="p-6">
-                  <div className="space-y-2">
-                    {accountDetails.map((row, rowIndex) => (
-                      <div key={rowIndex} className="grid grid-cols-2 gap-6">
-                        {row.map((detail, colIndex) => (
-                          <div key={colIndex} className="border rounded-lg p-4">
-                            <p className="text-sm text-gray-600 mb-1">
-                              {detail.label}
-                            </p>
-                            <p
-                              className="font-medium"
-                              style={{ color: "#039a77" }}
-                            >
-                              {detail.value}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+      {account ? (
+        <>
+          <div className="my-1   w-full border p-3 ">
+            <div className="flex justify-between mb-4 ">
+              <h1 className="text-2xl  font-bold">Activity Details</h1>
+              <div className="text-right">
+                <CustomButton
+                  // onClick={handleEditFormOpen}
+                  className="bg-[#039a77]"
+                >
+                  Edit
+                </CustomButton>
               </div>
             </div>
+            <div className="my-3 flex flex-col  justify-center  ">
+              <div className="grid md:grid-cols-2  mb-6 gap-4 md:gap-10">
+                <div className="flex flex-col   ">
+                  <p className="text-gray-700 text-start">Account Name </p>
+                  <span className=" text-[#039a77] flex-shrink-0">Amit </span>
+                </div>
+                <div className="flex flex-col">
+                  <p className="text-gray-700 text-start">Account Name </p>
+                  <span className=" text-[#039a77] flex-shrink-0">Amit </span>
+                </div>
+                <div className="flex flex-col ">
+                  <p className="text-gray-700 text-start">Account Name </p>
+                  <span className=" text-[#039a77] flex-shrink-0">Amit </span>
+                </div>
+                <div className="flex flex-col ">
+                  <p className="text-gray-700 text-start">Account Name </p>
+                  <span className=" text-[#039a77] flex-shrink-0">Amit </span>
+                </div>
+                <div className="flex flex-col ">
+                  <p className="text-gray-700 text-start">Account Name </p>
+                  <span className=" text-[#039a77] flex-shrink-0">Amit </span>
+                </div>
+                <div className="flex flex-col ">
+                  <p className="text-gray-700 text-start">Account Name </p>
+                  <span className=" text-[#039a77] flex-shrink-0">Amit </span>
+                </div> <div className="flex flex-col ">
+                  <p className="text-gray-700 text-start">Account Name </p>
+                  <span className=" text-[#039a77] flex-shrink-0">Amit </span>
+                </div> <div className="flex flex-col ">
+                  <p className="text-gray-700 text-start">Account Name </p>
+                  <span className=" text-[#039a77] flex-shrink-0">Amit </span>
+                </div> <div className="flex flex-col ">
+                  <p className="text-gray-700 text-start">Account Name </p>
+                  <span className=" text-[#039a77] flex-shrink-0">Amit </span>
+                </div>
+              </div>
+
+            </div>
           </div>
-   
-        <AccountForm
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          formData={formData}
-          setFormData={setFormData}
-          handleFormSubmit={handleAccountUpdate}
-        />
-      </>
-    </div>
+
+
+          <AccountForm
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            formData={formData}
+            setFormData={setFormData}
+            handleFormSubmit={handleAccountUpdate}
+          />
+        </>
+      ) : (
+        <>
+          <h1 className="mt-16">loading....</h1>
+        </>
+      )
+      }
+    </div >
   );
 }

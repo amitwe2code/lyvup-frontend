@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Users2 } from 'lucide-react';
+import { ActivityIcon, TypeIcon, Users, Users2 } from 'lucide-react';
+import Activity from '../../pages/admin/Activity';
 
 export default function BottomNavbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

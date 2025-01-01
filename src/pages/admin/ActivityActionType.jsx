@@ -1,0 +1,156 @@
+import React, { useState } from 'react'
+import Loader from '../../components/common/Loader'
+import ActivityActionTypeForm from '../../components/admin/ActivityActionTypeForm'
+
+export default function ActivityActionType() {
+    const[activityTypes,setActivityTypes]=useState([])
+    const { t } = useTranslation()
+    const [isBoolean, setIsBoolean] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPage, setTotalPage] = useState(1);
+    const [search, setSearch] = useState("");
+    const [ordering, setOrdering] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+    const [count, setCount] = useState(0);
+    const [formData, setFormData] = useState({
+      organization_id: "",
+      account_name: "",
+      account_type: "",
+      team_leader_id: "",
+      language: "",
+    });
+    const accessToken = useSelector((state) => state.token.accessToken);
+    const [loading, setLoading] = useState(false);
+  
+    const   getActivityActionTypes = async () => {
+      try {
+        setLoading(true);
+        const response = await getActivityTypes(accessToken, search, currentPage, pageSize, ordering);
+        setAccounts(response.data.data.results);
+        setTotalPage(response.data.data.pagination.total_pages);
+        setCount(response.data.data.pagination.count);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const handleAccountUpdate = async (account) => {
+      setFormData({
+        id: account.id,
+        organization_id: account.organization_id,
+        account_name: account.account_name,
+        account_type: account.account_type,
+        team_leader_id: account.team_leader_id,
+        language: account.language,
+      });
+      setIsOpen(true);
+    };
+  
+    const handleAccountDelete = async (e) => {
+      try {
+        setLoading(true);
+        const response = await deleteAccount(accessToken, e.currentTarget.id);
+        console.log("res=>", response);
+        // alert("delete user with id ", e.target.id);
+        setIsBoolean(true);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    const handleAccountAdd = async (e) => {
+      try {
+        e.preventDefault();
+        setLoading(true);
+  
+        if (e.target.id == "" || e.target.id == "undefined" || e.target.id == "null") {
+          const response = await addAccount(accessToken, formData);
+          console.log("response=", response);
+          // alert("user add success");
+          setFormData("");
+        } else {
+          const response = await updateAccount(accessToken, formData, e.target.id);
+          console.log("response=", response);
+          // alert("user update success");
+        }
+        setIsBoolean(true);
+        setIsOpen(false);
+        setFormData({
+          organization_id: "",
+          account_name: "",
+          account_type: "",
+          team_leader_id: "",
+          language: "",
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    useEffect(() => {
+      getActivityActionTypes();
+      setIsBoolean(false);
+    }, [isBoolean, pageSize, currentPage, ordering, search]);
+  
+
+    return (
+        <div className="flex">
+            <TopBar />
+            <BottomNavbar />
+            <div className="mt-14 mb-14 h-[calc(100vh-112px)] overflow-auto w-full border p-3 ">
+                <div className="flex h-auto w-full flex-col md:flex-row justify-between">
+                    <div className="md:w-1/2">
+                        <h3 className="text-2xl  font-bold"> Activity Type</h3>
+                    </div>
+                    <div className="md:w-1/2 flex flex-wrap justify-start md:justify-end ">
+                        <CustomInput
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="search"
+                            size="medium"
+                            className="border m-1  rounded-md "
+                        />
+                        <CustomButton className="my-1" onClick={() => setIsOpen(true)}>
+                            Add Activity Type
+                        </CustomButton>
+                    </div>
+                </div>
+                <div className="my-1">
+                    {loading ? (
+                        <div className="flex justify-center items-center h-64">
+                            <Loader />
+                        </div>
+                    ) : (<>
+                        <ActivityActionTypeTable
+                            activityTypes={activityTypes}
+                            setOrdering={setOrdering}
+                            handleActivityTypeDelete={handleActivityTypeDelete}
+                            handleActivityTypeUpdate={handleActivityTypeUpdate}
+                        />
+                        <Pagination
+                            nPages={totalPage}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            total={count}
+                            count={pageSize}
+                            setPageSize={setPageSize}
+                        />
+                    </>
+                    )}
+                </div>
+                <ActivityActionTypeForm
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    formData={formData}
+                    setFormData={setFormData}
+                    handleFormSubmit={handleAccountAdd}
+                />
+            </div>
+        </div>
+    )
+}

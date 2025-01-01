@@ -11,9 +11,9 @@ export default function ForgetPasswordForm() {
         console.log('forget call')
        const response= await forgetPassword(email)
        if(response){
-           alert('message is send one your mail')
+           // alert('message is send one your mail')
        }
-       alert('forgot call')
+       // alert('forgot call')
     }
     return (
         <>
