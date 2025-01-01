@@ -34,13 +34,6 @@ export default function Profile() {
 
   //updateUser apicall Function
   const handleUserUpdate = async (e) => {
-<<<<<<< HEAD
-    e.preventDefault();
-    const response = await updateUser(accessToken, formData, id);
-    
-    setIsOpen(false);
-    setBoolean(true);
-=======
     try {
       e.preventDefault();
       setLoading(true);
@@ -53,7 +46,6 @@ export default function Profile() {
     } finally {
       setLoading(false);
     }
->>>>>>> ad3977e62997ad9948378d63bd910f6994423f2e
   };
 
   //getUser apicall Function

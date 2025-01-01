@@ -51,12 +51,8 @@ export default function LoginForm() {
       console.log("validation error =>", validate())
       setloading(true);
       try {
-<<<<<<< HEAD
-        const response = await loginUser(email, password);
-=======
         const response = await loginUser(state.email, state.password);
         console.log("response =>", response);
->>>>>>> ad3977e62997ad9948378d63bd910f6994423f2e
         const accessToken = response.data.data.access_token;
         const refreshToken = response.data.data.refresh_token;
         const user = response.data.data.user

@@ -41,13 +41,8 @@ export default function SignupForm() {
     const handleSubmit = async(e) => {
         e.preventDefault();
         const response = await signupUser(user);
-<<<<<<< HEAD
         navigate('/')
      
-=======
-        // alert(response.data.data.message)
-        console.log(response);
->>>>>>> ad3977e62997ad9948378d63bd910f6994423f2e
     };
 
     return (
