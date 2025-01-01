@@ -9,24 +9,22 @@ export default function Logout() {
   const accessToken = localStorage.getItem('accessToken')
   const refreshToken = localStorage.getItem('refreshToken')
 
-  const handleLogOut = async () => {
-    try {
-      const response = await logoutUser(accessToken, refreshToken)
-      localStorage.removeItem('accessToken')
-      localStorage.removeItem('refreshToken')
-      localStorage.removeItem('user')
-      setBoolean(true)
-      console.log(response)
-    } catch (error) {
-      console.error('Logout error:', error)
-      // Error के case में भी user को logout करें
-      localStorage.removeItem('accessToken')
-      localStorage.removeItem('refreshToken')
-      localStorage.removeItem('user')
-      setBoolean(true)
+  // const handleLogOut = async () => {
+  //   try {
+  //     const response = await logoutUser(accessToken, refreshToken)
+  //     localStorage.removeItem('accessToken')
+  //     localStorage.removeItem('refreshToken')
+  //     localStorage.removeItem('user')
+  //     setBoolean(true)
+  //     console.log(response)
+  //   } catch (error) {
+  //     console.error('Logout error:', error)
+  //     // Error के case में भी user को logout करें
+  //     localStorage.removeItem('accessToken')
+  //     localStorage.removeItem('refreshToken')
+  //     localStorage.removeItem('user')
+  //     setBoolean(true)}
 
-<<<<<<< HEAD
-=======
     const handleLogOut=async()=>{
     const response=await logoutUser(accessToken,refreshToken)
     localStorage.removeItem('accessToken')
@@ -35,9 +33,7 @@ export default function Logout() {
     console.log(response)
     navigate('/')
     window.location.reload()
->>>>>>> ad3977e62997ad9948378d63bd910f6994423f2e
     }
-  }
 
   useEffect(() => {
     if (boolean) {
