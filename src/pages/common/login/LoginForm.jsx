@@ -60,6 +60,7 @@ export default function LoginForm() {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         dispatch(setToken({ accessToken, refreshToken, user }));
+
         setEmail("");
         setPassword("");
         // setErrors({ ...errors, password: ["invalid crendentials"] })
