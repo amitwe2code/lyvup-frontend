@@ -7,10 +7,6 @@ export default defineConfig({
   server:{
     host:'0.0.0.0',
     strictPort:true,
-<<<<<<< HEAD
     port:5050
-=======
-    port:8080
->>>>>>> 256ffc4 (user mananement deploy)
   }
 })
