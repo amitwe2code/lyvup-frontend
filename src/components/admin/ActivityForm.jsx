@@ -2,301 +2,14 @@ import React, { useState } from "react";
 import CustomButton from "../common/CustomButton";
 import useValidation from "../common/UseValidation";
 
-export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormSubmit }) {
-  const [step, setStep] = useState(1);
-  const initialFormState = {
-    intervention_type: "",
-    language: "",
-    intervetion_name: "",
-    intervention_description: "",
-    brand: "",
-    activity_type:"",
-    complition_check:"",
-    who: "",
-    activity: "",
-    coach_type: "",
-    location: "",
-    travel_time: "",
-    user_duration: "",
-    duration_coach: "",
-    duration_teamlead: "",
-    file: "",
-    indicate_when_completed: "",
-    price: "",
-    show_in_task: "",
-    send_reminder: "",
-    add_comment_option:"",
-    upload_possible: "",
-    url: "",
-  };
-  // const initialFormState = formData
-  const validators = {
-    intervention_type: [
-      (value) =>
-        step === 1 
-          ? value === null || value.trim() === ""
-            ? "Activity type is required"
-            : null
-          : null,
-    ],
-    language: [
-      (value) =>
-        step === 1 
-          ? value === null || value.trim() === ""
-            ? "Language is required"
-            : null
-          : null,
-    ],
-    intervention_name: [
-      (value) =>
-         step === 2
-          ? value === null || value.trim() === ""
-            ? "Intervention name is required"
-            : null
-          : null,
-    ],
-    intervention_description: [
-      (value) =>
-        step === 2
-          ? value === null || value.trim() === ""
-            ? "Intervention description is required"
-            : null
-          : null,
-    ],
-    brand: [
-      (value) =>
-        step === 2
-          ? value === null || value.trim() === ""
-            ? "Brand is required"
-            : null
-          : null,
-    ],
-    who: [
-      (value) =>
-        step === 2
-          ? value === null || value.trim() === ""
-            ? "For whom is required"
-            : null
-          : null,
-    ],
-    activity_type: [
-      (value) =>
-        step === 2 
-          ? value === null || value.trim() === ""
-            ? "activity type is required"
-            : null
-          : null,
-    ],
-    complition_check: [
-      (value) =>
-        step === 2
-          ? value === null || value.trim() === ""
-            ? "complition check is required"
-            : null
-          : null,
-    ],
-    activity: [
-      (value) =>
-        step===3 && (state.intervention_type=='survey')
-        ? value === null || value.trim() === ""
-        ? "complition check is required"
-        : null
-      : null,
-    ],
-    coach_type: [
-      (value) =>
-        step === 3 && (state.intervention_type === "interview" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "assignment")
-          ? value === null || value.trim() === ""
-            ? "Coach type is required"
-            : null
-          : null,
-    ],
-    challenge: [
-      (value) =>
-        step === 3 && (state.intervention_type === "challenge")
-          ? value === null || value.trim() === ""
-            ? "Challenge are required"
-            : null
-          : null,
-    ],
-    amount: [
-      (value) =>
-        step === 3 && (state.intervention_type === "challenge"||state.intervention_type==='other')
-          ? value === null || value.trim() === ""
-            ? "Amount are required"
-            : null
-          : null,
-    ],
-    location: [
-      (value) =>
-        step === 3 && (state.intervention_type === "interview" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "assignment")
-          ? value === null || value.trim() === ""
-            ? "Location are required"
-            : null
-          : null,
-    ],
-    user_duration: [
-      (value) =>
-        step === 3 &&((state.intervention_type === "interview" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "video"))
-          ? value === null || value.trim() === ""
-            ? "User duration is required"
-            : null
-          : null,
-    ],
-    duration_coach: [
-      (value) =>
-        step === 3 && (state.intervention_type === "interview" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "assignment") 
-          ? value === null || value.trim() === ""
-            ? "Duration for coach is required"
-            : null
-          : null,
-    ],
-    duration_teamlead: [
-      (value) =>
-        step === 3 && ((state.intervention_type === "interview" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "assignment") )
-          ? value === null || value.trim() === ""
-            ? "Duration for team lead is required"
-            : null
-          : null,
-    ],
-    travel_time: [
-      (value) =>
-        step === 3 && (state.intervention_type === "interview" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop")
-          ? value === null || value.trim() === ""
-            ? "Travel time is required"
-            : null
-          : null,
-    ],
-    file: [
-      (value) =>
-        step === 3 && (state.intervention_type === "interview" ||
-          state.intervention_type === "video" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "workshop")
-          ? value === null || value.trim() === ""
-            ? "File is required"
-            : null
-          : null,
-    ],
-    url: [
-      (value) =>
-        step === 3 && (state.intervention_type === "interview" ||
-          state.intervention_type === "video" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "workshop")
-          ? value === null || value.trim() === ""
-            ? "URL is required"
-            : null
-          : null,
-    ],
-    indicate_when_completed: [
-      (value) =>
-        step === 3 && ((state.intervention_type === "interview" ||
-          state.intervention_type === "video" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "excercise" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "workshop") )
-          ? value === null || value.trim() === ""
-            ? "Indicate when completed is required"
-            : null
-          : null,
-    ],
-    send_reminder: [
-      (value) =>
-        step === 3 && (state.intervention_type === "survey" ||
-          state.intervention_type === "challenge" ||
-          state.intervention_type === "interview" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "video")
-          ? value === null || value.trim() === ""
-            ? "Send reminder option is required"
-            : null
-          : null,
-    ],
-    show_in_task: [
-      (value) =>
-        step === 3 && ((state.intervention_type === "survey" ||
-          state.intervention_type === "challenge" ||
-          state.intervention_type === "interview" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "video"))
-          ? value === null || value.trim() === ""
-            ? "Show in task option is required"
-            : null
-          : null,
-    ],
-    upload_possible: [
-      (value) =>
-        step === 3 && (state.intervention_type === "assignment" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop")
-          ? value === null || value.trim() === ""
-            ? "Upload option is required"
-            : null
-          : null,
-    ],
-    add_comment_option: [
-      (value) =>
-        step === 3 && (state.intervention_type === "survey" ||
-          state.intervention_type === "challenge" ||
-          state.intervention_type === "interview" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "video")
-          ? value === null || value.trim() === ""
-            ? "Add comment option is required"
-            : null
-          : null,
-    ],
-    excercise: [
-      (value) =>
-        step === 3 && state.intervention_type === "excercise" 
-          ? value === null || value.trim() === ""
-            ? "excercise is required"
-            : null
-          : null,
-    ],
+export default function ActivityForm({ isOpen, setIsOpen,state,onInputChange,errors,validate,step,setStep,handleFormSubmit }) {
   
-  };
+  
+  
 
 
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
 
+  
 
   return (
     <div>
@@ -380,7 +93,7 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                           <option value="video">video</option>
                           <option value="workshop">workshop</option>
                           <option value="assignment">assignment</option>
-                          <option value="exercise">exercise</option>
+                          <option value="excercise">excercise</option>
                           <option value="podcast">podcast</option>
                           <option value="other">other</option>
                         </select>
@@ -424,7 +137,7 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                           htmlFor="intervention_name"
                           className="block text-xs font-medium text-gray-700 mb-1"
                         >
-                          Name
+                        Intervention Name
                         </label>
                         <input
                           type="text"
@@ -522,15 +235,15 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                       </div>
                       <div>
                         <label
-                          htmlFor="complition_check"
+                          htmlFor="completion_check"
                           className="block text-xs font-medium text-gray-700 mb-1"
                         >
-                          complition_check
+                          completion_check
                         </label>
                         <select
-                          name="complition_check"
-                          id="complition_check"
-                          value={state.complition_check}
+                          name="completion_check"
+                          id="completion_check"
+                          value={state.completion_check}
                           onChange={onInputChange}
                           className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
                             errors.brand ? " border-danger" : ""
@@ -563,8 +276,10 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                           }`}
                         >
                           <option value="">-Select-</option>
-                          <option value="group1">Group 1</option>
-                          <option value="group2">Group 2</option>
+                          <option value="team">team</option>
+                          <option value="individual">individual</option>
+                          <option value="team lead">team lead</option>
+                          <option value="coach">coach</option>
                         </select>
                         {errors.who && (
                           <span className="text-danger font-size-3">
@@ -752,8 +467,9 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                             }`}
                           >
                             <option value="">-Select-</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="Give praises">Give praises</option>
+                            <option value="Request feedback">Request feedback</option>
+                            <option value="Define goals">Define goals</option>
                           </select>
                           {errors.challenge && (
                             <span className="text-danger font-size-3">
@@ -810,8 +526,9 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                             }`}
                           >
                             <option value="">-Select-</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="online">online</option>
+                            <option value="video conference">video conference</option>
+                            <option value="live"> live</option>
                           </select>
                           {errors.location && (
                             <span className="text-danger font-size-3">
@@ -842,8 +559,10 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                             }`}
                           >
                             <option value="">-Select-</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="intern">intern</option>
+                            <option value="extern">extern</option>
+                            <option value="other">other</option>
+                            <option value="none">none</option>
                           </select>
                           {errors.coach_type && (
                             <span className="text-danger font-size-3">
@@ -867,7 +586,7 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                             User Duration
                           </label>
                           <input
-                            type="text"
+                            type="number"
                             name="user_duration"
                             id="user_duration"
                             value={state.user_duration}
@@ -889,24 +608,24 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                         state.intervention_type === "assignment") && (
                         <div>
                           <label
-                            htmlFor="duration_coach"
+                            htmlFor="coach_duration"
                             className="block text-xs font-medium text-gray-700 mb-1"
                           >
                             Duration for Coach
                           </label>
                           <input
-                            type="text"
-                            name="duration_coach"
-                            id="duration_coach"
-                            value={state.duration_coach}
+                            type="number"
+                            name="coach_duration"
+                            id="coach_duration"
+                            value={state.coach_duration}
                             onChange={onInputChange}
                             className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.duration_coach ? " border-danger" : ""
+                              errors.coach_duration ? " border-danger" : ""
                             }`}
                           />
-                          {errors.duration_coach && (
+                          {errors.coach_duration && (
                             <span className="text-danger font-size-3">
-                              {errors.duration_coach.join(", ")}
+                              {errors.coach_duration.join(", ")}
                             </span>
                           )}
                         </div>
@@ -917,24 +636,24 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                         state.intervention_type === "assignment") && (
                         <div>
                           <label
-                            htmlFor="duration_teamlead"
+                            htmlFor="teamlead_duration"
                             className="block text-xs font-medium text-gray-700 mb-1"
                           >
                             Duration for Team Lead
                           </label>
                           <input
-                            type="text"
-                            name="duration_teamlead"
-                            id="duration_teamlead"
-                            value={state.duration_teamlead}
+                            type="number"
+                            name="teamlead_duration"
+                            id="teamlead_duration"
+                            value={state.teamlead_duration}
                             onChange={onInputChange}
                             className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.duration_teamlead ? " border-danger" : ""
+                              errors.teamlead_duration ? " border-danger" : ""
                             }`}
                           />
-                          {errors.duration_teamlead && (
+                          {errors.teamlead_duration && (
                             <span className="text-danger font-size-3">
-                              {errors.duration_teamlead.join(", ")}
+                              {errors.teamlead_duration.join(", ")}
                             </span>
                           )}
                         </div>
@@ -981,7 +700,7 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                             Attach File
                           </label>
                           <input
-                            type="file"
+                            type="text"
                             name="file"
                             id="file"
                             value={state.file}
@@ -1083,9 +802,9 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                               errors.upload_possible ? " border-danger" : ""
                             }`}
                           >
-                            <option value="">-Select-</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option>-Select-</option>
+                            <option value="True">Yes</option>
+                            <option value="False">No</option>
                           </select>
                           {errors.upload_possible && (
                             <span className="text-danger font-size-3">
@@ -1131,9 +850,9 @@ export default function ActivityForm({ isOpen, setIsOpen,setFormData,handleFormS
                       </button>
                       <button
                         type="submit"
+                        id={state.id}
                         onClick={(e)=>{
                           if(validate()){
-                            setFormData(state)
                             handleFormSubmit(e)
 
                           }

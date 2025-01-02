@@ -13,7 +13,7 @@ export default function BottomNavbar() {
         }
     }, []);
 
-    // अगर user patient है तो navbar नहीं दिखाएंगे
+    // if user is patient then return null 
     if (userType === 'patient') {
         return null;
     }
@@ -35,8 +35,8 @@ export default function BottomNavbar() {
                     <NavItem icon={Users} label='Users' href='/users' />
                     <NavItem icon={Users2} label="Accounts" href="/accounts" />
                     <NavItem icon={NotebookTabs} label="Programs" href="/programs" />
-                    {/* <NavItem icon={TypeIcon} label="ActivityType" href="/activitytype" />
-                    <NavItem icon={ActivityIcon} label="Activity" href="/activity" /> */}
+                    <NavItem icon={TypeIcon} label="ActivityType" href="/activitytype" />
+                    <NavItem icon={ActivityIcon} label="Activity" href="/activity" />
                 </div>
             </nav>
         </div>

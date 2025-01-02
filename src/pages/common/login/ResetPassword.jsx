@@ -48,9 +48,7 @@ placeholder="Enter Your New Password"
 />
 </div>
 <div className="mb-4">
-{/* <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-Email
-</label> */}
+
 <input
 type="password"
 id="confirmpassword"

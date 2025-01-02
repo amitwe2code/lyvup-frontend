@@ -3,15 +3,15 @@ import { useEffect } from "react";
 import BottomNavbar from "../../components/user/BottomNavbar";
 import TopBar from "../../components/admin/TobBar";
 import { useSelector } from "react-redux";
-import { addActivity, deleteActivity,  getActivity, updateUser } from "../../api/api";
+import { addActivity, deleteActivity,  getActivity, updateActivity, updateUser } from "../../api/api";
 import CustomButton from "../../components/common/CustomButton";
 import CustomInput from "../../components/common/CustomInput";
 import Pagination from "../../components/common/Pagination";
 import ActivityTable from "../../components/admin/ActivityTable";
 import ActivityForm from "../../components/admin/ActivityForm";
 import Select from "react-select";
-import AccountDetail from "../../components/admin/AccountDetail";
 import ActivityDetail from "../../components/admin/ActivityDetail";
+import useValidation from "../../components/common/UseValidation";
 
 export default function Activity() {
   // state
@@ -28,7 +28,301 @@ export default function Activity() {
   const [selectedActivity,setSelectedActivity]=useState();
   const accessToken = useSelector((state) => state.token.accessToken);
   const [formData, setFormData] = useState({});
+  const [step, setStep] = useState(1);
+  const initialFormState = {
+    intervention_type: "",
+    language: "",
+    intervetion_name: "",
+    intervention_description: "",
+    brand: "",
+    activity_type:"",
+    completion_check:"",
+    who: "",
+    activity: "",
+    coach_type: "",
+    location: "",
+    travel_time: "",
+    user_duration: "",
+    coach_duration: "",
+    teamlead_duration: "",
+    file: "",
+    indicate_when_completed: "",
+    price: "",
+    show_in_task: "",
+    send_reminder: "",
+    add_comment_option:"",
+    upload_possible: "",
+    url: "",
+  };
   
+// const initialFormState = formData
+const validators = {
+  intervention_type: [
+    (value) =>
+      step === 1 
+        ? value === null || value.trim() === ""
+          ? "Activity type is required"
+          : null
+        : null,
+  ],
+  language: [
+    (value) =>
+      step === 1 
+        ? value === null || value.trim() === ""
+          ? "Language is required"
+          : null
+        : null,
+  ],
+  intervention_name: [
+    (value) =>
+       step === 2
+        ? value === null || value.trim() === ""
+          ? "Intervention name is required"
+          : null
+        : null,
+  ],
+  intervention_description: [
+    (value) =>
+      step === 2
+        ? value === null || value.trim() === ""
+          ? "Intervention description is required"
+          : null
+        : null,
+  ],
+  brand: [
+    (value) =>
+      step === 2
+        ? value === null || value.trim() === ""
+          ? "Brand is required"
+          : null
+        : null,
+  ],
+  who: [
+    (value) =>
+      step === 2
+        ? value === null || value.trim() === ""
+          ? "For whom is required"
+          : null
+        : null,
+  ],
+  activity_type: [
+    (value) =>
+      step === 2 
+        ? value === null || value.trim() === ""
+          ? "activity type is required"
+          : null
+        : null,
+  ],
+  completion_check: [
+    (value) =>
+      step === 2
+        ? value === null || value.trim() === ""
+          ? "completion check is required"
+          : null
+        : null,
+  ],
+  activity: [
+    (value) =>
+      step===3 && (state.intervention_type=='survey')
+      ? value === null || value.trim() === ""
+      ? "complition check is required"
+      : null
+    : null,
+  ],
+  coach_type: [
+    (value) =>
+      step === 3 && (state.intervention_type === "interview" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "workshop" ||
+        state.intervention_type === "assignment")
+        ? value === null || value.trim() === ""
+          ? "Coach type is required"
+          : null
+        : null,
+  ],
+  challenge: [
+    (value) =>
+      step === 3 && (state.intervention_type === "challenge")
+        ? value === null || value.trim() === ""
+          ? "Challenge are required"
+          : null
+        : null,
+  ],
+  amount: [
+    (value) =>
+      step === 3 && (state.intervention_type === "challenge"||state.intervention_type==='other')
+        ? value === null || value.trim() === ""
+          ? "Amount are required"
+          : null
+        : null,
+  ],
+  location: [
+    (value) =>
+      step === 3 && (state.intervention_type === "interview" ||
+        state.intervention_type === "workshop" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "assignment")
+        ? value === null || value.trim() === ""
+          ? "Location are required"
+          : null
+        : null,
+  ],
+  user_duration: [
+    (value) =>
+      step === 3 &&((state.intervention_type === "interview" ||
+        state.intervention_type === "workshop" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "assignment" ||
+        state.intervention_type === "podcast" ||
+        state.intervention_type === "video"))
+        ? value === null || value.trim() === ""
+          ? "User duration is required"
+          : null
+        : null,
+  ],
+  coach_duration: [
+    (value) =>
+      step === 3 && (state.intervention_type === "interview" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "workshop" ||
+        state.intervention_type === "assignment") 
+        ? value === null || value.trim() === ""
+          ? "Duration for coach is required"
+          : null
+        : null,
+  ],
+  teamlead_duration: [
+    (value) =>
+      step === 3 && ((state.intervention_type === "interview" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "workshop" ||
+        state.intervention_type === "assignment") )
+        ? value === null || value.trim() === ""
+          ? "Duration for team lead is required"
+          : null
+        : null,
+  ],
+  travel_time: [
+    (value) =>
+      step === 3 && (state.intervention_type === "interview" ||
+        state.intervention_type === "assignment" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "workshop")
+        ? value === null || value.trim() === ""
+        ? "Travel time is required"
+        : null
+        : null,
+    
+  ],
+  file: [
+    (value) =>
+      step === 3 && (state.intervention_type === "interview" ||
+        state.intervention_type === "video" ||
+        state.intervention_type === "assignment" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "podcast" ||
+        state.intervention_type === "workshop")
+        ? value === null || value.trim() === ""
+          ? "File is required"
+          : null
+        : null,
+  ],
+  url: [
+    (value) =>
+      step === 3 && (state.intervention_type === "interview" ||
+        state.intervention_type === "video" ||
+        state.intervention_type === "assignment" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "podcast" ||
+        state.intervention_type === "workshop")
+        ? value === null || value.trim() === ""
+          ? "URL is required"
+          : null
+        : null,
+  ],
+  indicate_when_completed: [
+    (value) =>
+      step === 3 && ((state.intervention_type === "interview" ||
+        state.intervention_type === "video" ||
+        state.intervention_type === "assignment" ||
+        state.intervention_type === "excercise" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "podcast" ||
+        state.intervention_type === "workshop") )
+        ? value === null || value.trim() === ""
+          ? "Indicate when completed is required"
+          : null
+        : null,
+  ],
+  send_reminder: [
+    (value) =>
+      step === 3 && (state.intervention_type === "survey" ||
+        state.intervention_type === "challenge" ||
+        state.intervention_type === "interview" ||
+        state.intervention_type === "assignment" ||
+        state.intervention_type === "podcast" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "workshop" ||
+        state.intervention_type === "video")
+        ? value === null || value.trim() === ""
+          ? "Send reminder option is required"
+          : null
+        : null,
+  ],
+  show_in_task: [
+    (value) =>
+      step === 3 && ((state.intervention_type === "survey" ||
+        state.intervention_type === "challenge" ||
+        state.intervention_type === "interview" ||
+        state.intervention_type === "assignment" ||
+        state.intervention_type === "podcast" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "workshop" ||
+        state.intervention_type === "video"))
+        ? value === null || value.trim() === ""
+          ? "Show in task option is required"
+          : null
+        : null,
+  ],
+  upload_possible: [
+    (value) =>
+      step === 3 && (state.intervention_type === "assignment" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "workshop")
+        ? value === null || value.trim() === ""
+          ? "Upload option is required"
+          : null
+        : null,
+  ],
+  add_comment_option: [
+    (value) =>
+      step === 3 && (state.intervention_type === "survey" ||
+        state.intervention_type === "challenge" ||
+        state.intervention_type === "interview" ||
+        state.intervention_type === "assignment" ||
+        state.intervention_type === "podcast" ||
+        state.intervention_type === "other" ||
+        state.intervention_type === "workshop" ||
+        state.intervention_type === "video")
+        ? value === null || value.trim() === ""
+          ? "Add comment option is required"
+          : null
+        : null,
+  ],
+  excercise: [
+    (value) =>
+      step === 3 && state.intervention_type === "excercise" 
+        ? value === null || value.trim() === ""
+          ? "excercise is required"
+          : null
+        : null,
+  ],
+
+};
+
+const { state, setState, onInputChange, errors, setErrors, validate } =
+useValidation(initialFormState, validators);
+
 
 
   //Activity list get/reterview fuction call
@@ -44,44 +338,58 @@ export default function Activity() {
 
   //Activity delete apiFunction Call
   const handleActivityDelete = async (id) => {
-    console.log("activity id =>",id)
     const response = await deleteActivity(accessToken, id);
-    console.log("res=>", response);
-    // alert("response.data.message")
+    setIsBoolean(true)
   };
 
   //Activity Update apiFunction Call
-  const handleActivityUpdate = async (user) => {
-    setFormData({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      user_type: user.user_type,
-      language_preference: user.language_preference,
+  const handleActivityUpdate = async (activity) => {
+    console.log('acitivity in =>',activity)
+    setState({
+      id:activity?.id,
+      intervention_type: activity?.intervention_type ||'',
+      language: activity?.language||'',
+      intervention_name: activity?.intervention_name||"",
+      intervention_description: activity?.intervention_description|| "",
+      brand: activity?.brand|| "",
+      activity_type: activity?.activity_type||"",
+      completion_check: activity?.completion_check||"",
+      who: activity?.who||"",
+      activity: activity?.activity||"",
+      coach_type: activity?.coach_type|| "",
+      location: activity?.location|| "",
+      travel_time: activity?.travel_time|| "",
+      user_duration: activity?.user_duration|| "",
+      coach_duration: activity?.coach_duration|| "",
+      teamlead_duration: activity?.teamlead_duration|| "",
+      file: activity?.file||"",
+      indicate_when_completed: activity?.indicate_when_completed|| "",
+      show_in_task: activity?.show_in_task|| "",
+      send_reminder: activity?.send_reminder|| "",
+      add_comment_option: activity?.add_comment_option||"",
+      upload_possible: activity?.upload_possible|| "",
+      url: activity?.url||"",
+     
     });
     setIsOpen(true);
   };
   //newActivity add apifunction Call
   const handleActivityAdd = async (e) => {
     e.preventDefault();
-
-    console.log("form data in activity =>",formData)
-    
-   
+    console.log("e in update =>",e);
+    console.log("state in activity =>",state)
     if (
       e.target.id == "" ||
       e.target.id == "undefined" ||
       e.target.id == "null"
     ) {
-      const response = await addActivity(accessToken, formData);
+      const response = await addActivity(accessToken, state);
       console.log("response=", response);
       setFormData("");
     } else {
-      console.log("passed data=>", formData);
-      const response = await updateUser(accessToken, formData, e.target.id);
+      console.log("e in update =>",e.target.id);
+      const response = await updateActivity(accessToken,state, e.target.id);
       console.log("response=", response);
-      // alert("user update success");
     }
     setIsBoolean(true)
     setIsOpen(false);
@@ -93,7 +401,7 @@ export default function Activity() {
   useEffect(() => {
     getActivityList(accessToken);
     setIsBoolean(false);
-  }, []);
+  }, [pageSize,search,ordering,currentPage,isBoolean]);
 
   return (
     <div className="flex">
@@ -109,7 +417,7 @@ export default function Activity() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="search"
               size="medium"
-              className="border m-1  rounded-md "
+              className="border m-1  rounded-md"
             />
             <CustomButton className="my-1" onClick={() => setIsOpen(true)}>
               Add Activity
@@ -140,7 +448,7 @@ export default function Activity() {
           </div>
         </div>
         <div className="my-1 h-full flex-grow flex gap-1 ">
-          <div className="w-3/5 h-full overflow-y-scroll">
+          <div className="w-3/5 h-full   overflow-y-scroll">
             <ActivityTable
               activitys={activitys}
               setOrdering={setOrdering}
@@ -167,7 +475,12 @@ export default function Activity() {
       <ActivityForm
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        setFormData={setFormData}
+        state={state}
+        onInputChange={onInputChange}
+        errors={errors}
+        validate={validate}
+        step={step}
+        setStep={setStep}
         handleFormSubmit={handleActivityAdd}
       />
 
