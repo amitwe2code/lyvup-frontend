@@ -10,7 +10,6 @@ import useValidation from "../../../components/common/UseValidation";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [errors, setErrors] = useState({});
   const [loading, setloading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -41,6 +40,8 @@ export default function LoginForm() {
   /*----LOGIN ONCHANGE FuNCTION----*/
   const { state, setState, onInputChange, errors, setErrors, validate } = useValidation(initialFormState, validators);
 
+
+  //login form submit function
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     console.log("email=", state);
@@ -98,10 +99,6 @@ export default function LoginForm() {
               value={state.email}
               onChange={onInputChange}
             />
-            {/* {errors?.email && (                                     
-              <p className="text-red-500 text-sm">{errors.email}</p>
-            )} */}
-            {/*----ERROR MESSAGE FOR email----*/}
             {errors.email && (
               <span
                 key={errors.email}
@@ -118,7 +115,6 @@ export default function LoginForm() {
               name="password"
               className={` border ${errors.email ? " border-danger" : ""} rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
               placeholder={t("lg_Enter your password")}
-              // required
               value={state.password}
               onChange={onInputChange}
             />
@@ -131,9 +127,7 @@ export default function LoginForm() {
                 {errors.password}
               </span>
             )}
-            {/* {errors?.password && (
-              <p className="text-red-500 text-sm">{errors.password}</p>
-            )} */}
+           
           </div>
           <button
             type="submit"

@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 import axios from "axios";
-const API_URL = '128.199.55.101:8000';
+const API_URL = 'http://127.0.0.1:8000';
 
 
 export const loginUser = async (email, password) => {
@@ -75,23 +75,7 @@ export const getUser = async (accessToken, id) => {
             return error
       }
 }
-// export const addUser = async (accessToken, formData) => {
-//       const Data = JSON.stringify(formData)
-//       console.log('data=', Data);
-//       try {
-//             const response = await axios.post(`${API_URL}/user/`, Data, {
-//                   headers: {
-//                         'Content-Type': 'application/json',
-//                         'Authorization': `Bearer ${accessToken}`
-//                   },
-//             },
 
-//             )
-//             return response
-//       } catch (error) {
-//             return error
-//       }
-// }
 export const addUser = async (accessToken, form) => {
       const formData = new FormData();
       formData.append("email", form.email);
@@ -102,7 +86,7 @@ export const addUser = async (accessToken, form) => {
       formData.append("user_type", form.user_type);
       const response = await axios.post(`${API_URL}/user/`, formData, {
             headers: {
-                  //'Content-Type': 'application/json',
+                  'Content-Type': 'application/json',
                   'Authorization': `Bearer ${accessToken}`
             }
       });
@@ -119,14 +103,13 @@ export const updateUser = async (accessToken, form, id) => {
       try {
             const response = await axios.put(`${API_URL}/user/${id}/`, formData, {
                   headers: {
-                        // 'Content-Type': 'application/json',
+                        'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`
                   },
 
             })
             return response
       } catch (error) {
-            // alert(error.message)/
             throw error
       }
 }
@@ -135,7 +118,7 @@ export const deleteUser = async (accessToken, id) => {
       try {
             const response = await axios.delete(`${API_URL}/user/${id}/`, {
                   headers: {
-                        // 'Content-Type': 'application/json',
+                        'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`
                   },
 
@@ -149,7 +132,6 @@ export const deleteUser = async (accessToken, id) => {
 
 
 //account api
-
 export const addAccount = async (accessToken, form) => {
       try {
             const response = await axios.post(`${API_URL}/account/`, form, {
@@ -162,7 +144,6 @@ export const addAccount = async (accessToken, form) => {
             throw error;
       }
 }
-
 export const getSingleAccountDetail = async (accessToken, id) => {
       try {
             const response = await axios.get(`${API_URL}/account/${id}/`, {
@@ -192,7 +173,6 @@ export const getAllAccountDetail = async (accessToken, search, currentPage, page
 
 export const updateAccount = async (accessToken, form, id) => {
       console.log('in update account', form, id)
-      // eslint-disable-next-line no-useless-catch
       try {
             const response = await axios.put(`${API_URL}/account/${id}/`, form, {
                   headers: {
@@ -220,7 +200,9 @@ export const deleteAccount = async (accessToken, id) => {
       }
 }
 
-//user account api
+
+
+//add user in team api   
 export const getAccountUsers = async (id) => {
       try {
             const response = await axios.get(`${API_URL}/useraccount/account/${id}/`);
@@ -252,6 +234,8 @@ export const AddUserAccount = async (accountId, userIds) => {
 }
 
 
+
+//activity api
 export const getActivity = async (accessToken, search, currentPage, pageSize, ordering) => {
       try {
             const response = await axios.get(`${API_URL}/survey/`, {
