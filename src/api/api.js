@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
 import axios from "axios";
 const API_URL = 'http://127.0.0.1:8000';
+'http://128.199.55.101:8000'
 
 
 export const loginUser = async (email, password) => {
@@ -238,7 +239,7 @@ export const AddUserAccount = async (accountId, userIds) => {
 //activity api
 export const getActivity = async (accessToken, search, currentPage, pageSize, ordering) => {
       try {
-            const response = await axios.get(`${API_URL}/survey/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
+            const response = await axios.get(`${API_URL}/survey/`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -279,7 +280,7 @@ export const addActivity = async (accessToken, data) => {
 
 export const updateActivity = async (accessToken, data, id) => {
       try {
-            const response = await axios.put(`${API_URL}/survey/${id}/`,data, {
+            const response = await axios.put(`${API_URL}/survey/${id}/`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -306,7 +307,7 @@ export const deleteActivity = async (accessToken, id) => {
 
 export const getActivityTypes = async (accessToken, search, currentPage, pageSize, ordering) => {
       try {
-            const response = await axios.get(`${API_URL}/activityapp/?search=${search}&`, {
+            const response = await axios.get(`${API_URL}/activityapp/`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }

@@ -184,7 +184,8 @@ export default function UserRegistrationForm({
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div>
+                {formData.user_type !== 'superadmin'?(
+                  <div>
                   <label
                     htmlFor="userType"
                     className="block text-xs font-medium text-gray-700 mb-1"
@@ -212,6 +213,8 @@ export default function UserRegistrationForm({
                     </span>
                   )} */}
                 </div>
+                ):null}
+               
                 {!formData.id ? (
                   <>
                     <div>

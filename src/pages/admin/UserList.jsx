@@ -45,11 +45,6 @@ export default function UserList() {
     try {
       setLoading(true);
       const response = await getUsers(accessToken, search, userType, currentPage, pageSize, ordering);
-      if (response.status == 200) {
-        toast.error("You can only upload a maximum of 30 files at a time", {
-          autoClose: 1000,
-        })
-      }
       let filteredUsers = response.data.data.results;
       setUsers(filteredUsers);
       setCount(response.data.data.pagination.count);
