@@ -66,7 +66,7 @@ export default function App() {
               </>
             ) : null}
 
-            {/* {(user?.user_type === 'SUPERADMIN' || user?.user_type === 'superadmin' || user?.user_type === 'Admin' || user?.user_type === 'admin') && token ? ( */}
+            {(user?.user_type === 'SUPERADMIN' || user?.user_type === 'superadmin' || user?.user_type === 'Admin' || user?.user_type === 'admin') && token ? (
               <>
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/users' element={<UserList />} />
@@ -79,7 +79,7 @@ export default function App() {
                 <Route path='/programs' element={<Programs />} />
                 
               </>
-            {/* ) : null} */}
+            ) : null}
 
             <Route path='*' element={<NotFound />} />
           </Routes>
