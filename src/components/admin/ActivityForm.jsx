@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import CustomButton from "../common/CustomButton";
 import useValidation from "../common/UseValidation";
 
-export default function ActivityForm({ isOpen, setIsOpen,state,onInputChange,errors,validate,step,setStep,handleFormSubmit }) {
-  
-  
-  
-
-
-
-  
-
-  return (
+export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,setState,onInputChange,errors,validate,step,setStep,handleFormSubmit }) {
+  console.log(state)
+    return (
     <div>
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -28,8 +21,13 @@ export default function ActivityForm({ isOpen, setIsOpen,state,onInputChange,err
                 size="small "
                 variant="outline "
                 className="font-bold"
-                onClick={() => setIsOpen(false)}
+                onClick={() =>{
+                  setState(initialFormState)
+                  setIsOpen(false)
+                  setStep(1)}
+                } 
               >
+               
                 X
               </CustomButton>
             </div>
@@ -108,7 +106,11 @@ export default function ActivityForm({ isOpen, setIsOpen,state,onInputChange,err
                       <CustomButton
                         type="button"
                         variant="outline"
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => {
+                          setState(initialFormState)
+                          setIsOpen(false)}
+                        }
+
                         className="px-3 py-1.5 text-sm border hover:bg-gray-300 rounded hover:text-[#039a77] "
                       >
                         Cancel
@@ -143,6 +145,7 @@ export default function ActivityForm({ isOpen, setIsOpen,state,onInputChange,err
                           type="text"
                           name="intervention_name"
                           id="intervention_name"
+                          placeholder="Enter Name"
                           value={state.intervention_name}
                           onChange={onInputChange}
                           className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
@@ -253,9 +256,9 @@ export default function ActivityForm({ isOpen, setIsOpen,state,onInputChange,err
                           <option value="yes">yes</option>
                           <option value="no">no</option>
                         </select>
-                        {errors.complition_check && (
+                        {errors.completion_check && (
                           <span className="text-danger font-size-3">
-                            {errors.complition_check.join(", ")}
+                            {errors.completion_check.join(", ")}
                           </span>
                         )}
                       </div>
@@ -302,8 +305,8 @@ export default function ActivityForm({ isOpen, setIsOpen,state,onInputChange,err
                       <CustomButton
                         type="button"
                         onClick={() => {
+                          console.log("errors =", errors)
                           if(validate()){
-                            console.log("validate call =", errors)
                             setStep(3);
                           }
                         }}
