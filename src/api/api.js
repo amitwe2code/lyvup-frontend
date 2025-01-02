@@ -265,8 +265,8 @@ export const getSingleActivity = async (accessToken, id) => {
 
 export const addActivity = async (accessToken, data) => {
       try {
-            console.log('data=>',data)
-            const response = await axios.post(`${API_URL}/survey/`,data, {
+            console.log('data=>', data)
+            const response = await axios.post(`${API_URL}/survey/`, data, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }

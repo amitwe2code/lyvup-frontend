@@ -15,6 +15,7 @@ import AccountDetail from './components/admin/AccountDetail'
 import Activity from './pages/admin/Activity'
 import ActivityDetail from './components/admin/ActivityDetail'
 import ActivityActionType from './pages/admin/ActivityActionType';
+import Programs from './pages/admin/Programs';
 
 // import UserRegistrationForm from './components/admin/UserRegistrationForm'
 // import User from './components/other/User'
@@ -65,7 +66,7 @@ export default function App() {
               </>
             ) : null}
 
-            {(user?.user_type === 'SUPERADMIN' || user?.user_type === 'superadmin' || user?.user_type === 'Admin' || user?.user_type === 'admin') && token ? (
+            {/* {(user?.user_type === 'SUPERADMIN' || user?.user_type === 'superadmin' || user?.user_type === 'Admin' || user?.user_type === 'admin') && token ? ( */}
               <>
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/users' element={<UserList />} />
@@ -75,8 +76,10 @@ export default function App() {
                 <Route path='/activity' element={<Activity />} />
                 <Route path='/activitytype' element={<ActivityActionType />} />
                 <Route path='/activity/detail' element={<ActivityDetail />} />
+                <Route path='/programs' element={<Programs />} />
+                
               </>
-            ) : null}
+            {/* ) : null} */}
 
             <Route path='*' element={<NotFound />} />
           </Routes>

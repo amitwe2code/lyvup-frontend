@@ -19,7 +19,7 @@ export default function TopBar() {
   const user = JSON.parse(localStorage.getItem("user"));
   const id = user?.id;
   const dropdownRef = useRef(null)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -107,6 +107,7 @@ export default function TopBar() {
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                     <Link
                       to={`/profile/${id}`}
+                      ref={dropdownRef}
                       className="flex items-center gap-2 px-4 text-lg  py-2 hover:text-[#039a77]   hover:bg-gray-100"
                       onClick={() => setIsDropdownOpen(false)}
                     >
