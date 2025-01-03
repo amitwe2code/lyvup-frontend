@@ -2,11 +2,29 @@
 import {  LogOutIcon } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import { logoutUser } from '../../../api/api'
+import { useEffect, useState } from 'react'
 
 export default function Logout() {
-    const navigate=useNavigate()
-    const accessToken=localStorage.getItem('accessToken')
-    const refreshToken=localStorage.getItem('refreshToken')
+  const [boolean, setBoolean] = useState(false)
+  const navigate = useNavigate()
+  const accessToken = localStorage.getItem('accessToken')
+  const refreshToken = localStorage.getItem('refreshToken')
+
+  const handleLogOut = async () => {
+    try {
+      const response = await logoutUser(accessToken, refreshToken)
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('refreshToken')
+      localStorage.removeItem('user')
+      setBoolean(true)
+      console.log(response)
+    } catch (error) {
+      console.error('Logout error:', error)
+      // Error के case में भी user को logout करें
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('refreshToken')
+      localStorage.removeItem('user')
+      setBoolean(true)
 
     const handleLogOut=async()=>{
       console.log("logout call")
@@ -18,6 +36,14 @@ export default function Logout() {
     navigate('/')
     window.location.reload()
     }
+  }
+  }
+  useEffect(() => {
+    if (boolean) {
+      navigate('/')
+      window.location.reload()
+    }
+  }, [boolean, navigate])
 
     return(
         <button

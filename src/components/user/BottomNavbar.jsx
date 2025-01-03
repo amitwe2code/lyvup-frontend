@@ -26,6 +26,7 @@ export default function BottomNavbar() {
     return null;
   }
 
+<<<<<<< HEAD
   const NavItem = ({ icon: Icon, label, href = "#" }) => (
     <a
       href={href}
@@ -111,4 +112,16 @@ export default function BottomNavbar() {
       </nav>
     </div>
   );
+=======
+    return (
+        <div>
+            <nav className="fixed h-14 bottom-0 left-0 right-0 bg-[#e8e8ed] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] py-2">
+                <div className="flex h-full font-semibold justify-around items-center">
+                    <NavItem icon={Users} label='Users' href='/users' />
+                    <NavItem icon={Users2} label="Accounts" href="/accounts" />
+                </div>
+            </nav>
+        </div>
+    );
+>>>>>>> origin/deploy
 }

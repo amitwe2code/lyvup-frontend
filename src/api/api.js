@@ -1,7 +1,12 @@
 /* eslint-disable no-useless-catch */
 import axios from "axios";
+<<<<<<< HEAD
 const API_URL = 'http://128.199.55.101:8000';
 
+=======
+import { data } from "react-router";
+const API_URL = '128.199.55.101:8000';
+>>>>>>> origin/deploy
 
 
 export const loginUser = async (email, password) => {
