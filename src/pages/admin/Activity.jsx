@@ -361,11 +361,7 @@ export default function Activity() {
   //Activity delete apiFunction Call
   const handleActivityDelete = async (id) => {
     const response = await deleteActivity(accessToken, id);
-<<<<<<< HEAD
     setIsBoolean(true);
-=======
-    console.log("res=>", response);
->>>>>>> origin/deploy
   };
 
   //Activity Update apiFunction Call

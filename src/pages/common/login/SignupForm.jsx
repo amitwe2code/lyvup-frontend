@@ -36,16 +36,6 @@ export default function SignupForm() {
     }));
   };
 
-<<<<<<< HEAD
-=======
-    // Form submit handler
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        const response = await signupUser(user);
-        navigate('/')
-     
-    };
->>>>>>> origin/deploy
 
   // Form submit handler
   const handleSubmit = async (e) => {
@@ -55,7 +45,7 @@ export default function SignupForm() {
     console.log(response);
   };
 
-   
+
 
 
   return (
