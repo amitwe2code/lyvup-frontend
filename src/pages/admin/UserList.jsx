@@ -99,6 +99,7 @@ export default function UserList() {
       ) {
         const response = await addUser(accessToken, formData);
         console.log("response=", response);
+      
       } else {
         console.log("passed data=>", formData);
         const response = await updateUser(accessToken, formData, e.target.id);
@@ -106,6 +107,14 @@ export default function UserList() {
         // alert("user update success");
       }
       setIsBoolean(true);
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        phone: "",
+        user_type: "",
+        language_preference: "",
+      })
       setIsOpen(false);
     } catch (error) {
       console.log(error);

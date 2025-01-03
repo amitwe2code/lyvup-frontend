@@ -77,7 +77,7 @@ export default function BottomNavbar() {
             <SquareUser size={20} />
             <span className="text-xs">Accounts</span>
           </Link>
-          <Link
+          {/* <Link
             onClick={() => setActiveTab("programs")}
             to={"/programs"}
             className={`flex flex-col text-black items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${
@@ -86,7 +86,7 @@ export default function BottomNavbar() {
           >
             <NotebookTabs />
             <span className="text-xs">Programs</span>
-          </Link>
+          </Link> */}
           <Link
             onClick={() => setActiveTab("activitytype")}
             to={"/activitytype"}

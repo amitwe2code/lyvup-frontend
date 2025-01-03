@@ -859,8 +859,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         id={state.id}
                         onClick={(e)=>{
                           if(validate()){
-                            setStep(1)
                             handleFormSubmit(e)
+                            setIsOpen(false)
 
                           }
                         }}
