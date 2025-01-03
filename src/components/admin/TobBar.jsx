@@ -18,21 +18,37 @@ export default function TopBar() {
   const [isExpanded, setIsExpanded] = useState(true);
   const user = JSON.parse(localStorage.getItem("user"));
   const id = user?.id;
-  const dropdownRef = useRef(null)
-  // const navigate = useNavigate()
+  // const dropdownRef = useRef(null)
+  const navigate=useNavigate()
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+
+
+  const handleLogOut=async()=>{
+    console.log("logout call")
+  const response=await logoutUser(accessToken,refreshToken)
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+  localStorage.removeItem('user')
+  console.log(response)
+  navigate('/')
+  window.location.reload()
+  }
+
+
+
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //       setIsDropdownOpen(false);
+  //     }
+  //   };
+
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
 
 
@@ -102,17 +118,19 @@ export default function TopBar() {
                   />
                 </button>
 
-                {/* ड्रॉपडाउन मेनू */}
+         
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                  <div className="absolute right-0 mt-2 w-28 bg-gray-200 rounded-md shadow-lg py-1 z-50">
                     <Link
                       to={`/profile/${id}`}
-                      ref={dropdownRef}
+                      // ref={dropdownRef}
                       className="flex items-center gap-2 px-4 text-lg  py-2 hover:text-[#039a77]   hover:bg-gray-100"
                       onClick={() => setIsDropdownOpen(false)}
                     >
-                      <User /> Profile
-                    </Link>
+                      <User />  
+                    </Link> 
+
+                  
                     <Logout />
                   </div>
                 )}
