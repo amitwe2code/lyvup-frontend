@@ -18,7 +18,7 @@ export default function TopBar() {
   const [isExpanded, setIsExpanded] = useState(true);
   const user = JSON.parse(localStorage.getItem("user"));
   const id = user?.id;
-  const dropdownRef = useRef(null)
+  const dropdownRef = useRef(null);
   // const navigate = useNavigate()
 
   useEffect(() => {
@@ -33,8 +33,6 @@ export default function TopBar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-
 
   const sidebarItems = [
     {
@@ -132,8 +130,9 @@ export default function TopBar() {
         </div>
       </nav>
       <div
-        className={`transition-all   h-[calc(100vh-7rem)] duration-300 mb-14 mt-14  ease-in-out hidden bg-[#f5f5f5] ${isExpanded ? "w-64" : "w-20"
-          }`}
+        className={`transition-all   h-[calc(100vh-7rem)] duration-300 mb-14 mt-14  ease-in-out hidden bg-[#f5f5f5] ${
+          isExpanded ? "w-64" : "w-20"
+        }`}
       >
         <nav className={`flex flex-col text-gray-400'`}>
           {sidebarItems.map((item, index) => (
@@ -150,10 +149,11 @@ export default function TopBar() {
               <span
                 className={`
                                     ml-3 transition-all duration-300 
-                                    ${isExpanded
-                    ? "opacity-100"
-                    : "opacity-0 w-0"
-                  }
+                                    ${
+                                      isExpanded
+                                        ? "opacity-100"
+                                        : "opacity-0 w-0"
+                                    }
                                     `}
               >
                 {item.label}

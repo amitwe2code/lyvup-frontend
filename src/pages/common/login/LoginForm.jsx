@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import LanguageSwitcher from "../../../components/common/languageSwitcher/LanguageSwitcher";
 import useValidation from "../../../components/common/UseValidation";
-
+import logo from "../../../assets/logo.png";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +17,7 @@ export default function LoginForm() {
   const initialFormState = {
     email: "",
     password: "",
-  }
+  };
 
   const validators = {
     email: [
@@ -25,21 +25,21 @@ export default function LoginForm() {
         value === null || value.trim() === ""
           ? "email is required"
           : !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
-            ? "Please enter a valid email address"
-            : null,
+          ? "Please enter a valid email address"
+          : null,
     ],
     password: [
       (value) =>
         value === null || value.trim() === ""
           ? "password is required"
           : /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
-            ? "at least one speacial character one number and one upper and lower case letter"
-            : null,
+          ? "at least one speacial character one number and one upper and lower case letter"
+          : null,
     ],
   };
   /*----LOGIN ONCHANGE FuNCTION----*/
-  const { state, setState, onInputChange, errors, setErrors, validate } = useValidation(initialFormState, validators);
-
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
 
   //login form submit function
   const handleLoginSubmit = async (e) => {
@@ -47,33 +47,31 @@ export default function LoginForm() {
     console.log("email=", state);
     console.log("password=", password);
 
-
     if (validate()) {
-      console.log("validation error =>", validate())
+      console.log("validation error =>", validate());
       setloading(true);
       try {
         const response = await loginUser(state.email, state.password);
         console.log("response =>", response);
         const accessToken = response.data.data.access_token;
         const refreshToken = response.data.data.refresh_token;
-        const user = response.data.data.user
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
+        const user = response.data.data.user;
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
         dispatch(setToken({ accessToken, refreshToken, user }));
         setEmail("");
         setPassword("");
         // setErrors({ ...errors, password: ["invalid crendentials"] })
         navigate(`/profile/${user?.id}`);
-        window.location.reload()
+        window.location.reload();
       } catch (error) {
         console.error("Login failed:", error);
       } finally {
         setloading(false);
       }
-    }
-    else {
-      console.log("validation error =>", validate())
+    } else {
+      console.log("validation error =>", validate());
     }
   };
 
@@ -81,29 +79,26 @@ export default function LoginForm() {
     <div className="flex justify-center items-center p-4 min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
         <div className="logo   text-center flex justify-center items-center">
-          <img
-            src="https://lyvup.com/hs-fs/hubfs/Tekengebied%201%20(2).jpg?width=211&height=149&name=Tekengebied%201%20(2).jpg"
-            alt="Lyvup Logo"
-            className="logo-img w-30 h-20"
-          />
+          <img src={logo} alt="Lyvup Logo" className="logo-img h-[50px] mb-3" />
         </div>
-        <h2 className="text-xl text-left mb-2 font-semibold ">{t("lg_LOGIN")}</h2>
+        <h2 className="text-xl text-left mb-2 font-semibold ">
+          {t("lg_LOGIN")}
+        </h2>
         <form onSubmit={handleLoginSubmit}>
           <div className="mb-4">
             <input
               type="email"
               id="email"
               name="email"
-              className={` border ${errors.email ? " border-danger" : ""} rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
+              className={` border ${
+                errors.email ? " border-danger" : ""
+              } rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
               placeholder={t("lg_Enter your username or email")}
               value={state.email}
               onChange={onInputChange}
             />
             {errors.email && (
-              <span
-                key={errors.email}
-                className="text-danger font-size-3"
-              >
+              <span key={errors.email} className="text-danger font-size-3">
                 {errors.email}
               </span>
             )}
@@ -113,21 +108,19 @@ export default function LoginForm() {
               type="password"
               id="password"
               name="password"
-              className={` border ${errors.email ? " border-danger" : ""} rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
+              className={` border ${
+                errors.email ? " border-danger" : ""
+              } rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
               placeholder={t("lg_Enter your password")}
               value={state.password}
               onChange={onInputChange}
             />
             {/*----ERROR MESSAGE FOR password----*/}
             {errors.password && (
-              <span
-                key={errors.password}
-                className="text-danger font-size-3"
-              >
+              <span key={errors.password} className="text-danger font-size-3">
                 {errors.password}
               </span>
             )}
-           
           </div>
           <button
             type="submit"

@@ -28,7 +28,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
       value: option.id,
       label: option.name,
     }));
-    console.log("options =>", options);
+    // console.log("options =>", options);
     setUnSelectedUsersList(options);
     // eslint-disable-next-line
   }, [unSelectedUsers]);
@@ -39,8 +39,8 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
 
   const handleAddUserToAccount = async (id) => {
     const response = await AddUserAccount(selectedAccount.id, selectedOptions);
-    console.log(response);
-    setSelectedOptions([])
+    // console.log(response);
+    setSelectedOptions([]);
     setBoolean(true);
   };
 
@@ -62,15 +62,15 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
   };
 
   const handleSelectChange = (selectedOption) => {
-    console.log('select option ----------', selectedOption)
+    console.log("select option ----------", selectedOption);
     if (selectedOption) {
-      const values = selectedOption.map(option => option.value);
+      const values = selectedOption.map((option) => option.value);
       setSelectedOptions(values);
     } else {
       setSelectedOptions([]);
     }
   };
-  console.log('selected option ', selectedOptions)
+  // console.log("selected option ", selectedOptions);
 
   const handleAddUsers = () => {
     if (selectedOptions.length > 0) {
@@ -82,8 +82,9 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
 
   return (
     <div
-      className={`fixed inset-y-0 right-0 w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+      className={`fixed inset-y-0 right-0 w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+        isOpen ? "translate-x-0" : "translate-x-full"
+      }`}
     >
       <div className="p-4">
         <div className="flex justify-between items-center mb-4">
@@ -109,9 +110,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
           <div className="border rounded-md p-2">
             <h4 className="font-semibold mb-2">Add New User</h4>
 
-
             <div className="flex gap-2 ">
-
               <Select
                 ref={selectRef}
                 options={unSelectedUsersList}
@@ -131,7 +130,6 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
                 add
               </CustomButton>
             </div>
-
           </div>
           {/* User List */}
           <div className="border rounded-md  p-2">
