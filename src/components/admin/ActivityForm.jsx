@@ -60,7 +60,7 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         >
                           <option value="">Select Language</option>
                           <option value="english">English</option>
-                          <option value="hindi">Hindi</option>
+                         
                         </select>
                         {errors.language && (
                           <span className="text-danger font-size-3">
@@ -262,34 +262,7 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           </span>
                         )}
                       </div>
-                      <div>
-                        <label
-                          htmlFor="who"
-                          className="block text-xs font-medium text-gray-700 mb-1"
-                        >
-                          For Whom
-                        </label>
-                        <select
-                          name="who"
-                          id="who"
-                          value={state.who}
-                          onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                            errors.who ? " border-danger" : ""
-                          }`}
-                        >
-                          <option value="">-Select-</option>
-                          <option value="team">team</option>
-                          <option value="individual">individual</option>
-                          <option value="team lead">team lead</option>
-                          <option value="coach">coach</option>
-                        </select>
-                        {errors.who && (
-                          <span className="text-danger font-size-3">
-                            {errors.who.join(", ")}
-                          </span>
-                        )}
-                      </div>
+                     
                     </div>
                     <div className="flex justify-end gap-2 mt-4">
                       <CustomButton
@@ -321,6 +294,34 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                 {state.intervention_type && step === 3 ? (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+                    <div>
+                        <label
+                          htmlFor="who"
+                          className="block text-xs font-medium text-gray-700 mb-1"
+                        >
+                          For Whom
+                        </label>
+                        <select
+                          name="who"
+                          id="who"
+                          value={state.who}
+                          onChange={onInputChange}
+                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
+                            errors.who ? " border-danger" : ""
+                          }`}
+                        >
+                          <option value="">-Select-</option>
+                          <option value="team">team</option>
+                          <option value="individual">individual</option>
+                          <option value="team lead">team lead</option>
+                          <option value="coach">coach</option>
+                        </select>
+                        {errors.who && (
+                          <span className="text-danger font-size-3">
+                            {errors.who.join(", ")}
+                          </span>
+                        )}
+                      </div>
                       {state.intervention_type === "survey" && (
                         <div>
                           <label
@@ -633,6 +634,32 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           )}
                         </div>
                       )}
+                       {state.intervention_type === "excercise" && (
+                      <div>
+                        <label
+                          htmlFor="excercise"
+                          className="block text-xs font-medium text-gray-700 mb-1"
+                        >
+                          excercise
+                        </label>
+                        <input
+                          type="text"
+                          name="excercise"
+                          id="excercise"
+                          placeholder="Enter excercise"
+                          value={state.excercise}
+                          onChange={onInputChange}
+                         className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
+                            errors.excercise ? " border-danger" : ""
+                          }`}
+                        />
+                        {errors.excercise && (
+                          <span className="text-danger font-size-3">
+                            {errors.excercise.join(", ")}
+                          </span>
+                        )}
+                      </div>
+                    )}
                       {(state.intervention_type === "interview" ||
                         state.intervention_type === "other" ||
                         state.intervention_type === "workshop" ||
@@ -817,31 +844,7 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         </div>
                       )}
                     </div>
-                    {state.intervention_type === "excercise" && (
-                      <div>
-                        <label
-                          htmlFor="excercise"
-                          className="block text-xs font-medium text-gray-700 mb-1"
-                        >
-                          User Duration
-                        </label>
-                        <input
-                          type="text"
-                          name="excercise"
-                          id="excercise"
-                          value={state.excercise}
-                          onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                            errors.excercise ? " border-danger" : ""
-                          }`}
-                        />
-                        {errors.excercise && (
-                          <span className="text-danger font-size-3">
-                            {errors.excercise.join(", ")}
-                          </span>
-                        )}
-                      </div>
-                    )}
+                   
 
                     <div className="flex justify-end gap-2 mt-4">
                       <button
@@ -856,6 +859,7 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         id={state.id}
                         onClick={(e)=>{
                           if(validate()){
+                            setStep(1)
                             handleFormSubmit(e)
 
                           }

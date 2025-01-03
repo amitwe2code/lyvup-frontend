@@ -56,6 +56,7 @@ export default function Activity() {
     send_reminder: "",
     add_comment_option: "",
     upload_possible: "",
+    excercise:'',
     url: "",
   };
 
@@ -103,7 +104,7 @@ export default function Activity() {
     ],
     who: [
       (value) =>
-        step === 2
+        step === 3
           ? value === null || value.trim() === ""
             ? "For whom is required"
             : null
@@ -158,7 +159,7 @@ export default function Activity() {
         step === 3 &&
         (state.intervention_type === "challenge" ||
           state.intervention_type === "other")
-          ? value === null || value.trim() === ""
+          ? value === null
             ? "Amount are required"
             : null
           : null,
@@ -394,6 +395,7 @@ export default function Activity() {
       console.log("response=", response);
     }
     setIsBoolean(true);
+    setState(initialFormState)
     setIsOpen(false);
   };
 
@@ -425,7 +427,7 @@ export default function Activity() {
           </div>
         </div>
 
-        <div className=" flex h-auto justify-start my-2 items-center">
+        {/* <div className=" flex h-auto justify-start my-2 items-center">
           <div className="inline-flex gap-3 rounded-md" role="group">
             <Select
               name="label"
@@ -444,9 +446,9 @@ export default function Activity() {
               isClearable
             />
           </div>
-        </div>
+        </div> */}
         <div className="my-1 h-full flex-grow flex gap-1 ">
-          <div className="w-3/5 h-full text-center   overflow-y-scroll">
+          <div className=" h-full text-center w-full   overflow-y-scroll">
             <ActivityTable
               activitys={activitys}
               setOrdering={setOrdering}

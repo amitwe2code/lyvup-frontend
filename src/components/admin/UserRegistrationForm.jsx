@@ -69,7 +69,7 @@ export default function UserRegistrationForm({
 
   return (
     <div>
-      {isOpen && (
+    {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
             <div className="p-4 border-b">
@@ -184,8 +184,7 @@ export default function UserRegistrationForm({
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                {formData.user_type !== 'superadmin'?(
-                  <div>
+                <div>
                   <label
                     htmlFor="userType"
                     className="block text-xs font-medium text-gray-700 mb-1"
@@ -213,8 +212,6 @@ export default function UserRegistrationForm({
                     </span>
                   )} */}
                 </div>
-                ):null}
-               
                 {!formData.id ? (
                   <>
                     <div>

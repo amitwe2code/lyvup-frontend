@@ -26,6 +26,16 @@ export default function BottomNavbar() {
     return null;
   }
 
+  const NavItem = ({ icon: Icon, label, href = "#" }) => (
+    <a
+      href={href}
+      className="flex flex-col text-black items-center justify-center hover:text-[#17686d] transition-colors duration-200"
+    >
+      <Icon size={20} />
+      <span className="text-xs">{label}</span>
+    </a>
+  );
+
   // const NavItem = ({ icon: Icon, label, href = "#" }) => (
   //   <a
   //     href={href}
