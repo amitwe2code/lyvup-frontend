@@ -17,8 +17,6 @@ import ActivityDetail from './components/admin/ActivityDetail'
 import ActivityActionType from './pages/admin/ActivityActionType';
 import Programs from './pages/admin/Programs';
 
-// import UserRegistrationForm from './components/admin/UserRegistrationForm'
-// import User from './components/other/User'
 
 export default function App() {
   const [user, setUser] = useState(null)

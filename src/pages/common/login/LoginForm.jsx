@@ -64,7 +64,9 @@ export default function LoginForm() {
         setEmail("");
         setPassword("");
         // setErrors({ ...errors, password: ["invalid crendentials"] })
-        navigate(`/profile/${user?.id}`);
+        setTimeout(() => {
+          navigate(`/profile/${user?.id}`);
+        }, 100);
         window.location.reload()
       } catch (error) {
         console.error("Login failed:", error);

@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-catch */
 import axios from "axios";
-// const API_URL = 'http://127.0.0.1:8000';
-const API_URL = "http://128.199.55.101:8000";
+const API_URL = 'http://127.0.0.1:8000';
+// const API_URL = "http://128.199.55.101:8000";
 
 export const loginUser = async (email, password) => {
   try {

@@ -8,7 +8,15 @@ export default function Logout() {
     const accessToken=localStorage.getItem('accessToken')
     const refreshToken=localStorage.getItem('refreshToken')
 
- 
+    const handleLogOut=async()=>{
+      console.log("logout call")
+    const response=await logoutUser(accessToken,refreshToken)
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('user')
+    console.log(response)
+    navigate('/')
+    window.location.reload()
     }
 
     return(
