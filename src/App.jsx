@@ -79,7 +79,7 @@ export default function App() {
               </>
             ) : null}
 
-            <Route path='*' element={<NotFound />} />
+            <Route path='*' element={<NotFound token={token} user={user}/>} />
           </Routes>
         </BrowserRouter>
       </div>

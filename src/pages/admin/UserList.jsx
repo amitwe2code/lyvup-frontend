@@ -173,7 +173,7 @@ export default function UserList() {
           </div>
         </div>
 
-
+        
         <div className=" flex justify-start my-2 items-center">
           <div className="inline-flex rounded-md" role="group">
             {(loginUser?.user_type === 'superadmin') && (
