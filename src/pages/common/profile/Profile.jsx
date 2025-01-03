@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Languages } from "lucide-react";
+import { Mail, Phone, MapPin, Languages, PenIcon, PenBoxIcon } from "lucide-react";
 import TopBar from "../../../components/admin/TobBar";
 import BottomNavbar from "../../../components/user/BottomNavbar";
 import { useSelector } from "react-redux";
@@ -26,7 +26,7 @@ export default function Profile() {
       name: user.name,
       email: user.email,
       phone: user.phone,
-      userType: user.user_type,
+      user_type: user.user_type,
       language_preference: user.language_preference,
     });
     setIsOpen(true);
@@ -54,6 +54,7 @@ export default function Profile() {
       setLoading(true);
       const response = await getUser(accessToken, id);
       setUser(response.data.data);
+      console.log('userData',response.data.data)
     } catch (error) {
       console.log(error);
     } finally {
@@ -79,9 +80,9 @@ export default function Profile() {
             <div className="text-right position-absolute top-5 right-5">
               <CustomButton
                 onClick={handleEditFormOpen}
-                className="bg-[#039a77]"
+                className="bg-none border-none text-[#039a77]"
               >
-                Edit
+                <PenBoxIcon/>
               </CustomButton>
             </div>
 

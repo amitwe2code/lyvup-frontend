@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { ActivityIcon, TypeIcon, Users, Users2 } from "lucide-react";
+import {
+  ActivityIcon,
+  TypeIcon,
+  Users,
+  Users2,
+  NotebookTabs,
+} from "lucide-react";
 import Activity from "../../pages/admin/Activity";
 
 export default function BottomNavbar() {
@@ -13,20 +19,15 @@ export default function BottomNavbar() {
     }
   }, []);
 
-  // अगर user patient है तो navbar नहीं दिखाएंगे
+  // if user is patient then return null
   if (userType === "patient") {
     return null;
   }
 
-  const NavItem = ({ icon: Icon, label, href = "#" }) => (
-    <a
-      href={href}
-      className="flex flex-col text-black items-center justify-center hover:text-[#17686d] transition-colors duration-200"
-    >
-      <Icon size={20} />
-      <span className="text-xs">{label}</span>
-    </a>
-  );
+  // अगर user patient है तो navbar नहीं दिखाएंगे
+  if (userType === "patient") {
+    return null;
+  }
 
   return (
     <div>
@@ -34,8 +35,9 @@ export default function BottomNavbar() {
         <div className="flex h-full font-semibold justify-around items-center">
           <NavItem icon={Users} label="Users" href="/users" />
           <NavItem icon={Users2} label="Accounts" href="/accounts" />
-          {/* <NavItem icon={TypeIcon} label="ActivityType" href="/activitytype" />
-                    <NavItem icon={ActivityIcon} label="Activity" href="/activity" /> */}
+          <NavItem icon={NotebookTabs} label="Programs" href="/programs" />
+          <NavItem icon={TypeIcon} label="ActivityType" href="/activitytype" />
+          <NavItem icon={ActivityIcon} label="Activity" href="/activity" />
         </div>
       </nav>
     </div>

@@ -81,7 +81,7 @@ export default function ActivityTable({ activitys, setOrdering, handleActivityDe
                                             id={activity?.id}
                                             variant="outline"
                                             size="small"
-                                            onClick={() => handleActivityUpdate(user)}
+                                            onClick={() => handleActivityUpdate(activity)}
                                             className="border   border-r-0 rounded-none "
                                         >
                                             {" "}
