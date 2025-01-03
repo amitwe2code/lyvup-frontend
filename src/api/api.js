@@ -1,12 +1,7 @@
 /* eslint-disable no-useless-catch */
 import axios from "axios";
-<<<<<<< HEAD
 const API_URL = 'http://128.199.55.101:8000';
 
-=======
-import { data } from "react-router";
-const API_URL = '128.199.55.101:8000';
->>>>>>> origin/deploy
 
 
 export const loginUser = async (email, password) => {
@@ -285,7 +280,7 @@ export const addActivity = async (accessToken, data) => {
 
 export const updateActivity = async (accessToken, data, id) => {
       try {
-            const response = await axios.put(`${API_URL}/survey/${id}/`,data, {
+            const response = await axios.put(`${API_URL}/survey/${id}/`, data, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -339,7 +334,7 @@ export const getSingleActivityType = async (accessToken, id) => {
 
 export const addActivityType = async (accessToken, data) => {
       try {
-            const response = await axios.post(`${API_URL}/activityapp/`,data, {
+            const response = await axios.post(`${API_URL}/activityapp/`, data, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
