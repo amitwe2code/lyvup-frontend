@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 import axios from "axios";
-const API_URL = 'http://128.199.55.101:8000';
+const API_URL = 'http://127.0.0.1:8000';
 
 
 
@@ -280,7 +280,7 @@ export const addActivity = async (accessToken, data) => {
 
 export const updateActivity = async (accessToken, data, id) => {
       try {
-            const response = await axios.put(`${API_URL}/survey/${id}/`,data, {
+            const response = await axios.put(`${API_URL}/survey/${id}/`, data, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -334,7 +334,7 @@ export const getSingleActivityType = async (accessToken, id) => {
 
 export const addActivityType = async (accessToken, data) => {
       try {
-            const response = await axios.post(`${API_URL}/activityapp/`,data, {
+            const response = await axios.post(`${API_URL}/activityapp/`, data, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -361,6 +361,73 @@ export const updateActivityType = async (accessToken, data, id) => {
 export const deleteActivityType = async (accessToken, id) => {
       try {
             const response = await axios.delete(`${API_URL}/activityapp/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+//program api call 
+export const getProgram = async (accessToken, search, currentPage, pageSize, ordering) => {
+      try {
+            const response = await axios.get(`${API_URL}/program/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+
+export const getSingleProgram = async (accessToken, id) => {
+      try {
+            const response = await axios.get(`${API_URL}/program/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const addProgram = async (accessToken, data) => {
+      try {
+            const response = await axios.post(`${API_URL}/program/`, data, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const updateProgram = async (accessToken, data, id) => {
+      try {
+            const response = await axios.put(`${API_URL}/program/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const deleteProgram = async (accessToken, id) => {
+      try {
+            const response = await axios.delete(`${API_URL}/program/${id}/`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }

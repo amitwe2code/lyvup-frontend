@@ -99,7 +99,7 @@ export default function UserList() {
       ) {
         const response = await addUser(accessToken, formData);
         console.log("response=", response);
-      
+
       } else {
         console.log("passed data=>", formData);
         const response = await updateUser(accessToken, formData, e.target.id);

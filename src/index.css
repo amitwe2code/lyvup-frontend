@@ -77,9 +77,141 @@
 .program-list .form-group  small span{
   font-size: 14px;
 }
+.program_sidebar {
+  position: relative;
+  height: calc(100vh-112px);
 
+}
+.program_sidebar_btn{
+  position: absolute;
+  right: -20px;
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .program_sidebar_btn{
+      display: block;
+  }
+  .program_sidebar.program_sidebar_show{
+    left: 0;
+  } 
+  .program_sidebar
+  { position: absolute;
+  left: -316px;
+  transition: 0.5s;
+}
+}
 @media screen and (max-width: 1023px) {
   #program-container .program-list {
       padding: 1em;
   }
+}
+
+.bg-secondary-color{
+  background-color: #e2e8f0;
+}
+
+
+
+
+
+.add_program_info .program_info_card,
+.add_program .program_card{
+background: linear-gradient(90deg, #03799a96, #5fbb977a 100%);
+padding: 10px;
+border-radius: 6px;
+}
+.add_program .program_card h6{
+font-family: sans-serif;
+font-size: 16px;
+margin-bottom: 2px;
+}
+.add_program .program_card p{
+font-size: 14px;
+font-family: sans-serif;
+margin: 0;
+color: #434343;
+}
+.add_program  .add_program_info {
+display: flex;
+gap: 8px;
+flex-wrap: wrap;
+margin-top: 16px;
+}
+.add_program  .add_program_info .program_info_card{
+color: #434343;
+font-size: 14px;
+display: flex;
+gap: 6px;
+
+}
+.add_program  .program_day_card {
+background: whitesmoke;
+border-radius: 6px;
+}
+.add_program  .program_day_card .program_day_card_contant{
+padding: 10px;
+position: relative;
+}
+.add_program  .program_day_card .program_day_card_contant .program_contant_add_btn{
+
+background: #03799a;
+width: 24px;
+height: 24px;
+padding: 15px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+color: #fff;
+position: absolute;
+right: -34px;
+top: 26%;
+
+}
+
+
+.add_program  .add_program_info .program_info_card span{
+
+}
+.add_program  .add_program_info .program_info_card span b{
+
+}
+.add_program  .program_day_card .program_day_card_head{
+background: #03799a;
+padding: 10px;
+border-radius: 6px;
+margin-top: 16px;
+}
+.add_program  .program_day_card  .total_duration{
+display: flex;
+justify-content: space-between;
+align-self: center;
+}
+.add_program .program_day_card .total_duration h4{
+font-size: 14px;
+margin: 0;
+color: #fff;
+line-height: 28px;
+
+}
+.add_program .program_day_card .total_duration .total_duration_btns{
+display: flex
+;
+align-items: center;
+gap: 8px;
+color: #fff;
+}
+.add_program .program_day_card .total_duration .total_duration_btns h6{
+margin: 0;
+font-style: 13px;
+color: #fff;
+}
+.add_program  .program_day_card p{
+font-size: 14px;
+color: rgb(0, 0, 0);
+margin-bottom: 3px;
+
+}
+.add_program  .program_day_card b{
+margin-right: 4px;
 }

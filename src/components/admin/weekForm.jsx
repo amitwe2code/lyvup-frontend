@@ -1,0 +1,207 @@
+import React, { useState } from "react";
+import CustomButton from "../common/CustomButton";
+import { updateUser } from "../../api/api";
+
+export default function WeekForm({
+    initialFormState,
+    isOpen,
+    setIsOpen,
+    state,
+    setState,
+    onInputChange,
+    errors,
+    handleFormSubmit,
+}) {
+    const [filterShow, setFilterShow] = useState(false)
+
+    return (
+        <div>
+            {isOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+                    <div className="bg-white max-h-full overflow-y-auto rounded-lg  max-w-xl shadow-xl w-full ">
+                        <div className="p-3  border-b">
+                            <h2 className="text-lg text-[#039a77] font-semibold">Add intervention to the week
+                            </h2>
+                        </div>
+                        <div className="p-4 flex flex-col gap-2 border-b justify-start items-center ">
+                            <div className="text-center ">
+                                <small className="flex  items-center gap-1">
+                                    <input
+                                        type="checkbox"
+                                        id="show_child_program"
+                                        className=""
+                                        checked={!filterShow}
+                                        onChange={(e) => {
+                                            setFilterShow(!filterShow);
+                                        }}
+                                        style={{ display: "inline" }}
+                                    />
+                                    <span>Dynamic intervention</span>
+                                </small>
+                            </div>
+
+
+                            {filterShow && (<div className="flex flex-wrap  items-center gap-2 justify-evenly">
+                                <div className="w-full">
+                                    <label
+                                        htmlFor="intervention_type"
+                                        className={`block text-gray-700 mb-1`}
+                                    >
+                                        Filter by Intervention
+                                    </label>
+                                    <select
+                                        name="intervention_type"
+                                        id="intervention_type"
+                                        value={state?.intervention_type}
+                                        onChange={onInputChange}
+                                        className={`w-full 
+                                         px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]`}
+                                    >
+                                        <option value="">Select Type</option>
+                                        <option value="survey">survey</option>
+                                        <option value="challenge">challenge</option>
+                                        <option value="interview">interview</option>
+                                        <option value="video">video</option>
+                                        <option value="workshop">workshop</option>
+                                        <option value="assignment">assignment</option>
+                                        <option value="excercise">excercise</option>
+                                        <option value="podcast">podcast</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                </div>
+
+                                <div className="w-full">
+                                    <label
+                                        htmlFor="intervention_type"
+                                        className={`block text-gray-700 mb-1`}
+                                    >
+                                        Search by intervention:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="program_search"
+                                        className="w-full 
+                                         px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]"
+                                        placeholder="Search"
+                                        // value={programSearch}
+                                        onChange={(e) => {
+                                            setProgramSearch(e.target.value);
+                                            searchProgram("search");
+                                        }}
+                                    />
+                                </div>
+                            </div>)}
+                        </div>
+                        <form className="p-4 space-y-3">
+                            <div>
+                                <label
+                                    htmlFor="language"
+                                    className="block text-xs font-medium text-gray-700 mb-1"
+                                >
+                                    Label
+                                </label>
+                                <select
+                                    name="language"
+                                    id="language"
+                                    value={state.language}
+                                    onChange={onInputChange}
+                                    className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.language ? " border-danger" : ""
+                                        }`}
+                                >
+                                    <option value="">Select Label</option>
+                                    <option value="important">Important</option>
+                                    <option value="urgent">Urgent</option>
+                                    <option value="normal">Normal</option>
+                                </select>
+                                {errors.language && (
+                                    <span className="text-danger font-size-3">
+                                        {errors.language.join(", ")}
+                                    </span>
+                                )}
+                            </div>
+                            <div className=" ">
+                                <small className="flex justify-center items-center gap-1">
+                                    <input
+                                        type="checkbox"
+                                        id="show_child_program"
+                                        className=""
+                                        checked={!filterShow}
+                                        onChange={(e) => {
+                                            setFilterShow(!filterShow);
+                                        }}
+                                        style={{ display: "inline" }}
+                                    />
+                                    <span>Dynamic intervention</span>
+                                </small>
+                            </div>
+                            <div className="w-full text-center">
+                                <div>
+
+                                    <select
+                                        name="day_for_week_activity"
+                                        id="day_for_week_activity"
+                                        value={state?.day_for_week_activity}
+                                        onChange={onInputChange}
+                                        className={`w-40
+                                        px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]`}
+                                    >
+                                        <option value="">To-do on </option>
+                                        <option value="sunday">sunday</option>
+                                        <option value="monday">monday</option>
+                                        <option value="tuesday">tuesday</option>
+                                        <option value="wednesday">wednesday</option>
+                                        <option value="thursday">thursday</option>
+                                        <option value="friday">friday</option>
+                                        <option value="saturday">saturday</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <select
+                                        name="time"
+                                        id="time"
+                                        value={state?.time}
+                                        onChange={onInputChange}
+                                        className={`w-20
+                                         px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]`}
+                                    >
+                                        <option value="">time </option>
+                                        <option value="sunday">sunday</option>
+                                        <option value="monday">monday</option>
+                                        <option value="tuesday">tuesday</option>
+                                        <option value="wednesday">wednesday</option>
+                                        <option value="thursday">thursday</option>
+                                        <option value="friday">friday</option>
+                                        <option value="saturday">saturday</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-center space-x-2 mt-4">
+                                <CustomButton
+                                    type="button"
+                                    onClick={() => {
+                                        setState(initialFormState)
+                                        setIsOpen(false)
+                                    }
+                                    }
+                                    className="px-3 py-1 text-xs bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                                >
+                                    Cancel
+                                </CustomButton>
+                                <CustomButton
+                                    type="submit"
+                                    id={state?.id}
+                                    variant="outline"
+                                    onClick={handleFormSubmit}
+                                    className="px-3 py-1 text-xs   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
+                                >
+                                    {state?.id ? "Update" : "Add"}
+                                </CustomButton>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}

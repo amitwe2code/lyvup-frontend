@@ -37,7 +37,8 @@ export default function ActivityActionTypeForm({
                     value={state.activity_type}
                     onChange={onInputChange}
                     required
-                    className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                     className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity_type ? " border-danger" : ""
+                          } `}
                   />
                   {errors.activity_type && (
                     <span className="text-danger font-size-3">
@@ -60,7 +61,8 @@ export default function ActivityActionTypeForm({
                     value={state.activity}
                     onChange={onInputChange}
                     required
-                    className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                     className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity ? " border-danger" : ""
+                          } `}
                   />
                   {errors.activity && (
                     <span className="text-danger font-size-3">
@@ -85,7 +87,8 @@ export default function ActivityActionTypeForm({
                     value={state.amount}
                     onChange={onInputChange}
                     required
-                    className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                     className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.amount ? " border-danger" : ""
+                          } `}
                   />
                   {errors.amount && (
                     <span className="text-danger font-size-3">
@@ -108,7 +111,8 @@ export default function ActivityActionTypeForm({
                     value={state.unit}
                     onChange={onInputChange}
                     required
-                    className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                     className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.unit ? " border-danger" : ""
+                          } `}
                   />
                   {errors.unit && (
                     <span className="text-danger font-size-3">
@@ -133,7 +137,8 @@ export default function ActivityActionTypeForm({
                     value={state.key_activity}
                     onChange={onInputChange}
                     required
-                    className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.key_activity ? " border-danger" : ""
+                          } `}
                   />
                   {errors.key_activity && (
                     <span className="text-danger font-size-3">
