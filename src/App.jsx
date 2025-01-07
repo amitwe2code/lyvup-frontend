@@ -16,6 +16,7 @@ import Activity from './pages/admin/Activity'
 import ActivityDetail from './components/admin/ActivityDetail'
 import ActivityActionType from './pages/admin/ActivityActionType';
 import Programs from './pages/admin/Programs';
+import Task from './pages/users/Task';
 
 
 export default function App() {
@@ -63,7 +64,6 @@ export default function App() {
                 <Route path='/profile/:id' element={<Profile />} />
               </>
             ) : null}
-
             {(user?.user_type === 'SUPERADMIN' || user?.user_type === 'superadmin' || user?.user_type === 'Admin' || user?.user_type === 'admin') && token ? (
               <>
                 <Route path='/dashboard' element={<Dashboard />} />
@@ -75,7 +75,7 @@ export default function App() {
                 <Route path='/activitytype' element={<ActivityActionType />} />
                 <Route path='/activity/detail' element={<ActivityDetail />} />
                 <Route path='/programs' element={<Programs />} />
-                
+                <Route path='/task' element={<Task/>}/>
               </>
             ) : null}
 

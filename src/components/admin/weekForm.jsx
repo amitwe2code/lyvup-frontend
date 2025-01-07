@@ -13,12 +13,13 @@ export default function WeekForm({
     handleFormSubmit,
 }) {
     const [filterShow, setFilterShow] = useState(false)
+    const [showDateTime, setShowDateTime] = useState(false)
 
     return (
         <div>
             {isOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white max-h-full overflow-y-auto rounded-lg  max-w-xl shadow-xl w-full ">
+                    <div className="bg-white max-h-full overflow-y-auto rounded-lg  max-w-2xl shadow-xl w-full ">
                         <div className="p-3  border-b">
                             <h2 className="text-lg text-[#039a77] font-semibold">Add intervention to the week
                             </h2>
@@ -30,19 +31,19 @@ export default function WeekForm({
                                         type="checkbox"
                                         id="show_child_program"
                                         className=""
-                                        checked={!filterShow}
+                                        checked={filterShow}
                                         onChange={(e) => {
                                             setFilterShow(!filterShow);
                                         }}
                                         style={{ display: "inline" }}
                                     />
-                                    <span>Dynamic intervention</span>
+                                    <span className="text-base">Dynamic intervention</span>
                                 </small>
                             </div>
 
 
-                            {filterShow && (<div className="flex flex-wrap  items-center gap-2 justify-evenly">
-                                <div className="w-full">
+                            {filterShow && (<div className="flex flex-wrap w-full items-center gap-3  justify-center">
+                                <div className="sm:w-2/5 ">
                                     <label
                                         htmlFor="intervention_type"
                                         className={`block text-gray-700 mb-1`}
@@ -55,7 +56,7 @@ export default function WeekForm({
                                         value={state?.intervention_type}
                                         onChange={onInputChange}
                                         className={`w-full 
-                                         px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]`}
+                                         p-2 text-sm input  rounded `}
                                     >
                                         <option value="">Select Type</option>
                                         <option value="survey">survey</option>
@@ -70,7 +71,7 @@ export default function WeekForm({
                                     </select>
                                 </div>
 
-                                <div className="w-full">
+                                <div className="sm:w-2/5 ">
                                     <label
                                         htmlFor="intervention_type"
                                         className={`block text-gray-700 mb-1`}
@@ -80,8 +81,8 @@ export default function WeekForm({
                                     <input
                                         type="text"
                                         id="program_search"
-                                        className="w-full 
-                                         px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]"
+                                        className=" input p-2  w-full 
+                                         text-sm  rounded "
                                         placeholder="Search"
                                         // value={programSearch}
                                         onChange={(e) => {
@@ -96,19 +97,20 @@ export default function WeekForm({
                             <div>
                                 <label
                                     htmlFor="language"
-                                    className="block text-xs font-medium text-gray-700 mb-1"
+                                    className="block text-base font-medium text-gray-700 mb-1"
                                 >
-                                    Label
+                                    Language
                                 </label>
                                 <select
                                     name="language"
                                     id="language"
                                     value={state.language}
+
                                     onChange={onInputChange}
-                                    className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.language ? " border-danger" : ""
+                                    className={`w-full p-2 input text-sm  rounded ${errors.language ? " border-danger" : ""
                                         }`}
                                 >
-                                    <option value="">Select Label</option>
+                                    <option value="">Select language</option>
                                     <option value="important">Important</option>
                                     <option value="urgent">Urgent</option>
                                     <option value="normal">Normal</option>
@@ -125,56 +127,62 @@ export default function WeekForm({
                                         type="checkbox"
                                         id="show_child_program"
                                         className=""
-                                        checked={!filterShow}
+                                        checked={showDateTime}
                                         onChange={(e) => {
-                                            setFilterShow(!filterShow);
+                                            setShowDateTime(!showDateTime);
                                         }}
                                         style={{ display: "inline" }}
                                     />
-                                    <span>Dynamic intervention</span>
+                                    <span className="text-base">Add day and time</span>
                                 </small>
                             </div>
-                            <div className="w-full text-center">
-                                <div>
+                            {showDateTime && (
+                                <div className="w-full flex flex-wrap justify-center  text-center gap-1  sm:gap-2">
+                                    <div>
+                                        <select
+                                            name="day_for_week_activity"
+                                            id="day_for_week_activity"
+                                            value={state?.day_for_week_activity}
+                                            onChange={onInputChange}
+                                            className={`w-full  p-2 input text-sm rounded   ${errors.day_for_week_activity ? " border-danger" : ""
+                                                }
+                                        `}
+                                        >
+                                            <option value="">To-do on </option>
+                                            <option value="sunday">sunday</option>
+                                            <option value="monday">monday</option>
+                                            <option value="tuesday">tuesday</option>
+                                            <option value="wednesday">wednesday</option>
+                                            <option value="thursday">thursday</option>
+                                            <option value="friday">friday</option>
+                                            <option value="saturday">saturday</option>
+                                        </select>
+                                        {errors.day_for_week_activity && (
+                                            <span className="text-danger font-size-3">
+                                                {errors.day_for_week_activity.join(", ")}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="w-20">
+                                        <input
+                                            type="time"
+                                            name="time"
+                                            id="time"
+                                            value={state?.time}
+                                            onChange={onInputChange}
+                                            className={`
+                                            p-2 text-sm input rounded  ${errors.time ? " border-danger" : ""
+                                                }  `}
+                                        />
+                                        {errors.time && (
+                                            <span className="text-danger font-size-3">
+                                                {errors.time.join(", ")}
+                                            </span>
+                                        )}
 
-                                    <select
-                                        name="day_for_week_activity"
-                                        id="day_for_week_activity"
-                                        value={state?.day_for_week_activity}
-                                        onChange={onInputChange}
-                                        className={`w-40
-                                        px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]`}
-                                    >
-                                        <option value="">To-do on </option>
-                                        <option value="sunday">sunday</option>
-                                        <option value="monday">monday</option>
-                                        <option value="tuesday">tuesday</option>
-                                        <option value="wednesday">wednesday</option>
-                                        <option value="thursday">thursday</option>
-                                        <option value="friday">friday</option>
-                                        <option value="saturday">saturday</option>
-                                    </select>
+                                    </div>
                                 </div>
-                                <div>
-                                    <select
-                                        name="time"
-                                        id="time"
-                                        value={state?.time}
-                                        onChange={onInputChange}
-                                        className={`w-20
-                                         px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]`}
-                                    >
-                                        <option value="">time </option>
-                                        <option value="sunday">sunday</option>
-                                        <option value="monday">monday</option>
-                                        <option value="tuesday">tuesday</option>
-                                        <option value="wednesday">wednesday</option>
-                                        <option value="thursday">thursday</option>
-                                        <option value="friday">friday</option>
-                                        <option value="saturday">saturday</option>
-                                    </select>
-                                </div>
-                            </div>
+                            )}
 
                             <div className="flex justify-center space-x-2 mt-4">
                                 <CustomButton

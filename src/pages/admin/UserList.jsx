@@ -64,7 +64,7 @@ export default function UserList() {
       const response = await deleteUser(accessToken, e.target.id);
       console.log("res=>", response);
       // alert("delete user with id ", e.target.id);
-      setIsBoolean(true); // यह list को refresh करेगा
+      setIsBoolean(true); 
     } catch (error) {
       console.log(error);
     } finally {
@@ -178,7 +178,7 @@ export default function UserList() {
           <div className="inline-flex rounded-md" role="group">
             {(loginUser?.user_type === 'superadmin') && (
               <CustomButton
-                className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === 'admin' ? 'bg-[#039a77] text-white' : ''}`}
+                className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === 'admin' ? 'btn_theme_color' : ''}`}
                 variant="outline"
                 onClick={() => setUserType("admin")}
               >
@@ -187,7 +187,7 @@ export default function UserList() {
             )}
 
             <CustomButton
-              className={`sm:w-40 px-10 capitalize rounded-none ${userType === 'patient' ? 'bg-[#039a77] text-white' : ''}`}
+              className={`sm:w-40 px-10 capitalize rounded-none ${userType === 'patient' ? 'btn_theme_color' : ''}`}
               variant="outline"
               onClick={() => setUserType("patient")}
             >

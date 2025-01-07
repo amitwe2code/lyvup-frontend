@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CustomButton from "../common/CustomButton";
 import { updateUser } from "../../api/api";
+import { CrossIcon, SidebarCloseIcon } from "lucide-react";
 
 export default function ProgramAssignToTeam({
     initialFormState,
@@ -12,28 +13,32 @@ export default function ProgramAssignToTeam({
     errors,
     handleFormSubmit,
 }) {
+    const [individual, setIndividual] = useState(false);
+    const close = () => {
+        setState(initialFormState)
+        setIsOpen(false)
+    }
 
 
     return (<>
-
-
         {isOpen && (<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
             <div className="bg-white max-h-full overflow-y-auto rounded-lg shadow-xl w-full max-w-2xl">
                 <div className="p-4 sm:p-6 md:p-8 max-h-[80vh] overflow-y-auto">
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 pb-2 border-b-2 border-[#039a77] text-[#039a77] sticky top-0 bg-white">Labeled Responsive Form</h2>
-
+                    <div className="flex flex-row justify-between items-center pb-2  mb-4 sm:mb-6  border-b-2 border-[#039a77] gap-4">
+                        <h2 className="text-2xl sm:text-3xl font-bold  text-[#039a77] sticky top-0 bg-white">Assign program</h2>
+                        <button className=" pr-2" onClick={() => close()}><b>X</b></button>
+                    </div>
                     <form className="space-y-4 sm:space-y-6">
                         <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
                             <label className="flex items-center w-full sm:w-1/2">
-                                <input type="checkbox" className="form-checkbox  text-[#039a77]" />
+                                <input type="radio" name='individual' className="form-checkbox  text-[#039a77]" onChange={() => setIndividual(false)} checked={!individual} />
                                 <span className="ml-2 text-gray-700">Assign to team</span>
                             </label>
                             <label className="flex items-center w-full sm:w-1/2">
-                                <input type="checkbox" className="form-checkbox  text-[#039a77]" />
+                                <input type="radio" name='individual' className="form-checkbox text-[#039a77]" onChange={() => setIndividual(true)} checked={individual} />
                                 <span className="ml-2 text-gray-700"> Assign to individual</span>
                             </label>
                         </div>
-
                         <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
                             <div className="w-full sm:w-1/2">
                                 <label htmlFor="assign_company" className="block text-sm font-medium text-gray-700 mb-1">Select organisation</label>
@@ -41,7 +46,8 @@ export default function ProgramAssignToTeam({
                                     id="assign_company"
                                     name="assign_company"
                                     onChange={onInputChange}
-                                    className="form-select block w-full p-2 rounded-md border-gray-300 border focus:border-[#039a77] focus:ring focus:ring-[#039a77] focus:ring-opacity-50"
+                                    className={`input block w-full p-2 rounded-md ${errors.assign_company ? " border-danger" : ""
+                                        } `}
                                 >
                                     <option>Option 1</option>
                                     <option>Option 2</option>
@@ -58,8 +64,9 @@ export default function ProgramAssignToTeam({
                                     id="assign_team"
                                     name="assign_team"
                                     onChange={onInputChange}
-                                    className="form-select block w-full p-2 rounded-md border-gray-300 border focus:border-[#039a77] focus:ring focus:ring-[#039a77] focus:ring-opacity-50"
-                                >
+                                    className={`input block w-full p-2 rounded-md  ${errors.assign_team ? " border-danger" : ""
+                                        }`
+                                    } >
                                     <option>Option A</option>
                                     <option>Option B</option>
                                 </select>
@@ -70,33 +77,38 @@ export default function ProgramAssignToTeam({
                                 )}
                             </div>
                         </div>
+                        {individual && (
 
-                        <div>
-                            <label htmlFor="assign_user" className="block text-sm font-medium text-gray-700 mb-1">Select individual</label>
-                            <input
-                                type="text"
-                                id="assign_user"
-                                name="assign_user"
-                                onChange={onInputChange}
-                                className="form-input mt-1 block w-1/2 p-2 rounded-md border-gray-300 border focus:border-[#039a77] focus:ring focus:ring-[#039a77] focus:ring-opacity-50"
-                                placeholder="Enter text here"
-                            />
-                            {errors.assign_user && (
-                                <span className="text-danger font-size-3">
-                                    {errors.assign_user.join(", ")}
-                                </span>
-                            )}
-                        </div>
+                            <div>
+                                <label htmlFor="assign_user" className="block text-sm font-medium text-gray-700 mb-1">Select individual</label>
+                                <select
+                                    id="assign_user"
+                                    name="assign_user"
+                                    onChange={onInputChange}
+                                    className={`input b w-full p-2 rounded-md  ${errors.assign_user ? " border-danger" : ""
+                                        }`}
+                                >
+                                    <option>Option A</option>
+                                    <option>Option B</option>
+                                </select>
+                                {errors.assign_user && (
+                                    <span className="text-danger font-size-3">
+                                        {errors.assign_user.join(", ")}
+                                    </span>
+                                )}
+                            </div>
+                        )}
 
                         <div className="flex justify-center">
                             <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
                                 <label htmlFor="assign_start_date" className="block text-sm font-medium text-gray-700 mb-1 text-start">Select start date</label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     id="assign_start_date"
                                     name="assign_start_date"
                                     onChange={onInputChange}
-                                    className="form-control hasDatepicker mt-1 block w-full p-2 rounded-md border-gray-300 border focus:border-[#039a77] focus:ring focus:ring-[#039a77] focus:ring-opacity-50"
+                                    className={`input  mt-1  w-full p-2 rounded-md ${errors.assign_start_date ? " border-danger" : ""
+                                        } `}
                                     placeholder="Centered input"
                                 />
                                 {errors.assign_start_date && (
@@ -107,16 +119,10 @@ export default function ProgramAssignToTeam({
                             </div>
                         </div>
                         <div className="text-center flex  gap-4 justify-center">
-
-
                             <CustomButton
                                 type="button"
-                                onClick={() => {
-                                    setState(initialFormState)
-                                    setIsOpen(false)
-                                }
-                                }
-                                className="px-3 py-1 text-xs bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                                onClick={() => close()}
+                                className="px-3 py-1 text-xs bg-none  rounded bg-slate-400 "
                             >
                                 Cancel
                             </CustomButton>
@@ -125,7 +131,7 @@ export default function ProgramAssignToTeam({
                                 id={state?.id}
                                 variant="outline"
                                 onClick={handleFormSubmit}
-                                className="px-3 py-1 text-xs   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
+                                className="px-3 py-1 text-xs  rounded "
                             >
                                 {state?.id ? "Update" : "Add"}
                             </CustomButton>

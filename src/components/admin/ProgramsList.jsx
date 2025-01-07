@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../common/Pagination";
 import CustomButton from "../common/CustomButton";
-import { Search } from "lucide-react";
+import { PanelRightClose, Search } from "lucide-react";
 import ProgramDetail from "./ProgramDetail";
 import ProgramForm from "./ProgramForm";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import useValidation from "../common/UseValidation";
 import WeekForm from "./weekForm";
 import ProgramAssignToTeam from "./ProgramAssignToTeam";
+import AddWeekForm from "./AddWeekForm";
 
 const ProgramList = () => {
   const [program, setProgram] = useState([])
@@ -23,7 +24,6 @@ const ProgramList = () => {
   const [count, setCount] = useState(0);
   const accessToken = useSelector((state) => state.token.accessToken);
   const [loading, setLoading] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false)
   const initialFormState = {
     name: '',
     description: '',
@@ -104,7 +104,7 @@ const ProgramList = () => {
     });
     console.log("activity=>", activityType)
     setIsOpen(true);
-
+ 
   };
 
   const handleProgramDelete = async (id) => {
@@ -152,139 +152,161 @@ const ProgramList = () => {
 
 
   return (
-    <div className="">
-      <div className="program-list">
-        <h3 className="text-xl mb-2 font-semibold">List</h3>
-        <div className="flex flex-col gap-2 mb-4 ">
-          <div className="">
-            <input
-              type="text"
-              id="program_search"
-              className="form-control program_search_class"
-              placeholder="Search"
-              value={search}
-            // onChange={(e) => {
-            //   setProgramSearch(e.target.value);
-            //   searchProgram("search");
-            // }}
-            />
-          </div>
-          <div className=" ">
-            <select
-              className="form-control"
-              id="program_coach"
-            // value={programCoach}
-            // onChange={(e) => {
-            //   setProgramCoach(e.target.value);
-            //   searchProgram("coach");
-            // }}
-            >
-              <option value="">All</option>
-              <option value="444">We2code coach</option>
 
-            </select>
-          </div>
-          <div className="">
-            <small>
-              <input
-                type="checkbox"
-                id="show_child_program"
-                className=""
-              // checked={showChildProgram}
-              // onChange={(e) => {
-              //   setShowChildProgram(e.target.checked);
-              //   searchProgram("filter");
-              // }}
-              // style={{ display: "inline" }}
-              />
-              <span>Show child program</span>
-            </small>
-          </div>
-        </div>
-       
-        <div className="h-80 my-2 overflow-y-auto">
-          <ol id="program_list_block" className="mt-3 flex flex-col gap-2">
-
-            <li className=" bg-white px-4 py-1 rounded">
-              <a
-                href="#"
-                className="act_list li_selected"
-                onClick={() => viewActivity(892)}
-              >
-                GLI Survey Program (LyvPrg892)
-              </a>
-            </li>
-
-            <li className=" bg-white px-4 py-1 rounded">
-              <a
-                href="#"
-                className="act_list li_selected "
-                onClick={() => viewActivity(892)}
-              >
-                GLI Survey Program (LyvPrg892)
-              </a>
-            </li>   <li className=" bg-white px-4 py-1 rounded">
-              <a
-                href="#"
-                className="act_list li_selected"
-                onClick={() => viewActivity(892)}
-              >
-                GLI Survey Program (LyvPrg892)
-              </a>
-            </li>   <li className=" bg-white px-4 py-1 rounded">
-              <a
-                href="#"
-                className="act_list li_selected"
-                onClick={() => viewActivity(892)}
-              >
-                GLI Survey Program (LyvPrg892)
-              </a>
-            </li>   <li className=" bg-white px-4 py-1 rounded">
-              <a
-                href="#"
-                className="act_list li_selected"
-                onClick={() => viewActivity(892)}
-              >
-                GLI Survey Program (LyvPrg892)
-              </a>
-            </li>   <li className=" bg-white px-4 py-1 rounded">
-              <a
-                href="#"
-                className="act_list li_selected"
-                onClick={() => viewActivity(892)}
-              >
-                GLI Survey Program (LyvPrg892)
-              </a>
-            </li>   <li className=" bg-white px-4 py-1 rounded">
-              <a
-                href="#"
-                className="act_list li_selected"
-                onClick={() => viewActivity(892)}
-              >
-                GLI Survey Program (LyvPrg892)
-              </a>
-            </li>
-          </ol>
-          <Pagination
-            nPages={totalPage}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            total={count}
-            count={pageSize}
-            setPageSize={setPageSize}
+    <div className="p-3  flex flex-col justify-evenly  h-full overflow-auto  ">
+      <h3 className="text-xl mb-2 font-semibold">List</h3>
+      <div className="flex flex-col gap-2  ">
+        <div className="">
+          <input
+            type="text"
+            id="program_search"
+            className="input  w-full "
+            placeholder="Search"
+            value={search}
+          // onChange={(e) => {
+          //   setProgramSearch(e.target.value);
+          //   searchProgram("search");
+          // }}
           />
         </div>
+        <div className=" ">
+          <select
+            className="input w-full"
+            id="program_coach"
+          // value={programCoach}
+          // onChange={(e) => {
+          //   setProgramCoach(e.target.value);
+          //   searchProgram("coach");
+          // }}
+          >
+            <option value="">All</option>
+            <option value="444">We2code coach</option>
+
+          </select>
+        </div>
+        <div >
+          <small className="flex items-center my-2 gap-1">
+            <input
+              type="checkbox"
+              id="show_child_program"
+              className=""
+            // checked={showChildProgram}
+            // onChange={(e) => {
+            //   setShowChildProgram(e.target.checked);
+            //   searchProgram("filter");
+            // }}
+            // style={{ display: "inline" }}
+            />
+            <span>Show child program</span>
+          </small>
+        </div>
+      </div>
+
+      <div className="h-96 border p-2   scroll-none overflow-y-auto">
+        <ol id="program_list_block" className="mt-3 flex flex-col gap-2">
+
+          <li className=" bg-green-100  p-2  text-sm rounded-md">
+            <a
+              href="#"
+              className="act_list li_selected"
+              onClick={() => viewActivity(892)}
+            >
+              GLI Survey Program (LyvPrg892)
+            </a>
+          </li>
+          <li className=" bg-green-100 p-2 text-sm rounded-md">
+            <a
+              href="#"
+              className="act_list li_selected"
+              onClick={() => viewActivity(892)}
+            >
+              GLI Survey Program (LyvPrg892)
+            </a>
+          </li>
+          <li className=" bg-green-100 p-2 text-sm rounded-md">
+            <a
+              href="#"
+              className="act_list li_selected"
+              onClick={() => viewActivity(892)}
+            >
+              GLI Survey Program (LyvPrg892)
+            </a>
+          </li>
+          <li className=" bg-green-100 p-2 text-sm rounded-md">
+            <a
+              href="#"
+              className="act_list li_selected"
+              onClick={() => viewActivity(892)}
+            >
+              GLI Survey Program (LyvPrg892)
+            </a>
+          </li>
+          <li className=" bg-green-100 p-2 text-sm rounded-md">
+            <a
+              href="#"
+              className="act_list li_selected"
+              onClick={() => viewActivity(892)}
+            >
+              GLI Survey Program (LyvPrg892)
+            </a>
+          </li>
+          <li className=" bg-green-100 p-2 text-sm rounded-md">
+            <a
+              href="#"
+              className="act_list li_selected"
+              onClick={() => viewActivity(892)}
+            >
+              GLI Survey Program (LyvPrg892)
+            </a>
+          </li>
+          <li className=" bg-green-100 p-2 text-sm rounded-md">
+            <a
+              href="#"
+              className="act_list li_selected"
+              onClick={() => viewActivity(892)}
+            >
+              GLI Survey Program (LyvPrg892)
+            </a>
+          </li>
+          <li className=" bg-green-100 p-2 text-sm rounded-md">
+            <a
+              href="#"
+              className="act_list li_selected"
+              onClick={() => viewActivity(892)}
+            >
+              GLI Survey Program (LyvPrg892)
+            </a>
+          </li>
+          <li className=" bg-green-100 p-2 text-sm rounded-md">
+            <a
+              href="#"
+              className="act_list li_selected"
+              onClick={() => viewActivity(892)}
+            >
+              GLI Survey Program (LyvPrg892)
+            </a>
+          </li>
 
 
-
-
+        </ol>
+        <Pagination
+          nPages={totalPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          total={count}
+          count={pageSize}
+          setPageSize={setPageSize}
+        />
+      </div>
+      <div className="flex justify-end items-end">
         <CustomButton
-          className=" my-1  w-100 mt-3"
+          className=" my-2  w-100 "
           onClick={() => setIsOpen(true)}
         >cp_create new program
         </CustomButton>
       </div>
-      <ProgramAssignToTeam
+
+      <AddWeekForm
         initialFormState={initialFormState}
         isOpen={isOpen}
         setIsOpen={setIsOpen}

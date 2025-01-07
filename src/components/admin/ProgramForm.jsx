@@ -13,19 +13,25 @@ export default function ProgramForm({
   handleFormSubmit,
 }) {
 
+  const close=()=>{
+    setState(initialFormState);
+    setIsOpen(false)
+  }
+
   return (
     <div>
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white max-h-full overflow-y-auto rounded-lg shadow-xl w-full max-w-md">
-            <div className="p-4 border-b">
-              <h2 className="text-lg font-semibold">Account Registration</h2>
+          <div className="bg-[white] max-h-full overflow-y-auto rounded-lg shadow-xl w-full max-w-md">
+            <div className="p-3 border-b flex flex-row justify-between items-center">
+              <h2 className="text-lg font-semibold text_theme_color">Account Registration</h2>
+              <button className="font-semibold " onClick={()=>close()}>X</button>
             </div>
             <form className="p-4 space-y-3">
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-xs font-medium text-gray-700 mb-1"
+                  className="block capitalize  font-medium text-gray-700 mb-1"
                 >
                   name
                 </label>
@@ -36,7 +42,7 @@ export default function ProgramForm({
                   placeholder="Enter name"
                   value={state.name}
                   onChange={onInputChange}
-                  className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.name ? " border-danger" : ""
+                  className={`w-full p-2 input text-sm rounded-md  ${errors.name ? " border-danger" : ""
                     }`}
                 />
                 {errors.name && (
@@ -48,7 +54,7 @@ export default function ProgramForm({
               <div>
                 <label
                   htmlFor="description"
-                  className="block text-xs font-medium text-gray-700 mb-1"
+                  className="block  font-medium text-gray-700 mb-1"
                 >
                   Description
                 </label>
@@ -59,19 +65,19 @@ export default function ProgramForm({
                   placeholder="Enter description"
                   value={state.description}
                   onChange={onInputChange}
-                  className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.description ? " border-danger" : ""
+                  className={`w-full p-2 input text-sm  rounded  ${errors.description ? " border-danger" : ""
                     }`}
                 />
                 {errors.description && (
                   <span className="text-danger font-size-3">
-                    {errors.description.join(", ")}
+                    {errors.description.join(", ")} 
                   </span>
                 )}
               </div>
               <div>
                 <label
                   htmlFor="brand"
-                  className="block text-xs font-medium text-gray-700 mb-1"
+                  className="block  font-medium text-gray-700 mb-1"
                 >
                   Label
                 </label>
@@ -80,7 +86,7 @@ export default function ProgramForm({
                   id="brand"
                   value={state.brand}
                   onChange={onInputChange}
-                  className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
+                  className={`w-full p-2 input text-sm  rounded  ${errors.brand ? " border-danger" : ""
                     }`}
                 >
                   <option value="">Select Label</option>
@@ -97,7 +103,7 @@ export default function ProgramForm({
               <div>
                 <label
                   htmlFor="language"
-                  className="block text-xs font-medium text-gray-700 mb-1"
+                  className="block  font-medium text-gray-700 mb-1"
                 >
                   Label
                 </label>
@@ -106,7 +112,7 @@ export default function ProgramForm({
                   id="language"
                   value={state.language}
                   onChange={onInputChange}
-                  className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.language ? " border-danger" : ""
+                  className={`w-full p-2 input text-sm  rounded  ${errors.language ? " border-danger" : ""
                     }`}
                 >
                   <option value="">Select Label</option>
@@ -123,7 +129,7 @@ export default function ProgramForm({
               <div>
                 <label
                   htmlFor="written_by"
-                  className="block text-xs font-medium text-gray-700 mb-1"
+                  className="block  font-medium text-gray-700 mb-1"
                 >
                   written_by
                 </label>
@@ -135,7 +141,7 @@ export default function ProgramForm({
                   value={state.written_by}
                   onChange={onInputChange}
                   required 
-                  className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 ${errors.written_by ? " border-danger" : ""
+                  className={`w-full p-2 input text-sm  rounded  ${errors.written_by ? " border-danger" : ""
                           }   `}
                 />
                 {errors.written_by && (
@@ -147,7 +153,7 @@ export default function ProgramForm({
               <div>
                 <label
                   htmlFor="version"
-                  className="block text-xs font-medium text-gray-700 mb-1"
+                  className="block  font-medium text-gray-700 mb-1"
                 >
                   version
                 </label>
@@ -159,7 +165,7 @@ export default function ProgramForm({
                   value={state.version}
                   onChange={onInputChange}
                   required
-                  className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
+                  className={`w-full p-2 input text-sm  rounded  ${errors.version ? " border-danger" : ""
                     }`}
                 />
                 {errors.version && (
@@ -171,7 +177,7 @@ export default function ProgramForm({
               <div>
                 <label
                   htmlFor="price"
-                  className="block text-xs font-medium text-gray-700 mb-1"
+                  className="block  font-medium text-gray-700 mb-1"
                 >
                   price
                 </label>
@@ -183,7 +189,8 @@ export default function ProgramForm({
                   value={state.price}
                   onChange={onInputChange}
                   required
-                  className="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className={`w-full p-2 input text-sm  rounded  ${errors.price ? " border-danger" : ""
+                    }`}
                 />
                 {errors.price && (
                   <span className="text-danger font-size-3">
@@ -199,7 +206,7 @@ export default function ProgramForm({
                     setIsOpen(false)
                   }
                   }
-                  className="px-3 py-1 text-xs bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                  className="px-3 py-1  bg-gray-200 text-gray-800 rounded hover:bg-gray-300 "
                 >
                   Cancel
                 </CustomButton>

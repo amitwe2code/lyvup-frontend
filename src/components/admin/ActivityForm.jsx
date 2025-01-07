@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import CustomButton from "../common/CustomButton";
 import useValidation from "../common/UseValidation";
 
-export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,setState,onInputChange,errors,validate,step,setStep,handleFormSubmit }) {
+export default function ActivityForm({ initialFormState, isOpen, setIsOpen, state, setState, onInputChange, errors, validate, step, setStep, handleFormSubmit }) {
   console.log(state)
-    return (
+  return (
     <div>
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -14,20 +14,21 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                 {step === 1
                   ? "Step 1: Initial Details"
                   : step === 2
-                  ? "Step 2 : Basic Details"
-                  : "Step 3 : Final Details"}
+                    ? "Step 2 : Basic Details"
+                    : "Step 3 : Final Details"}
               </h2>
               <CustomButton
                 size="small "
                 variant="outline "
                 className="font-bold"
-                onClick={() =>{
+                onClick={() => {
                   setState(initialFormState)
                   setIsOpen(false)
-                  setStep(1)}
-                } 
+                  setStep(1)
+                }
+                }
               >
-               
+
                 X
               </CustomButton>
             </div>
@@ -54,13 +55,12 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           name="language"
                           value={state.language}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border ${
-                            errors.language ? " border-danger" : ""
-                          } rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]`}
+                          className={`w-full px-2 py-1 text-sm input ${errors.language ? " border-danger" : ""
+                            } rounded `}
                         >
                           <option value="">Select Language</option>
                           <option value="english">English</option>
-                         
+
                         </select>
                         {errors.language && (
                           <span className="text-danger font-size-3">
@@ -80,9 +80,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           id="intervention_type"
                           value={state.intervention_type}
                           onChange={onInputChange}
-                          className={`w-full ${
-                            errors.intervention_type ? " border-danger" : ""
-                          } px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77]`}
+                          className={`w-full input ${errors.intervention_type ? " border-danger" : ""
+                            } px-2 py-1 text-sm border rounded `}
                         >
                           <option value="">Select Type</option>
                           <option value="survey">survey</option>
@@ -108,7 +107,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         variant="outline"
                         onClick={() => {
                           setState(initialFormState)
-                          setIsOpen(false)}
+                          setIsOpen(false)
+                        }
                         }
 
                         className="px-3 py-1.5 text-sm border hover:bg-gray-300 rounded hover:text-[#039a77] "
@@ -119,7 +119,7 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         type="button"
                         onClick={() => {
                           console.log("validate call =", errors)
-                          if(validate()){
+                          if (validate()) {
                             setStep(2);
                           }
                         }}
@@ -139,7 +139,7 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           htmlFor="intervention_name"
                           className="block text-xs font-medium text-gray-700 mb-1"
                         >
-                        Intervention Name
+                          Intervention Name
                         </label>
                         <input
                           type="text"
@@ -148,9 +148,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           placeholder="Enter Name"
                           value={state.intervention_name}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                            errors.intervention_name ? " border-danger" : ""
-                          }`}
+                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.intervention_name ? " border-danger" : ""
+                            }`}
                         />
                         {errors.intervention_name && (
                           <span className="text-danger font-size-3">
@@ -171,11 +170,10 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           value={state.intervention_description}
                           onChange={onInputChange}
                           rows={2}
-                          className={`w-full min-h-32 p-2 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                            errors.intervention_description
+                          className={`w-full min-h-32 p-2 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.intervention_description
                               ? " border-danger"
                               : ""
-                          }`}
+                            }`}
                         />
                         {errors.intervention_description && (
                           <span className="text-danger font-size-3">
@@ -195,9 +193,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           id="brand"
                           value={state.brand}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                            errors.brand ? " border-danger" : ""
-                          }`}
+                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
+                            }`}
                         >
                           <option value="">Select Label</option>
                           <option value="important">Important</option>
@@ -222,9 +219,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           id="activity_type"
                           value={state.activity_type}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                            errors.brand ? " border-danger" : ""
-                          }`}
+                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
+                            }`}
                         >
                           <option value="">Select Label</option>
                           <option value="yes">yes</option>
@@ -248,9 +244,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           id="completion_check"
                           value={state.completion_check}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                            errors.brand ? " border-danger" : ""
-                          }`}
+                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
+                            }`}
                         >
                           <option value="">Select Label</option>
                           <option value="yes">yes</option>
@@ -262,7 +257,7 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           </span>
                         )}
                       </div>
-                     
+
                     </div>
                     <div className="flex justify-end gap-2 mt-4">
                       <CustomButton
@@ -279,7 +274,7 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         type="button"
                         onClick={() => {
                           console.log("errors =", errors)
-                          if(validate()){
+                          if (validate()) {
                             setStep(3);
                           }
                         }}
@@ -294,7 +289,7 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                 {state.intervention_type && step === 3 ? (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-                    <div>
+                      <div>
                         <label
                           htmlFor="who"
                           className="block text-xs font-medium text-gray-700 mb-1"
@@ -306,9 +301,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                           id="who"
                           value={state.who}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                            errors.who ? " border-danger" : ""
-                          }`}
+                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.who ? " border-danger" : ""
+                            }`}
                         >
                           <option value="">-Select-</option>
                           <option value="team">team</option>
@@ -336,9 +330,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                             id="activity"
                             value={state.activity}
                             onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.activity ? " border-danger" : ""
-                            }`}
+                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.activity ? " border-danger" : ""
+                              }`}
                           />
                           {errors.activity && (
                             <span className="text-danger font-size-3">
@@ -355,33 +348,32 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         state.intervention_type === "other" ||
                         state.intervention_type === "workshop" ||
                         state.intervention_type === "video") && (
-                        <div>
-                          <label
-                            htmlFor="send_reminder"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Send Reminder
-                          </label>
-                          <select
-                            name="send_reminder"
-                            id="send_reminder"
-                            value={state.send_reminder}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.send_reminder ? " border-danger" : ""
-                            }`}
-                          >
-                            <option value="">-Select-</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                          </select>
-                          {errors.send_reminder && (
-                            <span className="text-danger font-size-3">
-                              {errors.send_reminder.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="send_reminder"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Send Reminder
+                            </label>
+                            <select
+                              name="send_reminder"
+                              id="send_reminder"
+                              value={state.send_reminder}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.send_reminder ? " border-danger" : ""
+                                }`}
+                            >
+                              <option value="">-Select-</option>
+                              <option value="yes">Yes</option>
+                              <option value="no">No</option>
+                            </select>
+                            {errors.send_reminder && (
+                              <span className="text-danger font-size-3">
+                                {errors.send_reminder.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       {(state.intervention_type === "survey" ||
                         state.intervention_type === "challenge" ||
                         state.intervention_type === "assignment" ||
@@ -390,33 +382,32 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         state.intervention_type === "interview" ||
                         state.intervention_type === "workshop" ||
                         state.intervention_type === "video") && (
-                        <div>
-                          <label
-                            htmlFor="show_in_task"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Show in Task
-                          </label>
-                          <select
-                            name="show_in_task"
-                            id="show_in_task"
-                            value={state.show_in_task}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.show_in_task ? " border-danger" : ""
-                            }`}
-                          >
-                            <option value="">-Select-</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                          </select>
-                          {errors.show_in_task && (
-                            <span className="text-danger font-size-3">
-                              {errors.show_in_task.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="show_in_task"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Show in Task
+                            </label>
+                            <select
+                              name="show_in_task"
+                              id="show_in_task"
+                              value={state.show_in_task}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.show_in_task ? " border-danger" : ""
+                                }`}
+                            >
+                              <option value="">-Select-</option>
+                              <option value="yes">Yes</option>
+                              <option value="no">No</option>
+                            </select>
+                            {errors.show_in_task && (
+                              <span className="text-danger font-size-3">
+                                {errors.show_in_task.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       {(state.intervention_type === "survey" ||
                         state.intervention_type === "challenge" ||
                         state.intervention_type === "podcast" ||
@@ -425,33 +416,32 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         state.intervention_type === "interview" ||
                         state.intervention_type === "workshop" ||
                         state.intervention_type === "video") && (
-                        <div>
-                          <label
-                            htmlFor="add_comment_option"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Add Comment Option
-                          </label>
-                          <select
-                            name="add_comment_option"
-                            id="add_comment_option"
-                            value={state.add_comment_option}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.add_comment_option ? " border-danger" : ""
-                            }`}
-                          >
-                            <option value="">-Select-</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                          </select>
-                          {errors.add_comment_option && (
-                            <span className="text-danger font-size-3">
-                              {errors.add_comment_option.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="add_comment_option"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Add Comment Option
+                            </label>
+                            <select
+                              name="add_comment_option"
+                              id="add_comment_option"
+                              value={state.add_comment_option}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.add_comment_option ? " border-danger" : ""
+                                }`}
+                            >
+                              <option value="">-Select-</option>
+                              <option value="yes">Yes</option>
+                              <option value="no">No</option>
+                            </select>
+                            {errors.add_comment_option && (
+                              <span className="text-danger font-size-3">
+                                {errors.add_comment_option.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
 
                       {state.intervention_type === "challenge" && (
                         <div>
@@ -466,9 +456,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                             id="challenge"
                             value={state.challenge}
                             onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.challenge ? " border-danger" : ""
-                            }`}
+                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.challenge ? " border-danger" : ""
+                              }`}
                           >
                             <option value="">-Select-</option>
                             <option value="Give praises">Give praises</option>
@@ -484,97 +473,94 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                       )}
                       {(state.intervention_type === "challenge" ||
                         state.intervention_type === "other") && (
-                        <div>
-                          <label
-                            htmlFor="amount"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Amount
-                          </label>
-                          <input
-                            type="number"
-                            name="amount"
-                            id="amount"
-                            value={state.amount}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.amount ? " border-danger" : ""
-                            }`}
-                          />
-                          {errors.amount && (
-                            <span className="text-danger font-size-3">
-                              {errors.amount.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="amount"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Amount
+                            </label>
+                            <input
+                              type="number"
+                              name="amount"
+                              id="amount"
+                              value={state.amount}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.amount ? " border-danger" : ""
+                                }`}
+                            />
+                            {errors.amount && (
+                              <span className="text-danger font-size-3">
+                                {errors.amount.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
 
                       {(state.intervention_type === "interview" ||
                         state.intervention_type === "workshop" ||
                         state.intervention_type === "other" ||
                         state.intervention_type === "assignment") && (
-                        <div>
-                          <label
-                            htmlFor="location"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Location
-                          </label>
-                          <select
-                            name="location"
-                            id="location"
-                            value={state.location}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.location ? " border-danger" : ""
-                            }`}
-                          >
-                            <option value="">-Select-</option>
-                            <option value="online">online</option>
-                            <option value="video conference">video conference</option>
-                            <option value="live"> live</option>
-                          </select>
-                          {errors.location && (
-                            <span className="text-danger font-size-3">
-                              {errors.location.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="location"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Location
+                            </label>
+                            <select
+                              name="location"
+                              id="location"
+                              value={state.location}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.location ? " border-danger" : ""
+                                }`}
+                            >
+                              <option value="">-Select-</option>
+                              <option value="online">online</option>
+                              <option value="video conference">video conference</option>
+                              <option value="live"> live</option>
+                            </select>
+                            {errors.location && (
+                              <span className="text-danger font-size-3">
+                                {errors.location.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
 
                       {(state.intervention_type === "interview" ||
                         state.intervention_type === "other" ||
                         state.intervention_type === "workshop" ||
                         state.intervention_type === "assignment") && (
-                        <div>
-                          <label
-                            htmlFor="coach_type"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Practitioner type
-                          </label>
-                          <select
-                            name="coach_type"
-                            id="coach_type"
-                            value={state.coach_type}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.coach_type ? " border-danger" : ""
-                            }`}
-                          >
-                            <option value="">-Select-</option>
-                            <option value="intern">intern</option>
-                            <option value="extern">extern</option>
-                            <option value="other">other</option>
-                            <option value="none">none</option>
-                          </select>
-                          {errors.coach_type && (
-                            <span className="text-danger font-size-3">
-                              {errors.coach_type.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="coach_type"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Practitioner type
+                            </label>
+                            <select
+                              name="coach_type"
+                              id="coach_type"
+                              value={state.coach_type}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.coach_type ? " border-danger" : ""
+                                }`}
+                            >
+                              <option value="">-Select-</option>
+                              <option value="intern">intern</option>
+                              <option value="extern">extern</option>
+                              <option value="other">other</option>
+                              <option value="none">none</option>
+                            </select>
+                            {errors.coach_type && (
+                              <span className="text-danger font-size-3">
+                                {errors.coach_type.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
 
                       {(state.intervention_type === "interview" ||
                         state.intervention_type === "workshop" ||
@@ -582,200 +568,193 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         state.intervention_type === "assignment" ||
                         state.intervention_type === "podcast" ||
                         state.intervention_type === "video") && (
-                        <div>
-                          <label
-                            htmlFor="user_duration"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            User Duration
-                          </label>
-                          <input
-                            type="number"
-                            name="user_duration"
-                            id="user_duration"
-                            value={state.user_duration}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.user_duration ? " border-danger" : ""
-                            }`}
-                          />
-                          {errors.user_duration && (
-                            <span className="text-danger font-size-3">
-                              {errors.user_duration.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "workshop" ||
-                        state.intervention_type === "assignment") && (
-                        <div>
-                          <label
-                            htmlFor="coach_duration"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Duration for Coach
-                          </label>
-                          <input
-                            type="number"
-                            name="coach_duration"
-                            id="coach_duration"
-                            value={state.coach_duration}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.coach_duration ? " border-danger" : ""
-                            }`}
-                          />
-                          {errors.coach_duration && (
-                            <span className="text-danger font-size-3">
-                              {errors.coach_duration.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
-                       {state.intervention_type === "excercise" && (
-                      <div>
-                        <label
-                          htmlFor="excercise"
-                          className="block text-xs font-medium text-gray-700 mb-1"
-                        >
-                          excercise
-                        </label>
-                        <input
-                          type="text"
-                          name="excercise"
-                          id="excercise"
-                          placeholder="Enter excercise"
-                          value={state.excercise}
-                          onChange={onInputChange}
-                         className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                            errors.excercise ? " border-danger" : ""
-                          }`}
-                        />
-                        {errors.excercise && (
-                          <span className="text-danger font-size-3">
-                            {errors.excercise.join(", ")}
-                          </span>
+                          <div>
+                            <label
+                              htmlFor="user_duration"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              User Duration
+                            </label>
+                            <input
+                              type="number"
+                              name="user_duration"
+                              id="user_duration"
+                              value={state.user_duration}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.user_duration ? " border-danger" : ""
+                                }`}
+                            />
+                            {errors.user_duration && (
+                              <span className="text-danger font-size-3">
+                                {errors.user_duration.join(", ")}
+                              </span>
+                            )}
+                          </div>
                         )}
-                      </div>
-                    )}
                       {(state.intervention_type === "interview" ||
                         state.intervention_type === "other" ||
                         state.intervention_type === "workshop" ||
                         state.intervention_type === "assignment") && (
+                          <div>
+                            <label
+                              htmlFor="coach_duration"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Duration for Coach
+                            </label>
+                            <input
+                              type="number"
+                              name="coach_duration"
+                              id="coach_duration"
+                              value={state.coach_duration}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.coach_duration ? " border-danger" : ""
+                                }`}
+                            />
+                            {errors.coach_duration && (
+                              <span className="text-danger font-size-3">
+                                {errors.coach_duration.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      {state.intervention_type === "excercise" && (
                         <div>
                           <label
-                            htmlFor="teamlead_duration"
+                            htmlFor="excercise"
                             className="block text-xs font-medium text-gray-700 mb-1"
                           >
-                            Duration for Team Lead
+                            excercise
                           </label>
                           <input
-                            type="number"
-                            name="teamlead_duration"
-                            id="teamlead_duration"
-                            value={state.teamlead_duration}
+                            type="text"
+                            name="excercise"
+                            id="excercise"
+                            placeholder="Enter excercise"
+                            value={state.excercise}
                             onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.teamlead_duration ? " border-danger" : ""
-                            }`}
+                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.excercise ? " border-danger" : ""
+                              }`}
                           />
-                          {errors.teamlead_duration && (
+                          {errors.excercise && (
                             <span className="text-danger font-size-3">
-                              {errors.teamlead_duration.join(", ")}
+                              {errors.excercise.join(", ")}
                             </span>
                           )}
                         </div>
                       )}
                       {(state.intervention_type === "interview" ||
+                        state.intervention_type === "other" ||
+                        state.intervention_type === "workshop" ||
+                        state.intervention_type === "assignment") && (
+                          <div>
+                            <label
+                              htmlFor="teamlead_duration"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Duration for Team Lead
+                            </label>
+                            <input
+                              type="number"
+                              name="teamlead_duration"
+                              id="teamlead_duration"
+                              value={state.teamlead_duration}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.teamlead_duration ? " border-danger" : ""
+                                }`}
+                            />
+                            {errors.teamlead_duration && (
+                              <span className="text-danger font-size-3">
+                                {errors.teamlead_duration.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      {(state.intervention_type === "interview" ||
                         state.intervention_type === "assignment" ||
                         state.intervention_type === "other" ||
                         state.intervention_type === "workshop") && (
-                        <div>
-                          <label
-                            htmlFor="travel_time"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Travel Time
-                          </label>
-                          <input
-                            type="text"
-                            name="travel_time"
-                            id="travel_time"
-                            value={state.travel_time}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.travel_time ? " border-danger" : ""
-                            }`}
-                          />
-                          {errors.travel_time && (
-                            <span className="text-danger font-size-3">
-                              {errors.travel_time.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="travel_time"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Travel Time
+                            </label>
+                            <input
+                              type="text"
+                              name="travel_time"
+                              id="travel_time"
+                              value={state.travel_time}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.travel_time ? " border-danger" : ""
+                                }`}
+                            />
+                            {errors.travel_time && (
+                              <span className="text-danger font-size-3">
+                                {errors.travel_time.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       {(state.intervention_type === "interview" ||
                         state.intervention_type === "video" ||
                         state.intervention_type === "assignment" ||
                         state.intervention_type === "other" ||
                         state.intervention_type === "podcast" ||
                         state.intervention_type === "workshop") && (
-                        <div>
-                          <label
-                            htmlFor="file"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Attach File
-                          </label>
-                          <input
-                            type="text"
-                            name="file"
-                            id="file"
-                            value={state.file}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.file ? " border-danger" : ""
-                            }`}
-                          />
-                          {errors.file && (
-                            <span className="text-danger font-size-3">
-                              {errors.file.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="file"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Attach File
+                            </label>
+                            <input
+                              type="text"
+                              name="file"
+                              id="file"
+                              value={state.file}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.file ? " border-danger" : ""
+                                }`}
+                            />
+                            {errors.file && (
+                              <span className="text-danger font-size-3">
+                                {errors.file.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       {(state.intervention_type === "interview" ||
                         state.intervention_type === "video" ||
                         state.intervention_type === "assignment" ||
                         state.intervention_type === "other" ||
                         state.intervention_type === "podcast" ||
                         state.intervention_type === "workshop") && (
-                        <div>
-                          <label
-                            htmlFor="url"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            URL
-                          </label>
-                          <input
-                            type="text"
-                            name="url"
-                            id="url"
-                            value={state.url}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.url ? " border-danger" : ""
-                            }`}
-                          />
-                          {errors.url && (
-                            <span className="text-danger font-size-3">
-                              {errors.url.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="url"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              URL
+                            </label>
+                            <input
+                              type="text"
+                              name="url"
+                              id="url"
+                              value={state.url}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.url ? " border-danger" : ""
+                                }`}
+                            />
+                            {errors.url && (
+                              <span className="text-danger font-size-3">
+                                {errors.url.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       {(state.intervention_type === "interview" ||
                         state.intervention_type === "video" ||
                         state.intervention_type === "assignment" ||
@@ -783,68 +762,66 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                         state.intervention_type === "other" ||
                         state.intervention_type === "podcast" ||
                         state.intervention_type === "workshop") && (
-                        <div>
-                          <label
-                            htmlFor="indicate_when_completed"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Indicate When Completed
-                          </label>
-                          <select
-                            name="indicate_when_completed"
-                            id="indicate_when_completed"
-                            value={state.indicate_when_completed}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.indicate_when_completed
-                                ? " border-danger"
-                                : ""
-                            }`}
-                          >
-                            <option value="">-Select-</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                          </select>
-                          {errors.indicate_when_completed && (
-                            <span className="text-danger font-size-3">
-                              {errors.indicate_when_completed.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="indicate_when_completed"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Indicate When Completed
+                            </label>
+                            <select
+                              name="indicate_when_completed"
+                              id="indicate_when_completed"
+                              value={state.indicate_when_completed}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.indicate_when_completed
+                                  ? " border-danger"
+                                  : ""
+                                }`}
+                            >
+                              <option value="">-Select-</option>
+                              <option value="yes">Yes</option>
+                              <option value="no">No</option>
+                            </select>
+                            {errors.indicate_when_completed && (
+                              <span className="text-danger font-size-3">
+                                {errors.indicate_when_completed.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
 
                       {(state.intervention_type === "assignment" ||
                         state.intervention_type === "other" ||
                         state.intervention_type === "workshop") && (
-                        <div>
-                          <label
-                            htmlFor="upload_possible"
-                            className="block text-xs font-medium text-gray-700 mb-1"
-                          >
-                            Upload Option
-                          </label>
-                          <select
-                            name="upload_possible"
-                            id="upload_possible"
-                            value={state.upload_possible}
-                            onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${
-                              errors.upload_possible ? " border-danger" : ""
-                            }`}
-                          >
-                            <option>-Select-</option>
-                            <option value="True">Yes</option>
-                            <option value="False">No</option>
-                          </select>
-                          {errors.upload_possible && (
-                            <span className="text-danger font-size-3">
-                              {errors.upload_possible.join(", ")}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                          <div>
+                            <label
+                              htmlFor="upload_possible"
+                              className="block text-xs font-medium text-gray-700 mb-1"
+                            >
+                              Upload Option
+                            </label>
+                            <select
+                              name="upload_possible"
+                              id="upload_possible"
+                              value={state.upload_possible}
+                              onChange={onInputChange}
+                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.upload_possible ? " border-danger" : ""
+                                }`}
+                            >
+                              <option>-Select-</option>
+                              <option value="True">Yes</option>
+                              <option value="False">No</option>
+                            </select>
+                            {errors.upload_possible && (
+                              <span className="text-danger font-size-3">
+                                {errors.upload_possible.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        )}
                     </div>
-                   
+
 
                     <div className="flex justify-end gap-2 mt-4">
                       <button
@@ -857,8 +834,8 @@ export default function ActivityForm({initialFormState, isOpen, setIsOpen,state,
                       <button
                         type="submit"
                         id={state.id}
-                        onClick={(e)=>{
-                          if(validate()){
+                        onClick={(e) => {
+                          if (validate()) {
                             handleFormSubmit(e)
                             setIsOpen(false)
 

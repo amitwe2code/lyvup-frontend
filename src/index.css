@@ -2,18 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
+/* universal css */
 * {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   padding: 0px;
   margin: 0px;
   font-family: 'poppins', sans-serif;
 }
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
+/* common css  */
+
+/* button css */
+.btn_theme_color{
+  background: #17686d;
+  color: white;
+}
+
+
+/* input css */
+form input:focus-visible,form select:focus-visible,button:focus{
+  outline: none;
+}
+
+.input{
+  background: rgb(249, 253, 249);
+  border:1px solid #d3d3d3;
+  padding:  8px;
+  border-radius: 6px;
+}
+
+.input:hover,.input:focus{
+  border:1px solid #17686d
+}
+
+
+/* set border to any card  */
+.card_border{
+  border:1px solid white;
+  border-radius: 2px;
+}
+.card_border:hover,.card_border:focus{
+  border:1px solid  #e3e3e3;
+}
+
+
+
+
+
+
+.text_theme_color{
+  color: #17686d;
+}
+
+.bg_secondary_color{
+  background-color: #e2e8f0;
+}
+/* scroll-bar hide */
+.scroll-none::-webkit-scrollbar{
+  display: none;
+}
+
+
+
+
+
+
+
+
+
 
 
 
 /*  select button arrow  */
 .css-1xc3v61-indicatorContainer {
-  color: #039a77 !important;
+  color: #17686d ;
 
 }
 
@@ -21,15 +92,23 @@
 .loader {
   border-radius: 50%;
 }
-.search_icon {
-  /* position: absolute; */
-  right: 0px;
-  top: 0px;
-  line-height: 36px;
-  background: #d3d3d3;
-  padding: 0 .75em;
-  border-radius: 3px;
+
+
+.icon_size_small{
+  width: 30px;
+  height: 30px;
+  background:#17686d;
+  padding: 6px;
+  color:white;
+  border-radius: 4px;
 }
+.icon_size_small:hover{
+  background-color: #015a45;
+}
+
+
+
+
 .box-border{
   overflow-x: hidden;
 }
@@ -79,24 +158,26 @@
 }
 .program_sidebar {
   position: relative;
-  height: calc(100vh-112px);
-
 }
 .program_sidebar_btn{
   position: absolute;
-  right: -20px;
+  right: -50px;
+  top:10px;
   display: none;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 640px) {
   .program_sidebar_btn{
+      border-radius: 50%;
       display: block;
   }
   .program_sidebar.program_sidebar_show{
+    width: 300px;
+    position: absolute;
     left: 0;
   } 
-  .program_sidebar
-  { position: absolute;
-  left: -316px;
+  .program_sidebar { 
+  position: absolute;
+  left: -280px;
   transition: 0.5s;
 }
 }
@@ -106,17 +187,12 @@
   }
 }
 
-.bg-secondary-color{
-  background-color: #e2e8f0;
-}
-
-
 
 
 
 .add_program_info .program_info_card,
 .add_program .program_card{
-background: linear-gradient(90deg, #03799a96, #5fbb977a 100%);
+background: #dcfce7;
 padding: 10px;
 border-radius: 6px;
 }
@@ -154,7 +230,7 @@ position: relative;
 }
 .add_program  .program_day_card .program_day_card_contant .program_contant_add_btn{
 
-background: #03799a;
+background:#dcfce7;
 width: 24px;
 height: 24px;
 padding: 15px;
@@ -166,18 +242,10 @@ color: #fff;
 position: absolute;
 right: -34px;
 top: 26%;
-
 }
 
-
-.add_program  .add_program_info .program_info_card span{
-
-}
-.add_program  .add_program_info .program_info_card span b{
-
-}
 .add_program  .program_day_card .program_day_card_head{
-background: #03799a;
+background: #17686d;
 padding: 10px;
 border-radius: 6px;
 margin-top: 16px;
