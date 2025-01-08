@@ -173,6 +173,7 @@ export default function ActivityActionType() {
                     ) : (<>
                         <ActivityActionTypeTable
                             activityTypes={activityTypes}
+                            ordering={ordering}
                             setOrdering={setOrdering}
                             handleActivityActionTypeDelete={handleActivityActionTypeDelete}
                             handleActivityActionTypeUpdate={handleActivityActionTypeUpdate}

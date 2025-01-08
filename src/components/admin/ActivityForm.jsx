@@ -3,14 +3,14 @@ import CustomButton from "../common/CustomButton";
 import useValidation from "../common/UseValidation";
 
 export default function ActivityForm({ initialFormState, isOpen, setIsOpen, state, setState, onInputChange, errors, validate, step, setStep, handleFormSubmit }) {
-  console.log(state)
+ 
   return (
     <div>
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
-            <div className="p-3 border-b flex justify-between item-center ">
-              <h2 className="text-lg font-semibold text-[#039a77]">
+          <div className="bg-white max-h-full overflow-auto rounded-lg  shadow-xl w-full max-w-2xl">
+            <div className="p-3 border-b btn_theme_color flex justify-between item-center ">
+              <h2 className="text-lg font-semibold ">
                 {step === 1
                   ? "Step 1: Initial Details"
                   : step === 2
@@ -46,7 +46,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="language"
-                          className="block text-xs font-bold mb-1"
+                          className="block  font-bold mb-1"
                         >
                           Language
                         </label>
@@ -55,7 +55,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           name="language"
                           value={state.language}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm input ${errors.language ? " border-danger" : ""
+                          className={`w-full  text-sm input ${errors.language ? " border-danger" : ""
                             } rounded `}
                         >
                           <option value="">Select Language</option>
@@ -71,7 +71,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="intervention_type"
-                          className={`block text-xs font-bold text-gray-700 mb-1`}
+                          className={`block  font-bold text-gray-700 mb-1`}
                         >
                           Type
                         </label>
@@ -80,8 +80,8 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           id="intervention_type"
                           value={state.intervention_type}
                           onChange={onInputChange}
-                          className={`w-full input ${errors.intervention_type ? " border-danger" : ""
-                            } px-2 py-1 text-sm border rounded `}
+                          className={`w-full  ${errors.intervention_type ? " border-danger" : ""
+                            } input text-sm border rounded `}
                         >
                           <option value="">Select Type</option>
                           <option value="survey">survey</option>
@@ -137,7 +137,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="intervention_name"
-                          className="block text-xs font-medium text-gray-700 mb-1"
+                          className="block  font-medium text-gray-700 mb-1"
                         >
                           Intervention Name
                         </label>
@@ -148,7 +148,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           placeholder="Enter Name"
                           value={state.intervention_name}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.intervention_name ? " border-danger" : ""
+                          className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.intervention_name ? " border-danger" : ""
                             }`}
                         />
                         {errors.intervention_name && (
@@ -160,7 +160,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div className="row-span-3">
                         <label
                           htmlFor="intervention_description"
-                          className="block text-xs font-medium text-gray-700 mb-1"
+                          className="block  font-medium text-gray-700 mb-1"
                         >
                           Description
                         </label>
@@ -169,6 +169,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           id="intervention_description"
                           value={state.intervention_description}
                           onChange={onInputChange}
+                          placeholder="Enter description"
                           rows={2}
                           className={`w-full min-h-32 p-2 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.intervention_description
                               ? " border-danger"
@@ -184,7 +185,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="brand"
-                          className="block text-xs font-medium text-gray-700 mb-1"
+                          className="block  font-medium text-gray-700 mb-1"
                         >
                           Label
                         </label>
@@ -193,7 +194,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           id="brand"
                           value={state.brand}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
+                          className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
                             }`}
                         >
                           <option value="">Select Label</option>
@@ -210,7 +211,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="activity_type"
-                          className="block text-xs font-medium text-gray-700 mb-1"
+                          className="block  font-medium text-gray-700 mb-1"
                         >
                           activity_type
                         </label>
@@ -219,7 +220,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           id="activity_type"
                           value={state.activity_type}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
+                          className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
                             }`}
                         >
                           <option value="">Select Label</option>
@@ -235,7 +236,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="completion_check"
-                          className="block text-xs font-medium text-gray-700 mb-1"
+                          className="block  font-medium text-gray-700 mb-1"
                         >
                           completion_check
                         </label>
@@ -244,7 +245,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           id="completion_check"
                           value={state.completion_check}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
+                          className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
                             }`}
                         >
                           <option value="">Select Label</option>
@@ -292,7 +293,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="who"
-                          className="block text-xs font-medium text-gray-700 mb-1"
+                          className="block  font-medium text-gray-700 mb-1"
                         >
                           For Whom
                         </label>
@@ -301,7 +302,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           id="who"
                           value={state.who}
                           onChange={onInputChange}
-                          className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.who ? " border-danger" : ""
+                          className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.who ? " border-danger" : ""
                             }`}
                         >
                           <option value="">-Select-</option>
@@ -320,7 +321,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                         <div>
                           <label
                             htmlFor="activity"
-                            className="block text-xs font-medium text-gray-700 mb-1"
+                            className="block  font-medium text-gray-700 mb-1"
                           >
                             survey
                           </label>
@@ -330,7 +331,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             id="activity"
                             value={state.activity}
                             onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.activity ? " border-danger" : ""
+                            className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.activity ? " border-danger" : ""
                               }`}
                           />
                           {errors.activity && (
@@ -351,7 +352,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="send_reminder"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Send Reminder
                             </label>
@@ -360,7 +361,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="send_reminder"
                               value={state.send_reminder}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.send_reminder ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.send_reminder ? " border-danger" : ""
                                 }`}
                             >
                               <option value="">-Select-</option>
@@ -385,7 +386,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="show_in_task"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Show in Task
                             </label>
@@ -394,7 +395,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="show_in_task"
                               value={state.show_in_task}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.show_in_task ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.show_in_task ? " border-danger" : ""
                                 }`}
                             >
                               <option value="">-Select-</option>
@@ -419,7 +420,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="add_comment_option"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Add Comment Option
                             </label>
@@ -428,7 +429,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="add_comment_option"
                               value={state.add_comment_option}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.add_comment_option ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.add_comment_option ? " border-danger" : ""
                                 }`}
                             >
                               <option value="">-Select-</option>
@@ -447,7 +448,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                         <div>
                           <label
                             htmlFor="challenge"
-                            className="block text-xs font-medium text-gray-700 mb-1"
+                            className="block  font-medium text-gray-700 mb-1"
                           >
                             Challenge
                           </label>
@@ -456,7 +457,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             id="challenge"
                             value={state.challenge}
                             onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.challenge ? " border-danger" : ""
+                            className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.challenge ? " border-danger" : ""
                               }`}
                           >
                             <option value="">-Select-</option>
@@ -476,7 +477,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="amount"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Amount
                             </label>
@@ -486,7 +487,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="amount"
                               value={state.amount}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.amount ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.amount ? " border-danger" : ""
                                 }`}
                             />
                             {errors.amount && (
@@ -504,7 +505,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="location"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Location
                             </label>
@@ -513,7 +514,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="location"
                               value={state.location}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.location ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.location ? " border-danger" : ""
                                 }`}
                             >
                               <option value="">-Select-</option>
@@ -536,7 +537,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="coach_type"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Practitioner type
                             </label>
@@ -545,7 +546,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="coach_type"
                               value={state.coach_type}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.coach_type ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.coach_type ? " border-danger" : ""
                                 }`}
                             >
                               <option value="">-Select-</option>
@@ -571,7 +572,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="user_duration"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               User Duration
                             </label>
@@ -581,7 +582,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="user_duration"
                               value={state.user_duration}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.user_duration ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.user_duration ? " border-danger" : ""
                                 }`}
                             />
                             {errors.user_duration && (
@@ -598,7 +599,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="coach_duration"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Duration for Coach
                             </label>
@@ -608,7 +609,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="coach_duration"
                               value={state.coach_duration}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.coach_duration ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.coach_duration ? " border-danger" : ""
                                 }`}
                             />
                             {errors.coach_duration && (
@@ -622,7 +623,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                         <div>
                           <label
                             htmlFor="excercise"
-                            className="block text-xs font-medium text-gray-700 mb-1"
+                            className="block  font-medium text-gray-700 mb-1"
                           >
                             excercise
                           </label>
@@ -633,7 +634,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             placeholder="Enter excercise"
                             value={state.excercise}
                             onChange={onInputChange}
-                            className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.excercise ? " border-danger" : ""
+                            className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.excercise ? " border-danger" : ""
                               }`}
                           />
                           {errors.excercise && (
@@ -650,7 +651,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="teamlead_duration"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Duration for Team Lead
                             </label>
@@ -660,7 +661,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="teamlead_duration"
                               value={state.teamlead_duration}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.teamlead_duration ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.teamlead_duration ? " border-danger" : ""
                                 }`}
                             />
                             {errors.teamlead_duration && (
@@ -677,7 +678,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="travel_time"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Travel Time
                             </label>
@@ -687,7 +688,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="travel_time"
                               value={state.travel_time}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.travel_time ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.travel_time ? " border-danger" : ""
                                 }`}
                             />
                             {errors.travel_time && (
@@ -706,7 +707,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="file"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Attach File
                             </label>
@@ -716,7 +717,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="file"
                               value={state.file}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.file ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.file ? " border-danger" : ""
                                 }`}
                             />
                             {errors.file && (
@@ -735,7 +736,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="url"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               URL
                             </label>
@@ -745,7 +746,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="url"
                               value={state.url}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.url ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.url ? " border-danger" : ""
                                 }`}
                             />
                             {errors.url && (
@@ -765,7 +766,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="indicate_when_completed"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Indicate When Completed
                             </label>
@@ -774,7 +775,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="indicate_when_completed"
                               value={state.indicate_when_completed}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.indicate_when_completed
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.indicate_when_completed
                                   ? " border-danger"
                                   : ""
                                 }`}
@@ -797,7 +798,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="upload_possible"
-                              className="block text-xs font-medium text-gray-700 mb-1"
+                              className="block  font-medium text-gray-700 mb-1"
                             >
                               Upload Option
                             </label>
@@ -806,7 +807,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               id="upload_possible"
                               value={state.upload_possible}
                               onChange={onInputChange}
-                              className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.upload_possible ? " border-danger" : ""
+                              className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.upload_possible ? " border-danger" : ""
                                 }`}
                             >
                               <option>-Select-</option>

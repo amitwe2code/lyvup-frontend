@@ -192,7 +192,7 @@ form input:focus-visible,form select:focus-visible,button:focus{
 
 .add_program_info .program_info_card,
 .add_program .program_card{
-background: #dcfce7;
+background: #e2e8f0;
 padding: 10px;
 border-radius: 6px;
 }
@@ -230,7 +230,7 @@ position: relative;
 }
 .add_program  .program_day_card .program_day_card_contant .program_contant_add_btn{
 
-background:#dcfce7;
+background:#e2e8f0;
 width: 24px;
 height: 24px;
 padding: 15px;

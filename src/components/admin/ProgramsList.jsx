@@ -10,110 +10,35 @@ import useValidation from "../common/UseValidation";
 import WeekForm from "./weekForm";
 import ProgramAssignToTeam from "./ProgramAssignToTeam";
 import AddWeekForm from "./AddWeekForm";
+import { getProgram } from "../../api/api";
 
-const ProgramList = () => {
-  const [program, setProgram] = useState([])
+const ProgramList = (props) => {
+  const [programs, setPrograms] = useState([])
   const { t } = useTranslation()
-  const [isBoolean, setIsBoolean] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalPage, setTotalPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("")
   const [ordering, setOrdering] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [count, setCount] = useState(0);
   const accessToken = useSelector((state) => state.token.accessToken);
   const [loading, setLoading] = useState(false);
-  const initialFormState = {
-    name: '',
-    description: '',
-    brand: '',
-    language: '',
-    written_by: '',
-    version: '',
-    price: ''
-  }
 
-  // const initialFormState = formData
-  const validators = {
-    name: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "name is required"
-          : null,
-    ],
-    description: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "description is required"
-          : null,
-    ],
-    brand: [
-      (value) =>
-        value === null
-          ? "label is required"
-          : null,
-    ],
-    language: [
-      (value) =>
-        value === null
-          ? "language is required"
-          : null,
-    ],
-    written_by: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "written by is required"
-          : null,
-    ],
-    version: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "version is required"
-          : null,
-    ],
-    price: [
-      (value) =>
-        value === null || value.trim() === ""
-          ? "price is required"
-          : null,
-    ],
-  }
-  const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState, validators);
 
-  const getActivityActionTypes = async () => {
+  const getProgramList = async () => {
     try {
       setLoading(true);
-      const response = await getActivityTypes(accessToken, search, currentPage, pageSize, ordering);
+      const response = await getProgram(accessToken, search, currentPage, pageSize, ordering);
       console.log("activitytypes =>", response.data.data)
-      setActivityTypes(response.data.data.results);
+      setPrograms(response.data.data.results);
+      if (props.program === "") {
+        props.setProgram(response.data.data.results[0])
+      }
       setCount(response.data.data.pagination.count);
       setTotalPage(response.data.data.pagination.total_pages);
       setCurrentPage(response.data.data.pagination.current_page);
-
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const handleProgramUpdate = async (activityType) => {
-    setState({
-      ...activityType
-    });
-    console.log("activity=>", activityType)
-    setIsOpen(true);
- 
-  };
-
-  const handleProgramDelete = async (id) => {
-    try {
-      setLoading(true);
-      console.log("e in type delete =>", id);
-      const response = await deleteActivityType(accessToken, id);
-      console.log("res=>", response);
-      setIsBoolean(true);
     } catch (error) {
       console.log(error);
     } finally {
@@ -121,40 +46,19 @@ const ProgramList = () => {
     }
   };
 
-  const handleProgramAddAndUpdate = async (e) => {
-    if (validate) {
 
-      try {
-        e.preventDefault();
-        setLoading(true);
-        if (e.target.id == "" || e.target.id == "undefined" || e.target.id == "null") {
-          const response = await addActivityType(accessToken, state);
-          console.log("response=", response);
-        } else {
-          const response = await updateActivityType(accessToken, state, e.target.id);
-          console.log("response=", response);
-        }
-        setIsBoolean(true);
-        setIsOpen(false);
-        setState(initialFormState);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
+
 
   useEffect(() => {
-    getActivityActionTypes();
-    setIsBoolean(false);
-  }, [isBoolean, pageSize, currentPage, ordering, search]);
+    getProgramList();
+    props.setApiCall(false);
+  }, [props.apiCall, pageSize, currentPage, ordering, search]);
 
 
   return (
 
     <div className="p-3  flex flex-col justify-evenly  h-full overflow-auto  ">
-      <h3 className="text-xl mb-2 font-semibold">List</h3>
+      <h3 className="text-2xl  font-bold">List</h3>
       <div className="flex flex-col gap-2  ">
         <div className="">
           <input
@@ -163,21 +67,19 @@ const ProgramList = () => {
             className="input  w-full "
             placeholder="Search"
             value={search}
-          // onChange={(e) => {
-          //   setProgramSearch(e.target.value);
-          //   searchProgram("search");
-          // }}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
           />
         </div>
         <div className=" ">
           <select
             className="input w-full"
             id="program_coach"
-          // value={programCoach}
-          // onChange={(e) => {
-          //   setProgramCoach(e.target.value);
-          //   searchProgram("coach");
-          // }}
+            value={filter}
+            onChange={(e) => {
+              setFilter(e.target.value);
+            }}
           >
             <option value="">All</option>
             <option value="444">We2code coach</option>
@@ -204,90 +106,11 @@ const ProgramList = () => {
 
       <div className="h-96 border p-2   scroll-none overflow-y-auto">
         <ol id="program_list_block" className="mt-3 flex flex-col gap-2">
-
-          <li className=" bg-green-100  p-2  text-sm rounded-md">
-            <a
-              href="#"
-              className="act_list li_selected"
-              onClick={() => viewActivity(892)}
-            >
-              GLI Survey Program (LyvPrg892)
-            </a>
-          </li>
-          <li className=" bg-green-100 p-2 text-sm rounded-md">
-            <a
-              href="#"
-              className="act_list li_selected"
-              onClick={() => viewActivity(892)}
-            >
-              GLI Survey Program (LyvPrg892)
-            </a>
-          </li>
-          <li className=" bg-green-100 p-2 text-sm rounded-md">
-            <a
-              href="#"
-              className="act_list li_selected"
-              onClick={() => viewActivity(892)}
-            >
-              GLI Survey Program (LyvPrg892)
-            </a>
-          </li>
-          <li className=" bg-green-100 p-2 text-sm rounded-md">
-            <a
-              href="#"
-              className="act_list li_selected"
-              onClick={() => viewActivity(892)}
-            >
-              GLI Survey Program (LyvPrg892)
-            </a>
-          </li>
-          <li className=" bg-green-100 p-2 text-sm rounded-md">
-            <a
-              href="#"
-              className="act_list li_selected"
-              onClick={() => viewActivity(892)}
-            >
-              GLI Survey Program (LyvPrg892)
-            </a>
-          </li>
-          <li className=" bg-green-100 p-2 text-sm rounded-md">
-            <a
-              href="#"
-              className="act_list li_selected"
-              onClick={() => viewActivity(892)}
-            >
-              GLI Survey Program (LyvPrg892)
-            </a>
-          </li>
-          <li className=" bg-green-100 p-2 text-sm rounded-md">
-            <a
-              href="#"
-              className="act_list li_selected"
-              onClick={() => viewActivity(892)}
-            >
-              GLI Survey Program (LyvPrg892)
-            </a>
-          </li>
-          <li className=" bg-green-100 p-2 text-sm rounded-md">
-            <a
-              href="#"
-              className="act_list li_selected"
-              onClick={() => viewActivity(892)}
-            >
-              GLI Survey Program (LyvPrg892)
-            </a>
-          </li>
-          <li className=" bg-green-100 p-2 text-sm rounded-md">
-            <a
-              href="#"
-              className="act_list li_selected"
-              onClick={() => viewActivity(892)}
-            >
-              GLI Survey Program (LyvPrg892)
-            </a>
-          </li>
-
-
+          {(programs || []).map((program) => (
+            <li key={program?.id} onClick={() => props.setProgram(program)} className={`  ${(program?.id === props.program.id) ? "bg-[#17686d] text-white" : "bg_secondary_color"} font-semibold  p-2  text-sm rounded-md`}>
+              {program?.name}
+            </li>
+          ))}
         </ol>
         <Pagination
           nPages={totalPage}
@@ -306,21 +129,7 @@ const ProgramList = () => {
         </CustomButton>
       </div>
 
-      <AddWeekForm
-        initialFormState={initialFormState}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        state={state}
-        setState={setState}
-        onInputChange={onInputChange}
-        errors={errors}
-        handleFormSubmit={handleProgramAddAndUpdate}
-      />
-
-
-
-
-      {/* <ProgramForm
+      {/* <AddWeekForm
         initialFormState={initialFormState}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -330,6 +139,12 @@ const ProgramList = () => {
         errors={errors}
         handleFormSubmit={handleProgramAddAndUpdate}
       /> */}
+      <ProgramForm
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        apiCall={props.apiCall}
+        setApiCall={props.setApiCall}
+      />
     </div>
   );
 };

@@ -142,6 +142,7 @@ export default function Account() {
           ) : (<>
             <AccountTable
               accounts={accounts}
+              ordering={ordering}
               setOrdering={setOrdering}
               handleAccountDelete={handleAccountDelete}
               handleAccountUpdate={handleAccountUpdate}

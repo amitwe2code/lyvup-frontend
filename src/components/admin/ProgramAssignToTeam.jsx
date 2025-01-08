@@ -22,10 +22,10 @@ export default function ProgramAssignToTeam({
 
     return (<>
         {isOpen && (<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-            <div className="bg-white max-h-full overflow-y-auto rounded-lg shadow-xl w-full max-w-2xl">
+            <div className="bg_secondary_color max-h-full overflow-y-auto rounded-lg shadow-xl w-full max-w-2xl">
                 <div className="p-4 sm:p-6 md:p-8 max-h-[80vh] overflow-y-auto">
-                    <div className="flex flex-row justify-between items-center pb-2  mb-4 sm:mb-6  border-b-2 border-[#039a77] gap-4">
-                        <h2 className="text-2xl sm:text-3xl font-bold  text-[#039a77] sticky top-0 bg-white">Assign program</h2>
+                    <div className="p-3 border-b btn_theme_color gap-2 flex flex-row justify-between items-center">
+                        <h2 className="text-lg font-semibold">Assign program</h2>
                         <button className=" pr-2" onClick={() => close()}><b>X</b></button>
                     </div>
                     <form className="space-y-4 sm:space-y-6">

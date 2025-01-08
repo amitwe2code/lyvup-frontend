@@ -19,7 +19,7 @@ export default function WeekForm({
         <div>
             {isOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white max-h-full overflow-y-auto rounded-lg  max-w-2xl shadow-xl w-full ">
+                    <div className="bg_secondary_color max-h-full overflow-y-auto rounded-lg  max-w-2xl shadow-xl w-full ">
                         <div className="p-3  border-b">
                             <h2 className="text-lg text-[#039a77] font-semibold">Add intervention to the week
                             </h2>
@@ -192,7 +192,7 @@ export default function WeekForm({
                                         setIsOpen(false)
                                     }
                                     }
-                                    className="px-3 py-1 text-xs bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                                    className=" bg-gray-400 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
                                 >
                                     Cancel
                                 </CustomButton>
@@ -201,7 +201,7 @@ export default function WeekForm({
                                     id={state?.id}
                                     variant="outline"
                                     onClick={handleFormSubmit}
-                                    className="px-3 py-1 text-xs   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
+                                    className=" "
                                 >
                                     {state?.id ? "Update" : "Add"}
                                 </CustomButton>

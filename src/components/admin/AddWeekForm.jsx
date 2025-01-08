@@ -12,8 +12,8 @@ export default function AddWeekForm(props) {
         <div>
             {props?.isOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white max-h-full overflow-y-auto rounded-lg  max-w-2xl shadow-xl w-full  ">
-                        <div className="flex flex-row justify-between items-center pb-2 p-3  mb-4 sm:mb-6  border-b-2 border-[#039a77] gap-4">
+                    <div className="bg_secondary_color max-h-full overflow-y-auto rounded-lg  max-w-2xl shadow-xl w-full  ">
+                        <div className="flex flex-row justify-between items-center  p-3 btn_theme_color sm:mb-6  border-b-2 gap-2">
                             <h2 className="text-2xl sm:text-3xl font-bold  text-[#039a77] sticky top-0 bg-white">Assign program</h2>
                             <button className=" pr-2" onClick={() => close()}><b>X</b></button>
                         </div>

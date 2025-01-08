@@ -379,6 +379,7 @@ export const getProgram = async (accessToken, search, currentPage, pageSize, ord
                         'Authorization': `Bearer ${accessToken}`
                   }
             });
+            console.log("res in program=",response);
             return response;
       } catch (error) {
             throw error;
@@ -414,7 +415,7 @@ export const addProgram = async (accessToken, data) => {
 
 export const updateProgram = async (accessToken, data, id) => {
       try {
-            const response = await axios.put(`${API_URL}/program/${id}/`, {
+            const response = await axios.patch(`${API_URL}/program/${id}/`,data, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }

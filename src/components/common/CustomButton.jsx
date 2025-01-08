@@ -21,7 +21,7 @@ export default function CustomButton({
 
     const variantClasses = {
         primary: 'bg-[#17686d] text-white ',
-        outline: 'border border-[#17686d] text-[#17686d] hover:bg-[#17686d] hover:text-white',
+        outline: 'border-2 border-[#17686d] text-[#17686d] hover:bg-[#17686d] hover:text-white',
     };
 
     return (

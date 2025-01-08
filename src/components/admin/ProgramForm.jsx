@@ -1,31 +1,127 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomButton from "../common/CustomButton";
-import { updateUser } from "../../api/api";
+import { addProgram, getSingleProgram, updateProgram, updateUser } from "../../api/api";
+import useValidation from "../common/UseValidation";
+import { useSelector } from "react-redux";
 
-export default function ProgramForm({
-  initialFormState,
-  isOpen,
-  setIsOpen,
-  state,
-  setState,
-  onInputChange,
-  errors,
-  handleFormSubmit,
-}) {
+export default function ProgramForm(props) {
 
-  const close=()=>{
-    setState(initialFormState);
-    setIsOpen(false)
+  const [loading, setLoading] = useState(false)
+  const accessToken = useSelector((state) => state.token.accessToken);
+  const initialFormState = {
+    name: '',
+    description: '',
+    brand: '',
+    language: '',
+    written_by: '',
+    version: '',
+    price: ''
   }
+
+  // const initialFormState = formData
+  const validators = {
+    name: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "name is required"
+          : null,
+    ],
+    description: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "description is required"
+          : null,
+    ],
+    // brand: [
+    //   (value) =>
+    //     value === null || value.trim() === ""
+    //       ? "label is required"
+    //       : null,
+    // ],
+    // language: [
+    //   (value) =>
+    //     value === null || value.trim() === ""
+    //       ? "language is required"
+    //       : null,
+    // ],
+    written_by: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "written by is required"
+          : null,
+    ],
+    version: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "version is required"
+          : null,
+    ],
+    price: [
+      (value) =>
+        value === null || value.trim() ===''
+          ? "price is required"
+          : null,
+    ],
+  }
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
+
+
+  const getUpdateProgram = async () => {
+    setState({
+      ...props.program
+    })
+  }
+
+
+  const handleProgramAddAndUpdate = async (e) => {
+    console.log(errors)
+    if (validate()) {
+      console.log("id in update and add ",e.target.id);
+      try {
+        e.preventDefault();
+        setLoading(true);
+        if (e.target.id == "" || e.target.id == "undefined" || e.target.id == "null") {
+          const response = await addProgram(accessToken, state);
+          console.log("response=", response);
+        } else {
+          const response = await updateProgram(accessToken, state, e.target.id);
+          console.log("response=", response);
+          props.setprogram(state)
+       
+        }
+        props.setApiCall(true)
+        props.setIsOpen(false);
+        setState(initialFormState);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+
+
+  const close = () => {
+    setState(initialFormState);
+    props.setIsOpen(false)
+  }
+  useEffect(() => {
+    if (props?.program) {
+      getUpdateProgram()
+    }
+
+  },[props.isOpen])
 
   return (
     <div>
-      {isOpen && (
+      {props?.isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-[white] max-h-full overflow-y-auto rounded-lg shadow-xl w-full max-w-md">
-            <div className="p-3 border-b flex flex-row justify-between items-center">
-              <h2 className="text-lg font-semibold text_theme_color">Account Registration</h2>
-              <button className="font-semibold " onClick={()=>close()}>X</button>
+          <div className="bg_secondary_color max-h-full overflow-auto rounded-lg shadow-xl w-full max-w-md">
+            <div className="p-3 border-b btn_theme_color gap-2 flex flex-row justify-between items-center">
+              <h2 className="text-lg font-semibold">Program Registration </h2>
+              <button className="font-semibold " onClick={() => close()}>X</button>
             </div>
             <form className="p-4 space-y-3">
               <div>
@@ -70,11 +166,11 @@ export default function ProgramForm({
                 />
                 {errors.description && (
                   <span className="text-danger font-size-3">
-                    {errors.description.join(", ")} 
+                    {errors.description.join(", ")}
                   </span>
                 )}
               </div>
-              <div>
+              <div className="hidden">
                 <label
                   htmlFor="brand"
                   className="block  font-medium text-gray-700 mb-1"
@@ -100,12 +196,12 @@ export default function ProgramForm({
                   </span>
                 )}
               </div>
-              <div>
+              <div className="hidden">
                 <label
                   htmlFor="language"
                   className="block  font-medium text-gray-700 mb-1"
                 >
-                  Label
+                  Language
                 </label>
                 <select
                   name="language"
@@ -116,9 +212,9 @@ export default function ProgramForm({
                     }`}
                 >
                   <option value="">Select Label</option>
-                  <option value="important">Important</option>
-                  <option value="urgent">Urgent</option>
-                  <option value="normal">Normal</option>
+                  <option value="en">english</option>
+                  <option value="nl">dutch</option>
+                  <option value="hn">hindi</option>
                 </select>
                 {errors.language && (
                   <span className="text-danger font-size-3">
@@ -140,9 +236,9 @@ export default function ProgramForm({
                   placeholder="Enter written_by"
                   value={state.written_by}
                   onChange={onInputChange}
-                  required 
+                  required
                   className={`w-full p-2 input text-sm  rounded  ${errors.written_by ? " border-danger" : ""
-                          }   `}
+                    }   `}
                 />
                 {errors.written_by && (
                   <span className="text-danger font-size-3">
@@ -201,11 +297,7 @@ export default function ProgramForm({
               <div className="flex justify-end space-x-2 mt-4">
                 <CustomButton
                   type="button"
-                  onClick={() => {
-                    setState(initialFormState)
-                    setIsOpen(false)
-                  }
-                  }
+                  onClick={() =>close()}
                   className="px-3 py-1  bg-gray-200 text-gray-800 rounded hover:bg-gray-300 "
                 >
                   Cancel
@@ -214,7 +306,7 @@ export default function ProgramForm({
                   type="submit"
                   id={state?.id}
                   variant="outline"
-                  onClick={handleFormSubmit}
+                  onClick={(e) => handleProgramAddAndUpdate(e)}
                   className="px-3 py-1 text-xs   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
                 >
                   {state?.id ? "Update" : "Add"}

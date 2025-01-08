@@ -451,6 +451,7 @@ export default function Activity() {
           <div className=" h-full text-center w-full   overflow-y-scroll">
             <ActivityTable
               activitys={activitys}
+              ordering={setOrdering}
               setOrdering={setOrdering}
               handleActivityDelete={handleActivityDelete}
               handleActivityUpdate={handleActivityUpdate}

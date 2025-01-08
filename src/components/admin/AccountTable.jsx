@@ -8,46 +8,30 @@ import Loader from "../common/Loader";
 
 export default function AccountTable({
   accounts,
+  ordering,
   setOrdering,
   handleAccountDelete,
   handleAccountUpdate,
 }) {
-  const [openDropdown, setOpenDropdown] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState(null);
 
-  const handleSort = (field, direction) => {
-    setOrdering(direction === "asc" ? field : `-${field}`);
-    setOpenDropdown(null);
-  };
+
 
   const SortDropdown = ({ field }) => (
-    <div className="relative inline-block">
-      <button
-        onClick={() => setOpenDropdown(openDropdown === field ? null : field)}
-        className="inline-flex items-center"
-      >
-        {field} <ChevronDown className="w-4 h-4 ml-1" />
-      </button>
+    <button
+      onClick={() => {
+        const newDirection = ordering === field ? `-${field}` : field;
+        setOrdering(newDirection);
+      }}
+      className="inline-flex items-center"
+    >
+      {field} <ChevronDown className="w-4 h-4 ml-1" />
+    </button>
 
-      {openDropdown === field && (
-        <div className="absolute z-10 mt-1 bg-white border rounded-md shadow-lg">
-          <button
-            className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
-            onClick={() => handleSort(field, "asc")}
-          >
-            'At_ascending'
-          </button>
-          <button
-            className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
-            onClick={() => handleSort(field, "desc")}
-          >
-            'At_descending'
-          </button>
-        </div>
-      )}
-    </div>
-  );
+  )
+
+
 
   return (
     <>
@@ -56,7 +40,7 @@ export default function AccountTable({
           <thead className="">
             <tr className="h-10">
               <th className="leading-none text-sm" scope="col">
-                <SortDropdown field="id" />
+               s.no
               </th>
               <th className="leading-none text-sm" scope="col">
                 <SortDropdown field="account_type" />
@@ -76,11 +60,11 @@ export default function AccountTable({
             </tr>
           </thead>
           <tbody className="text-sm">
-            {accounts.map((account) => (
+            {accounts.map((account,index) => (
               <tr key={account?.id} className="border-collapse">
 
                 <td> <Link to={`/account/${account?.id}`}>
-                  {" "}   {account?.id} </Link>    </td>
+                  {index+1} </Link>    </td>
                 <td>{account?.account_type}</td>
                 <td>{account?.account_name}</td>
                 <td>{account?.team_leader_id}</td>

@@ -16,16 +16,16 @@ export default function ActivityActionTypeForm({
     <div>
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
-            <div className="p-4 border-b">
-              <h2 className="text-lg font-semibold">Account Registration</h2>
+          <div className="bg_secondary_color max-h-full overflow-auto rounded-lg shadow-xl w-full max-w-2xl">
+            <div className="p-3 btn_theme_color border-b">
+              <h2 className="text-lg font-semibold">Activity Registration</h2>
             </div>
             <form className="p-4 space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label
                     htmlFor="activity_type"
-                    className="block text-xs font-medium text-gray-700 mb-1"
+                    className="block  font-medium text-gray-700 mb-1"
                   >
                     activity_type
                   </label>
@@ -37,7 +37,7 @@ export default function ActivityActionTypeForm({
                     value={state.activity_type}
                     onChange={onInputChange}
                     required
-                     className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity_type ? " border-danger" : ""
+                     className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity_type ? " border-danger" : ""
                           } `}
                   />
                   {errors.activity_type && (
@@ -49,7 +49,7 @@ export default function ActivityActionTypeForm({
                 <div>
                   <label
                     htmlFor="activity"
-                    className="block text-xs font-medium text-gray-700 mb-1"
+                    className="block  font-medium text-gray-700 mb-1"
                   >
                     activity
                   </label>
@@ -61,7 +61,7 @@ export default function ActivityActionTypeForm({
                     value={state.activity}
                     onChange={onInputChange}
                     required
-                     className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity ? " border-danger" : ""
+                     className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity ? " border-danger" : ""
                           } `}
                   />
                   {errors.activity && (
@@ -75,7 +75,7 @@ export default function ActivityActionTypeForm({
                 <div>
                   <label
                     htmlFor="amount"
-                    className="block text-xs font-medium text-gray-700 mb-1"
+                    className="block  font-medium text-gray-700 mb-1"
                   >
                     amount
                   </label>
@@ -87,7 +87,7 @@ export default function ActivityActionTypeForm({
                     value={state.amount}
                     onChange={onInputChange}
                     required
-                     className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.amount ? " border-danger" : ""
+                     className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.amount ? " border-danger" : ""
                           } `}
                   />
                   {errors.amount && (
@@ -99,7 +99,7 @@ export default function ActivityActionTypeForm({
                 <div>
                   <label
                     htmlFor="unit"
-                    className="block text-xs font-medium text-gray-700 mb-1"
+                    className="block  font-medium text-gray-700 mb-1"
                   >
                     unit
                   </label>
@@ -111,7 +111,7 @@ export default function ActivityActionTypeForm({
                     value={state.unit}
                     onChange={onInputChange}
                     required
-                     className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.unit ? " border-danger" : ""
+                     className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.unit ? " border-danger" : ""
                           } `}
                   />
                   {errors.unit && (
@@ -125,7 +125,7 @@ export default function ActivityActionTypeForm({
                 <div>
                   <label
                     htmlFor="key_activity"
-                    className="block text-xs font-medium text-gray-700 mb-1"
+                    className="block  font-medium text-gray-700 mb-1"
                   >
                     key_activity
                   </label>
@@ -137,7 +137,7 @@ export default function ActivityActionTypeForm({
                     value={state.key_activity}
                     onChange={onInputChange}
                     required
-                    className={`w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.key_activity ? " border-danger" : ""
+                    className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.key_activity ? " border-danger" : ""
                           } `}
                   />
                   {errors.key_activity && (
@@ -155,7 +155,7 @@ export default function ActivityActionTypeForm({
                     setIsOpen(false)
                   }
                 }
-                  className="px-3 py-1 text-xs bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                  className="px-3 py-1  bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
                 >
                   Cancel
                 </CustomButton>
@@ -164,7 +164,7 @@ export default function ActivityActionTypeForm({
                   id={state?.id}
                   variant="outline"
                   onClick={handleFormSubmit}
-                  className="px-3 py-1 text-xs   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
+                  className="px-3 py-1   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
                 >
                   {state?.id ? "Update" : "Add"}
                 </CustomButton>
