@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import ProgramForm from './ProgramForm'
 import { deleteProgram } from '../../api/api'
 import { useSelector } from 'react-redux'
+import WeekTable from './program/WeekTable'
 
 export default function ProgramDetail(props) {
   const [isOpen, setIsOpen] = useState(false)
@@ -41,38 +42,13 @@ export default function ProgramDetail(props) {
             {/* <span class="program_info_card"><b>Language:</b>{props?.program?.language}</span>
             <span class="program_info_card"><b>label : </b>{props?.program?.label}</span> */}
           </div>
-
-
-          <div class="week-card  my-2 border w-full">
-            <div class=" week-header flex flex-row bg_secondary_color justify-between items-center py-2 px-3">
-              <h4 className='capitalize font-semibold'>week 1 </h4>
-
-              <div className='flex flex-row items-center gap-4'>
-                <div className='hidden sm:block'><h6>Duration: 0 min.</h6></div>
-                <div className='flex flex-row gap-4 '>
-                  <button><PlusIcon className='icon_size_small' /></button>
-                  <button><CopyIcon className='icon_size_small' /></button>
-                  <button><TrashIcon className='icon_size_small' /></button>
-                </div>
-              </div>
-            </div>
-            <div className='week-body p-1 bg-white flex flex-wrap gap-3  justify-start'>
-              {/* week assign activity  */}
-              <div class="card_border   ">
-                <div className='flex flex-row justify-end gap-3 p-2 '>
-
-                </div>
-                <div className='p-3'>
-
-                  <p>New Test NEw Lyvup setup Description</p>
-                  <p><b>Intervention type:</b>Survey</p>
-                  <p><b>Intervention type</b>Survey</p>
-                </div>
-              </div>
-            </div>
-
+          <div className='my-3'>
+            <WeekTable />
           </div>
-          <div className=''>
+
+
+
+          <div className='my-5'>
             <button className='button p-2  py-1 border rounded-md btn_theme_color   text-white '>Add Week</button>
           </div>
 

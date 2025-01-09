@@ -2,19 +2,19 @@
 import { useEffect, useState } from "react";
 import BottomNavbar from "../../components/user/BottomNavbar";
 import TopBar from "../../components/admin/TobBar";
-import UserTable from "../../components/admin/UserTable";
+import UserTable from "../../components/admin/users/UserTable";
 import { useSelector } from "react-redux";
 import { addUser, deleteUser, getUsers, updateUser } from "../../api/api";
 import CustomButton from "../../components/common/CustomButton";
 import CustomInput from "../../components/common/CustomInput";
-import UserRegistrationForm from "../../components/admin/UserRegistrationForm";
+import UserRegistrationForm from "../../components/admin/users/UserRegistrationForm";
 import Pagination from "../../components/common/Pagination";
 import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/common/Loader";
 import { toast } from "react-toastify";
 import UserModelForm from "../../components/admin/modelforms/UserModelForm";
 import Header from "../../components/common/Header";
-import UserComponent from "../../components/admin/UserComponent";
+import UserComponent from "../../components/admin/users/UserComponent";
 
 export default function UserList() {
   // state

@@ -29,7 +29,8 @@
 
 
 /* input css */
-form input:focus-visible,form select:focus-visible,button:focus{
+
+form input:focus-visible,form select:focus-visible,button:focus,input{
   outline: none;
 }
 

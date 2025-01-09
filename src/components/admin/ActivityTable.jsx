@@ -1,5 +1,5 @@
 import CustomButton from "../common/CustomButton";
-import { Delete, LetterText, Trash, ChevronDown } from "lucide-react";
+import { Delete, LetterText, Trash, ChevronDown, ChevronUp } from "lucide-react";
 import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -9,13 +9,14 @@ export default function ActivityTable({ activitys, ordering, setOrdering, handle
         <button
             onClick={() => {
                 const newDirection = ordering === field ? `-${field}` : field;
-                setOrdering(newDirection);
+                props?.setOrdering(newDirection);
             }}
             className="inline-flex items-center"
         >
             {field} {(ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
         </button>
     );
+
 
     return (
         <>
@@ -27,16 +28,16 @@ export default function ActivityTable({ activitys, ordering, setOrdering, handle
                                s.no
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="Intervention name" />
+                                <SortDropdown field="activity name" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="Intervention Type" />
+                                <SortDropdown field="activity Type" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
                                 <SortDropdown field="label" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="Intervention Description" />
+                                <SortDropdown field="activity Description" />
                             </th>
 
                             <th className="leading-none text-sm" scope="col">
@@ -48,10 +49,10 @@ export default function ActivityTable({ activitys, ordering, setOrdering, handle
                         {(activitys || []).map((activity,index) => (
                             <tr key={activity.id} className="border-collapse" onClick={() => setSelectedActivity(activity)} >
                                 <td>{index+1}</td>
-                                <td>{activity?.intervention_name}</td>
-                                <td>{activity?.intervention_type}</td>
+                                <td>{activity?.activity_name}</td>
+                                <td>{activity?.activity_type}</td>
                                 <td>{activity?.brand}</td>
-                                <td>{activity?.intervention_description}</td>
+                                <td>{activity?.activity_description}</td>
                                 <td className="flex h-auto w-auto ">
                                     <div className="inline-flex" role="group">
                                         <CustomButton

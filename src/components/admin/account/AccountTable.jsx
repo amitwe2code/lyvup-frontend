@@ -1,36 +1,46 @@
-import CustomButton from "../common/CustomButton";
-import { LetterText, Trash, ChevronDown, Users } from "lucide-react";
-import DateFormat from "./DateFormat";
+import CustomButton from "../../common/CustomButton";
+import { LetterText, Trash, ChevronDown, Users, ChevronUp } from "lucide-react";
+import DateFormat from "../DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import AccountSidebar from "./AccountSidebar";
-import Loader from "../common/Loader";
+import { deleteAccount } from "../../../api/api";
+import AccountModelForm from "../modelforms/AccountModelForm";
+import { useSelector } from "react-redux";
 
-export default function AccountTable({
-  accounts,
-  ordering,
-  setOrdering,
-  handleAccountDelete,
-  handleAccountUpdate,
-}) {
+export default function AccountTable(props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState(null);
-
-
+  const [updateAccount, setUpdateAccount] = useState(null)
+  const accessToken = useSelector((state) => state.token.accessToken);
+  const [isOpen, setIsOpen] = useState(false)
+  const handleAccountDelete = async (id) => {
+    try {
+      setLoading(true);
+      const response = await deleteAccount(accessToken, id);
+      props.setApicall(true)
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleUpdateAccount = (account) => {
+    setUpdateAccount(account)
+    setIsOpen(true)
+  }
 
   const SortDropdown = ({ field }) => (
     <button
-      onClick={() => {
-        const newDirection = ordering === field ? `-${field}` : field;
-        setOrdering(newDirection);
-      }}
-      className="inline-flex items-center"
+        onClick={() => {
+            const newDirection = props?.ordering === field ? `-${field}` : field;
+            props?.setOrdering(newDirection);
+        }}
+        className="inline-flex items-center"
     >
-      {field} <ChevronDown className="w-4 h-4 ml-1" />
+        {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
     </button>
-
-  )
-
+);
 
 
   return (
@@ -40,7 +50,7 @@ export default function AccountTable({
           <thead className="">
             <tr className="h-10">
               <th className="leading-none text-sm" scope="col">
-               s.no
+                s.no
               </th>
               <th className="leading-none text-sm" scope="col">
                 <SortDropdown field="account_type" />
@@ -60,11 +70,11 @@ export default function AccountTable({
             </tr>
           </thead>
           <tbody className="text-sm">
-            {accounts.map((account,index) => (
+            {props?.accounts.map((account, index) => (
               <tr key={account?.id} className="border-collapse">
 
                 <td> <Link to={`/account/${account?.id}`}>
-                  {index+1} </Link>    </td>
+                  {index + 1} </Link>    </td>
                 <td>{account?.account_type}</td>
                 <td>{account?.account_name}</td>
                 <td>{account?.team_leader_id}</td>
@@ -75,7 +85,7 @@ export default function AccountTable({
                       id={account.id}
                       variant="outline"
                       size="small"
-                      onClick={() => handleAccountUpdate(account)}
+                      onClick={() => handleUpdateAccount(account)}
                       className="border   border-r-0 rounded-none "
                     >
                       {" "}
@@ -85,7 +95,7 @@ export default function AccountTable({
                       id={account.id}
                       variant="outline"
                       size="small"
-                      onClick={(e) => handleAccountDelete(e)}
+                      onClick={(e) => handleAccountDelete(account?.id)}
                       className="border border-r-0 rounded-none  "
                     >
                       {" "}
@@ -110,6 +120,14 @@ export default function AccountTable({
         </table>
 
       </div>
+      <AccountModelForm
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        apicall={props?.apiCall}
+        setApiCall={props?.setApiCall}
+        updateAccount={updateAccount}
+        setUpdateAccount={setUpdateAccount}
+      />
 
       <AccountSidebar
         isOpen={isSidebarOpen}
@@ -119,3 +137,6 @@ export default function AccountTable({
     </>
   );
 }
+
+
+

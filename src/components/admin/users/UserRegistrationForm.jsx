@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import CustomButton from "../common/CustomButton";
-import { addUser, updateUser } from "../../api/api";
-import useValidation from '../common/UseValidation'
+import CustomButton from "../../common/CustomButton";
+import { addUser, updateUser } from "../../../api/api";
+import useValidation from '../../common/UseValidation'
 import { useSelector } from "react-redux";
 export default function UserRegistrationForm(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
@@ -63,18 +63,21 @@ export default function UserRegistrationForm(props) {
     setState({
       ...user
     });
-    setIsOpen(true);
+    props.setIsOpen(true);
   };
 
   //newUser add apifunction Call
-  const handleUserAdd = async (id) => {
+  const handleUserAdd = async (e,id) => {
     try {
+     
       e.preventDefault();
       if (validate()) {
         if (id) {
-          const response = await addUser(accessToken, state);
-        } else {
           const response = await updateUser(accessToken, state, id);
+         
+        } else {
+          console.log("add call");
+          const response = await addUser(accessToken, state);
         }
         props.setApiCall(true);
         setState({ ...initialFormState })
@@ -115,8 +118,8 @@ export default function UserRegistrationForm(props) {
               value={state.name}
               onChange={onInputChange}
               placeholder="enter name"
-              required
-              className="w-full input  text-sm  "
+            
+              className={`w-full input text-sm ${errors.name?'border-danger':''}`}
             />
             {errors.name && (
               <span
@@ -142,7 +145,7 @@ export default function UserRegistrationForm(props) {
               value={state.email}
               onChange={onInputChange}
               required
-              className="w-full input  text-sm  "
+              className={`w-full input text-sm ${errors.email?'border-danger':''}`}
             />
             {errors.email && (
               <span
@@ -170,7 +173,7 @@ export default function UserRegistrationForm(props) {
               value={state.phone}
               onChange={onInputChange}
               required
-              className="w-full input  text-sm  "
+              className={`w-full input text-sm ${errors.phone?'border-danger':''}`}
             />
             {errors.phone && (
               <span
@@ -194,7 +197,7 @@ export default function UserRegistrationForm(props) {
               value={state.language_preference}
               onChange={onInputChange}
               required
-              className="w-full input  text-sm  "
+              className={`w-full input text-sm ${errors.language_preference?'border-danger':''}`}
             >
               <option value="">Select</option>
               <option value="English">English</option>
@@ -224,7 +227,7 @@ export default function UserRegistrationForm(props) {
               value={state.user_type}
               onChange={onInputChange}
               required
-              className="w-full input  text-sm  "
+              className={`w-full input text-sm ${errors.user_type?'border-danger':''}`}
             >
               <option value="">Select</option>
               <option value="admin">Admin</option>
@@ -256,7 +259,7 @@ export default function UserRegistrationForm(props) {
                   value={state.password}
                   onChange={onInputChange}
                   required
-                  className="w-full input  text-sm  "
+                  className={`w-full input text-sm ${errors.password?'border-danger':''}`}
                 />
                 {errors.password && (
                   <span
@@ -280,8 +283,8 @@ export default function UserRegistrationForm(props) {
           </CustomButton>
           <CustomButton
             type="submit"
-            onClick={handleUserAdd}
             id={state?.id}
+            onClick={(e)=>handleUserAdd(e,state?.id)}
             variant="outline"
             className=" text-xs   rounded "
           >

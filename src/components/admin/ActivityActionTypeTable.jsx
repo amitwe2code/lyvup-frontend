@@ -6,11 +6,11 @@ import {
   Users,
   Settings2Icon,
   SettingsIcon,
+  ChevronUp,
 } from "lucide-react";
 import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import AccountSidebar from "./AccountSidebar";
 import Loader from "../common/Loader";
 
 export default function ActivityActionTypeTable({
@@ -24,14 +24,15 @@ export default function ActivityActionTypeTable({
   const SortDropdown = ({ field }) => (
     <button
         onClick={() => {
-            const newDirection = ordering === field ? `-${field}` : field;
-            setOrdering(newDirection);
+            const newDirection = props?.ordering === field ? `-${field}` : field;
+            props?.setOrdering(newDirection);
         }}
         className="inline-flex items-center"
     >
-        {field} {(ordering===field)?( <ChevronUp className="w-4 h-4 ml-1" />):( <ChevronDown className="w-4 h-4 ml-1" />)} 
+        {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
     </button>
 );
+
 
   return (
     <>

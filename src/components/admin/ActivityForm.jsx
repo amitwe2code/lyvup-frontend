@@ -59,7 +59,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             } rounded `}
                         >
                           <option value="">Select Language</option>
-                          <option value="english">English</option>
+                          <option value="en">English</option>
 
                         </select>
                         {errors.language && (
@@ -70,17 +70,17 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       </div>
                       <div>
                         <label
-                          htmlFor="intervention_type"
+                          htmlFor="activity_type"
                           className={`block  font-bold text-gray-700 mb-1`}
                         >
                           Type
                         </label>
                         <select
-                          name="intervention_type"
-                          id="intervention_type"
-                          value={state.intervention_type}
+                          name="activity_type"
+                          id="activity_type"
+                          value={state.activity_type}
                           onChange={onInputChange}
-                          className={`w-full  ${errors.intervention_type ? " border-danger" : ""
+                          className={`w-full  ${errors.activity_type ? " border-danger" : ""
                             } input text-sm border rounded `}
                         >
                           <option value="">Select Type</option>
@@ -94,9 +94,9 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <option value="podcast">podcast</option>
                           <option value="other">other</option>
                         </select>
-                        {errors.intervention_type && (
+                        {errors.activity_type && (
                           <span className="text-danger font-size-3">
-                            {errors.intervention_type.join(", ")}
+                            {errors.activity_type.join(", ")}
                           </span>
                         )}
                       </div>
@@ -131,54 +131,54 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                   </>
                 ) : null}
 
-                {state.intervention_type && step === 2 ? (
+                {state.activity_type && step === 2 ? (
                   <>
                     <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
                       <div>
                         <label
-                          htmlFor="intervention_name"
+                          htmlFor="activity_name"
                           className="block  font-medium text-gray-700 mb-1"
                         >
-                          Intervention Name
+                          activity Name
                         </label>
                         <input
                           type="text"
-                          name="intervention_name"
-                          id="intervention_name"
+                          name="activity_name"
+                          id="activity_name"
                           placeholder="Enter Name"
-                          value={state.intervention_name}
+                          value={state.activity_name}
                           onChange={onInputChange}
-                          className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.intervention_name ? " border-danger" : ""
+                          className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.activity_name ? " border-danger" : ""
                             }`}
                         />
-                        {errors.intervention_name && (
+                        {errors.activity_name && (
                           <span className="text-danger font-size-3">
-                            {errors.intervention_name.join(", ")}
+                            {errors.activity_name.join(", ")}
                           </span>
                         )}
                       </div>
                       <div className="row-span-3">
                         <label
-                          htmlFor="intervention_description"
+                          htmlFor="activity_description"
                           className="block  font-medium text-gray-700 mb-1"
                         >
                           Description
                         </label>
                         <textarea
-                          name="intervention_description"
-                          id="intervention_description"
-                          value={state.intervention_description}
+                          name="activity_description"
+                          id="activity_description"
+                          value={state.activity_description}
                           onChange={onInputChange}
                           placeholder="Enter description"
                           rows={2}
-                          className={`w-full min-h-32 p-2 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.intervention_description
+                          className={`w-full min-h-32 p-2 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.activity_description
                               ? " border-danger"
                               : ""
                             }`}
                         />
-                        {errors.intervention_description && (
+                        {errors.activity_description && (
                           <span className="text-danger font-size-3">
-                            {errors.intervention_description.join(", ")}
+                            {errors.activity_description.join(", ")}
                           </span>
                         )}
                       </div>
@@ -205,31 +205,6 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                         {errors.brand && (
                           <span className="text-danger font-size-3">
                             {errors.brand.join(", ")}
-                          </span>
-                        )}
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="activity_type"
-                          className="block  font-medium text-gray-700 mb-1"
-                        >
-                          activity_type
-                        </label>
-                        <select
-                          name="activity_type"
-                          id="activity_type"
-                          value={state.activity_type}
-                          onChange={onInputChange}
-                          className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
-                            }`}
-                        >
-                          <option value="">Select Label</option>
-                          <option value="yes">yes</option>
-                          <option value="no">no</option>
-                        </select>
-                        {errors.activity_type && (
-                          <span className="text-danger font-size-3">
-                            {errors.activity_type.join(", ")}
                           </span>
                         )}
                       </div>
@@ -287,7 +262,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                   </>
                 ) : null}
 
-                {state.intervention_type && step === 3 ? (
+                {state.activity_type && step === 3 ? (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
                       <div>
@@ -317,7 +292,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           </span>
                         )}
                       </div>
-                      {state.intervention_type === "survey" && (
+                      {state.activity_type === "survey" && (
                         <div>
                           <label
                             htmlFor="activity"
@@ -341,14 +316,14 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           )}
                         </div>
                       )}
-                      {(state.intervention_type === "survey" ||
-                        state.intervention_type === "challenge" ||
-                        state.intervention_type === "interview" ||
-                        state.intervention_type === "assignment" ||
-                        state.intervention_type === "podcast" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "workshop" ||
-                        state.intervention_type === "video") && (
+                      {(state.activity_type === "survey" ||
+                        state.activity_type === "challenge" ||
+                        state.activity_type === "interview" ||
+                        state.activity_type === "assignment" ||
+                        state.activity_type === "podcast" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "workshop" ||
+                        state.activity_type === "video") && (
                           <div>
                             <label
                               htmlFor="send_reminder"
@@ -375,14 +350,14 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             )}
                           </div>
                         )}
-                      {(state.intervention_type === "survey" ||
-                        state.intervention_type === "challenge" ||
-                        state.intervention_type === "assignment" ||
-                        state.intervention_type === "podcast" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "interview" ||
-                        state.intervention_type === "workshop" ||
-                        state.intervention_type === "video") && (
+                      {(state.activity_type === "survey" ||
+                        state.activity_type === "challenge" ||
+                        state.activity_type === "assignment" ||
+                        state.activity_type === "podcast" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "interview" ||
+                        state.activity_type === "workshop" ||
+                        state.activity_type === "video") && (
                           <div>
                             <label
                               htmlFor="show_in_task"
@@ -409,14 +384,14 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             )}
                           </div>
                         )}
-                      {(state.intervention_type === "survey" ||
-                        state.intervention_type === "challenge" ||
-                        state.intervention_type === "podcast" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "assignment" ||
-                        state.intervention_type === "interview" ||
-                        state.intervention_type === "workshop" ||
-                        state.intervention_type === "video") && (
+                      {(state.activity_type === "survey" ||
+                        state.activity_type === "challenge" ||
+                        state.activity_type === "podcast" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "assignment" ||
+                        state.activity_type === "interview" ||
+                        state.activity_type === "workshop" ||
+                        state.activity_type === "video") && (
                           <div>
                             <label
                               htmlFor="add_comment_option"
@@ -444,7 +419,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           </div>
                         )}
 
-                      {state.intervention_type === "challenge" && (
+                      {state.activity_type === "challenge" && (
                         <div>
                           <label
                             htmlFor="challenge"
@@ -472,8 +447,8 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           )}
                         </div>
                       )}
-                      {(state.intervention_type === "challenge" ||
-                        state.intervention_type === "other") && (
+                      {(state.activity_type === "challenge" ||
+                        state.activity_type === "other") && (
                           <div>
                             <label
                               htmlFor="amount"
@@ -498,10 +473,10 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           </div>
                         )}
 
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "workshop" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "assignment") && (
+                      {(state.activity_type === "interview" ||
+                        state.activity_type === "workshop" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "assignment") && (
                           <div>
                             <label
                               htmlFor="location"
@@ -530,10 +505,10 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           </div>
                         )}
 
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "workshop" ||
-                        state.intervention_type === "assignment") && (
+                      {(state.activity_type === "interview" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "workshop" ||
+                        state.activity_type === "assignment") && (
                           <div>
                             <label
                               htmlFor="coach_type"
@@ -563,12 +538,12 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           </div>
                         )}
 
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "workshop" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "assignment" ||
-                        state.intervention_type === "podcast" ||
-                        state.intervention_type === "video") && (
+                      {(state.activity_type === "interview" ||
+                        state.activity_type === "workshop" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "assignment" ||
+                        state.activity_type === "podcast" ||
+                        state.activity_type === "video") && (
                           <div>
                             <label
                               htmlFor="user_duration"
@@ -592,10 +567,10 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             )}
                           </div>
                         )}
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "workshop" ||
-                        state.intervention_type === "assignment") && (
+                      {(state.activity_type === "interview" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "workshop" ||
+                        state.activity_type === "assignment") && (
                           <div>
                             <label
                               htmlFor="coach_duration"
@@ -619,7 +594,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             )}
                           </div>
                         )}
-                      {state.intervention_type === "excercise" && (
+                      {state.activity_type === "excercise" && (
                         <div>
                           <label
                             htmlFor="excercise"
@@ -644,10 +619,10 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           )}
                         </div>
                       )}
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "workshop" ||
-                        state.intervention_type === "assignment") && (
+                      {(state.activity_type === "interview" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "workshop" ||
+                        state.activity_type === "assignment") && (
                           <div>
                             <label
                               htmlFor="teamlead_duration"
@@ -671,10 +646,10 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             )}
                           </div>
                         )}
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "assignment" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "workshop") && (
+                      {(state.activity_type === "interview" ||
+                        state.activity_type === "assignment" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "workshop") && (
                           <div>
                             <label
                               htmlFor="travel_time"
@@ -698,12 +673,12 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             )}
                           </div>
                         )}
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "video" ||
-                        state.intervention_type === "assignment" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "podcast" ||
-                        state.intervention_type === "workshop") && (
+                      {(state.activity_type === "interview" ||
+                        state.activity_type === "video" ||
+                        state.activity_type === "assignment" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "podcast" ||
+                        state.activity_type === "workshop") && (
                           <div>
                             <label
                               htmlFor="file"
@@ -727,12 +702,12 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             )}
                           </div>
                         )}
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "video" ||
-                        state.intervention_type === "assignment" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "podcast" ||
-                        state.intervention_type === "workshop") && (
+                      {(state.activity_type === "interview" ||
+                        state.activity_type === "video" ||
+                        state.activity_type === "assignment" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "podcast" ||
+                        state.activity_type === "workshop") && (
                           <div>
                             <label
                               htmlFor="url"
@@ -756,13 +731,13 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             )}
                           </div>
                         )}
-                      {(state.intervention_type === "interview" ||
-                        state.intervention_type === "video" ||
-                        state.intervention_type === "assignment" ||
-                        state.intervention_type === "excercise" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "podcast" ||
-                        state.intervention_type === "workshop") && (
+                      {(state.activity_type === "interview" ||
+                        state.activity_type === "video" ||
+                        state.activity_type === "assignment" ||
+                        state.activity_type === "excercise" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "podcast" ||
+                        state.activity_type === "workshop") && (
                           <div>
                             <label
                               htmlFor="indicate_when_completed"
@@ -792,9 +767,9 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           </div>
                         )}
 
-                      {(state.intervention_type === "assignment" ||
-                        state.intervention_type === "other" ||
-                        state.intervention_type === "workshop") && (
+                      {(state.activity_type === "assignment" ||
+                        state.activity_type === "other" ||
+                        state.activity_type === "workshop") && (
                           <div>
                             <label
                               htmlFor="upload_possible"

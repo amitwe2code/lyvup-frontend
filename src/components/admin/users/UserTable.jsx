@@ -1,15 +1,18 @@
-import CustomButton from "../common/CustomButton";
+import CustomButton from "../../common/CustomButton";
 import { Delete, LetterText, Trash, ChevronDown, ChevronUp } from "lucide-react";
-import DateFormat from "./DateFormat";
+import DateFormat from "../DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { deleteUser, updateUser } from "../../api/api";
-import UserModelForm from "./modelforms/UserModelForm";
+import { deleteUser, updateUser } from "../../../api/api";
+import UserModelForm from "../modelforms/UserModelForm";
+import Loader from "../../common/Loader";
+import { useSelector } from "react-redux";
 
 export default function UserTable(props) {
     const [isOpen, setIsOpen] = useState(false)
     const [updateUser, setUpdateUser] = useState({})
-
+    const accessToken = useSelector((state) => state.token.accessToken);
+    const [loading,setLoading]=useState(false)
     const handleUserUpdate = (user) => {
         setUpdateUser(user)
         setIsOpen(true)
@@ -21,7 +24,7 @@ export default function UserTable(props) {
             setLoading(true);
             const response = await deleteUser(accessToken, id);
             console.log("res=>", response);
-            setIsBoolean(true);
+            props?.setApiCall(true);
         } catch (error) {
             console.log(error);
         } finally {
@@ -44,6 +47,7 @@ export default function UserTable(props) {
 
     return (
         <>
+        {loading? <><Loader/></>:<>
             <div className="  border-2 w-full my-1 overflow-auto ">
                 <table className="table table-auto border-collapse">
                     <thead className="">
@@ -55,7 +59,7 @@ export default function UserTable(props) {
                                 <SortDropdown field="name" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="email" />
+                                <SortDropdown field="email" />  
                             </th>
                             <th className="leading-none text-sm" scope="col">
                                 <SortDropdown field="phone" />
@@ -122,11 +126,12 @@ export default function UserTable(props) {
                     </tbody>
                 </table>
             </div >
+            </>}
             <UserModelForm
                 isOpen={isOpen}
-                setIsOpen={isOpen}
-                apicall={props.apiCall}
-                setApiCall={props.setApiCall}
+                setIsOpen={setIsOpen}
+                apicall={props?.apiCall}
+                setApiCall={props?.setApiCall}
                 updateUser={updateUser}
                 setUpdateUser={setUpdateUser}
             />

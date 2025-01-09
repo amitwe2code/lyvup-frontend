@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import Pagination from '../common/Pagination';
+import Pagination from '../../common/Pagination';
 import UserTable from './UserTable';
-import Loader from '../common/Loader';
-import CustomButton from '../common/CustomButton';
-import CustomInput from '../common/CustomInput';
-import { getUsers } from '../../api/api';
+import Loader from '../../common/Loader';
+import CustomButton from '../../common/CustomButton';
+import CustomInput from '../../common/CustomInput';
+import { getUsers } from '../../../api/api';
 
 export default function UserComponent(props) {
   const [search, setSearch] = useState("");
@@ -62,7 +62,7 @@ export default function UserComponent(props) {
     }
     getUserList(accessToken);
     props?.setApiCall(false);
-  }, [ search, userType, currentPage, pageSize, ordering]);
+  }, [props?.apiCall, search, userType, currentPage, pageSize, ordering]);
 
   if (!loginUser || loginUser.user_type === 'patient') {
     return null;
@@ -73,7 +73,15 @@ export default function UserComponent(props) {
     <>
       <div className='flex flex-wrap justify-start gap-4 mb-2 items-center'>
         <div className="inline-flex rounded-md" role="group">
+          <CustomButton
+            className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === '' ? 'btn_theme_color' : ''}`}
+            variant="outline"
+            onClick={() => setUserType("")}
+          >
+            all
+          </CustomButton>
           {(loginUser?.user_type === 'superadmin') && (
+
             <CustomButton
               className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === 'admin' ? 'btn_theme_color' : ''}`}
               variant="outline"

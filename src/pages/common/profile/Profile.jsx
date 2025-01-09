@@ -15,46 +15,17 @@ import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../../../api/api";
 import DateFormat from "../../../components/admin/DateFormat";
 import CustomButton from "../../../components/common/CustomButton";
-import UserRegistrationForm from "../../../components/admin/UserRegistrationForm";
 import Loader from "../../../components/common/Loader";
+import UserModelForm from "../../../components/admin/modelforms/UserModelForm";
 
 export default function Profile() {
   const [user, setUser] = useState({});
-  const [formData, setFormData] = useState({});
-  const [Boolean, setBoolean] = useState(false);
+  const [apiCall, setApiCall] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
 
-  //open updateform and set formdata
-  const handleEditFormOpen = () => {
-    setFormData({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      user_type: user.user_type,
-      language_preference: user.language_preference,
-    });
-    setIsOpen(true);
-  };
-
-  //updateUser apicall Function
-  const handleUserUpdate = async (e) => {
-    try {
-      e.preventDefault();
-      setLoading(true);
-      const response = await updateUser(accessToken, formData, id);
-      // alert("user update success");
-      setIsOpen(false);
-      setBoolean(true);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   //getUser apicall Function
   const getuser = async () => {
@@ -73,8 +44,8 @@ export default function Profile() {
   //useEffect Call
   useEffect(() => {
     getuser();
-    setBoolean(false);
-  }, [Boolean]);
+    setApiCall(false);
+  }, [apiCall]);
 
   return (
     <div className="flex">
@@ -87,7 +58,7 @@ export default function Profile() {
           <div className="overflow-auto w-full   p-3">
             <div className="text-right mb-3">
               <CustomButton
-                onClick={handleEditFormOpen}
+                onClick={()=>setIsOpen(true)}
                 className="bg-none border-none text-[#039a77]"
               >
                 <PenBoxIcon />
@@ -152,14 +123,13 @@ export default function Profile() {
                     </div>
                   </div>
                 </div>
-                <UserRegistrationForm
-                  isOpen={isOpen}
-                  setIsOpen={setIsOpen}
-                  formData={formData}
-                  isUpdate="true"
-                  setFormData={setFormData}
-                  handleFormSubmit={handleUserUpdate}
-                />
+                <UserModelForm
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        apicall={apiCall}
+                        setApiCall={setApiCall}
+                        updateUser={user}
+                    />
               </div>
             </div>
           </div>

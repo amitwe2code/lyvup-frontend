@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import CustomButton from "../common/CustomButton";
-import {
-  AddUserAccount,
-  getAccountUsers,
-  RemoveUserAccount,
-} from "../../api/api";
+
 import Select from "react-select";
+import CustomButton from "../../common/CustomButton";
+import { AddUserAccount, getAccountUsers, RemoveUserAccount } from "../../../api/api";
 
 export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
   const [search, setSearch] = useState("");
@@ -146,7 +143,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
                     id={user.id}
                     size="small"
                     onClick={() => handleRemoveUserFromAccount(user.id)}
-                    className="text-red-500 hover:bg-red-500 hover:text-white"
+                    className="border-danger text-red-500 hover:bg-red-500 hover:text-white"
                   >
                     Remove
                   </CustomButton>
