@@ -1,12 +1,34 @@
 import React, { useState } from 'react'
 import CustomButton from '../common/CustomButton'
+import { useSelector } from 'react-redux'
+import { addWeakActivity } from '../../api/api'
 
 export default function AddWeekForm(props) {
+    const accessToken = useSelector((state) => state.token.accessToken)
+    
+    const initialFormState={
+        program_id:props.program_id,
+        week_no:props.week_no
+    }
+
+
+
+    const addWeek=async(e)=>{
+        e.preventDefault()
+        const response=await addWeakActivity(accessToken,initialFormState)
+        console.log('response in form =>',response);
+        props.setApiCall(true)
+        props.setIsOpen(false)
+    } 
+      
+
+
     const [step, setStep] = useState(1)
     const close = () => {
-       props?.setState(props?.initialFormState)
+    //    props?.setState(props?.initialFormState)
        props?.setIsOpen(false)
-       props?.setStep(1)
+    //    props?.setStep(1)
+
     }
     return (
         <div>
@@ -14,14 +36,14 @@ export default function AddWeekForm(props) {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
                     <div className="bg_secondary_color max-h-full overflow-y-auto rounded-lg  max-w-2xl shadow-xl w-full  ">
                         <div className="flex flex-row justify-between items-center  p-3 btn_theme_color sm:mb-6  border-b-2 gap-2">
-                            <h2 className="text-2xl sm:text-3xl font-bold  text-[#039a77] sticky top-0 bg-white">Assign program</h2>
+                            <h2 className="text-2xl sm:text-3xl font-bold ">Assign program</h2>
                             <button className=" pr-2" onClick={() => close()}><b>X</b></button>
                         </div>
                         <form>
                         {step === 1 && (
 
                             <div className='w-full flex flex-row justify-center gap-4 p-2 my-4 items-center'>
-                                <CustomButton type='submit' onClick={props?.handleFormSubmit}>cp_add_new_week</CustomButton>
+                                <CustomButton type='submit' onClick={(e)=>addWeek(e)}>cp_add_new_week</CustomButton>
                                 <CustomButton onClick={()=>setStep(2)}>Add midweak</CustomButton>
                             </div>
                         )}

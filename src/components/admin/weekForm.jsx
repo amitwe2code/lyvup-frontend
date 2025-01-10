@@ -2,18 +2,39 @@ import React, { useState } from "react";
 import CustomButton from "../common/CustomButton";
 import { updateUser } from "../../api/api";
 
-export default function WeekForm({
-    initialFormState,
-    isOpen,
-    setIsOpen,
-    state,
-    setState,
-    onInputChange,
-    errors,
-    handleFormSubmit,
-}) {
+export default function  WeekForm(props) {
+    const initialFormState={
+        week_no:props.week_no,
+        problem_id:props.problem_id,
+        activity_id:'',
+        activity_type: "",
+        language: "",
+        activity_name:"",
+        activity_description: "",
+        brand: "",
+        completion_check: "",
+        who: "",
+        activity: "",
+        coach_type: "",
+        location: "",
+        travel_time: "",
+        user_duration: "",
+        coach_duration: "",
+        teamlead_duration: "",
+        file: "",
+        indicate_when_completed: "",
+        price: "",
+        show_in_task: "",
+        send_reminder: "",
+        add_comment_option: "",
+        upload_possible: "",
+        excercise:'',
+        url: "",
+    }
+    
     const [filterShow, setFilterShow] = useState(false)
     const [showDateTime, setShowDateTime] = useState(false)
+    
 
     return (
         <div>
@@ -94,7 +115,7 @@ export default function WeekForm({
                             </div>)}
                         </div>
                         <form className="p-4 space-y-3">
-                            <div>
+                            {/* <div>
                                 <label
                                     htmlFor="language"
                                     className="block text-base font-medium text-gray-700 mb-1"
@@ -120,7 +141,7 @@ export default function WeekForm({
                                         {errors.language.join(", ")}
                                     </span>
                                 )}
-                            </div>
+                            </div> */}
                             <div className=" ">
                                 <small className="flex justify-center items-center gap-1">
                                     <input

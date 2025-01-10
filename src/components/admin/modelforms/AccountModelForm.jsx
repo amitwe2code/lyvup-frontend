@@ -10,7 +10,6 @@ export default function AccountModelForm(props) {
                     <AccountForm
                         isOpen={props?.isOpen}
                         setIsOpen={props?.setIsOpen}
-                        apicall={props.apiCall}
                         setApiCall={props.setApiCall}
                         updateAccount={props?.updateAccount}
                         setUpdateAccount={props?.setUpdateAccount}

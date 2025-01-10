@@ -30,7 +30,7 @@
 
 /* input css */
 
-form input:focus-visible,form select:focus-visible,button:focus,input{
+form input:focus-visible,form select:focus-visible,button:focus,input,select{
   outline: none;
 }
 
@@ -134,51 +134,40 @@ form input:focus-visible,form select:focus-visible,button:focus,input{
   padding: 1em;
   margin: 0 auto;
 }
-.program-list .form-group {
-  position: relative;
-}
-.program_search_class{
-}
 
-.program-list .form-group #_02_-_Search_Button {
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  position: absolute;
-  top: 9px;
-  left: 9px;
-}
-.program-list #show_child_program{
-  display: inline;
-  margin-right: 4px;
-  width: 16px;
-  margin-left: 2px;
-}
 .program-list .form-group  small span{
   font-size: 14px;
 }
-.program_sidebar {
+/* .program_sidebar {
   position: relative;
-}
+} */
 .program_sidebar_btn{
   position: absolute;
-  right: -50px;
-  top:10px;
+  right: 0px;
+  background-color:#17686d;
+  color: white;
+  border-radius: 50%;
+  top:5px;
   display: none;
 }
-@media screen and (max-width: 640px) {
+@media screen and (max-width:768px) {
   .program_sidebar_btn{
       border-radius: 50%;
       display: block;
+      left: -20px;
   }
   .program_sidebar.program_sidebar_show{
     width: 300px;
     position: absolute;
-    left: 0;
+    right: 0px;
+   
   } 
+  .expandend_btn{
+    right: 0px;
+  }
   .program_sidebar { 
   position: absolute;
-  left: -280px;
+  right: -280px;
   transition: 0.5s;
 }
 }
@@ -197,11 +186,7 @@ background: #e2e8f0;
 padding: 10px;
 border-radius: 6px;
 }
-.add_program .program_card h6{
-font-family: sans-serif;
-font-size: 16px;
-margin-bottom: 2px;
-}
+
 .add_program .program_card p{
 font-size: 14px;
 font-family: sans-serif;
@@ -219,16 +204,8 @@ color: #434343;
 font-size: 14px;
 display: flex;
 gap: 6px;
+}
 
-}
-.add_program  .program_day_card {
-background: whitesmoke;
-border-radius: 6px;
-}
-.add_program  .program_day_card .program_day_card_contant{
-padding: 10px;
-position: relative;
-}
 .add_program  .program_day_card .program_day_card_contant .program_contant_add_btn{
 
 background:#e2e8f0;

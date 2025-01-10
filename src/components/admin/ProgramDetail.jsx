@@ -1,21 +1,20 @@
 import { CopyIcon, Edit2Icon, LetterTextIcon, PenBoxIcon, PencilIcon, PlusIcon, TrashIcon } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProgramForm from './ProgramForm'
-import { deleteProgram } from '../../api/api'
+import { deleteProgram, getWeek } from '../../api/api'
 import { useSelector } from 'react-redux'
 import WeekTable from './program/WeekTable'
+import AddWeekForm from './AddWeekForm'
 
 export default function ProgramDetail(props) {
   const [isOpen, setIsOpen] = useState(false)
   const accessToken = useSelector((state) => state.token.accessToken)
-
+ 
+ 
   const programDelete = async (id) => {
-    console.log('id=', id);
     const response = await deleteProgram(accessToken, id)
-    console.log("response in delte=>", response);
     props.setApiCall(true)
   }
-
 
 
   return (
@@ -43,23 +42,22 @@ export default function ProgramDetail(props) {
             <span class="program_info_card"><b>label : </b>{props?.program?.label}</span> */}
           </div>
           <div className='my-3'>
-            <WeekTable />
+             <WeekTable program_id={props?.program?.id} />
           </div>
+          {/*  */}
 
 
+         
 
-          <div className='my-5'>
-            <button className='button p-2  py-1 border rounded-md btn_theme_color   text-white '>Add Week</button>
-          </div>
-
-          <ProgramForm
+          {/* <ProgramForm
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             program={props.program}
             setprogram={props.setProgram}
             apiCall={props.apiCall}
             setApiCall={props.setApiCall}
-          />
+          /> */}
+         
 
 
         </div>

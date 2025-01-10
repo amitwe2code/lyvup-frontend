@@ -368,7 +368,7 @@ export const getProgram = async (accessToken, search, currentPage, pageSize, ord
                         'Authorization': `Bearer ${accessToken}`
                   }
             });
-            console.log("res in program=",response);
+          
             return response;
       } catch (error) {
             throw error;
@@ -435,7 +435,35 @@ export const getWeek = async (accessToken) => {
                         'Authorization': `Bearer ${accessToken}`
                   }
             });
-            console.log("res in program=",response);
+         
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+export const addWeakActivity = async (accessToken, data) => {
+      try {
+            const response = await axios.post(`${API_URL}/week/`, data, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+
+
+export const deleteWeekActivity = async (accessToken, id) => {
+      try {
+            const response = await axios.delete(`${API_URL}/week/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
             return response;
       } catch (error) {
             throw error;

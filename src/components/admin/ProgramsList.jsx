@@ -31,7 +31,6 @@ const ProgramList = (props) => {
     try {
       setLoading(true);
       const response = await getProgram(accessToken, search, currentPage, pageSize, ordering);
-      console.log("activitytypes =>", response.data.data)
       setPrograms(response.data.data.results);
       if (props.program === "") {
         props.setProgram(response.data.data.results[0])
@@ -104,7 +103,7 @@ const ProgramList = (props) => {
         </div>
       </div>
 
-      <div className="h-96 border p-2   scroll-none overflow-y-auto">
+      <div className="min-h-32 h-96 border p-2   overflow-y-auto">
         <ol id="program_list_block" className="mt-3 flex flex-col gap-2">
           {(programs || []).map((program) => (
             <li key={program?.id} onClick={() => props.setProgram(program)} className={`  ${(program?.id === props.program.id) ? "bg-[#17686d] text-white" : "bg_secondary_color"} font-semibold  p-2  text-sm rounded-md`}>
