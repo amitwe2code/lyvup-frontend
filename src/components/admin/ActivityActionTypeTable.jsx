@@ -24,12 +24,12 @@ export default function ActivityActionTypeTable({
   const SortDropdown = ({ field }) => (
     <button
         onClick={() => {
-            const newDirection = props?.ordering === field ? `-${field}` : field;
+            const newDirection = ordering === field ? `-${field}` : field;
             props?.setOrdering(newDirection);
         }}
         className="inline-flex items-center"
     >
-        {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
+        {field} {(ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
     </button>
 );
 

@@ -226,7 +226,7 @@ export const AddUserAccount = async (accountId, userIds) => {
 
 
 //activity api
-export const getActivity = async (accessToken, search, currentPage, pageSize, ordering) => {
+export const getActivity = async (accessToken, search='', currentPage=1, pageSize='', ordering='') => {
       try {
             const response = await axios.get(`${API_URL}/activity/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
                   headers: {
@@ -428,9 +428,9 @@ export const deleteProgram = async (accessToken, id) => {
       }
 }
 
-export const getWeek = async (accessToken) => {
+export const getWeek = async (accessToken,program_id) => {
       try {
-            const response = await axios.get(`${API_URL}/week/`, {
+            const response = await axios.get(`${API_URL}/week/?program_id=${program_id}`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }

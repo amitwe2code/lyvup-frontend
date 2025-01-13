@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { deleteWeekActivity, getWeek } from '../../../api/api'
 import { useSelector } from 'react-redux';
 import { CopyIcon, PlusIcon, TrashIcon } from 'lucide-react';
-import AddWeekForm from '../AddWeekForm';
-import WeekForm from '../weekForm';
+import AddWeekForm from './AddWeekForm';
+import WeekForm from './weekForm';
 
 export default function WeekTable(props) {
     const accessToken = useSelector((state) => state.token.accessToken)
@@ -13,7 +13,7 @@ export default function WeekTable(props) {
     const [weekNo, setWeekNo] = useState()  //add new week number 
 
     const getWeeks = async () => {
-        const response = await getWeek(accessToken)
+        const response = await getWeek(accessToken,props.program_id)
         // setWeeks(response.data.data.results)
         const WeekActivityData = response.data.data.results.reduce((acc, activity) => {
             acc[activity.week_no] = acc[activity.week_no] || [];
@@ -32,22 +32,23 @@ export default function WeekTable(props) {
         setApiCall(true)
     }
     
-    const handleAdd=(e,id)=>{
-
+    const handleAdd=(e,weekNo)=>{
+        e.preventDefault()
+        setWeekNo(weekNo)
+        setIsOpen(true)
     }   
 
     useEffect(() => {
         getWeeks()
-    }, [apiCall])
+    }, [apiCall,props.program_id])
 
 
     return (
         <>
             <div>
 
-                {Object.keys(weeks).map((week) => (<div class="week-card  my-2 border w-full">
-                    {console.log('week =>',week)}
-                    <div class=" week-header flex flex-row bg_secondary_color justify-between items-center py-2 px-3">
+                {Object.keys(weeks).map((week) => (<div key={week} className="week-card  my-2 border w-full">
+                    <div className=" week-header flex flex-row bg_secondary_color justify-between items-center py-2 px-3">
                         <h4 className='capitalize font-semibold'>week {week}  </h4>
 
                         <div className='flex flex-row items-center gap-4'>
@@ -61,7 +62,7 @@ export default function WeekTable(props) {
                     </div>
                     <div className='week-body p-1 w-full overflow-auto bg-white flex flex-wrap gap-3  justify-start'>
                         {weeks[week] && <>
-                            <table class="table w overflow-auto">
+                            <table className="table w overflow-auto">
                                 <thead>
                                     <tr>
                                         <th>activity_name</th>
@@ -108,7 +109,7 @@ export default function WeekTable(props) {
                 /> */}
                 <WeekForm 
                 isOpen={isOpen}
-                setIsOpen={isOpen}
+                setIsOpen={setIsOpen}
                 program_id={props.program_id}
                 week_no={weekNo} />
             </div>
