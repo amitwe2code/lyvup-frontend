@@ -11,8 +11,6 @@ export default function ProgramForm(props) {
   const initialFormState = {
     name: '',
     description: '',
-    brand: '',
-    language: '',
     written_by: '',
     version: '',
     price: ''
@@ -170,7 +168,7 @@ export default function ProgramForm(props) {
                   </span>
                 )}
               </div>
-              <div className="hidden">
+              {/* <div className="hidden">
                 <label
                   htmlFor="brand"
                   className="block  font-medium text-gray-700 mb-1"
@@ -195,8 +193,8 @@ export default function ProgramForm(props) {
                     {errors.brand.join(", ")}
                   </span>
                 )}
-              </div>
-              <div className="hidden">
+              </div> */}
+              {/* <div className="hidden">
                 <label
                   htmlFor="language"
                   className="block  font-medium text-gray-700 mb-1"
@@ -221,7 +219,7 @@ export default function ProgramForm(props) {
                     {errors.language.join(", ")}
                   </span>
                 )}
-              </div>
+              </div> */}
               <div>
                 <label
                   htmlFor="written_by"

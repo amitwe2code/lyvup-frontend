@@ -11,47 +11,52 @@ import useValidation from "../../common/UseValidation";
 export default function WeekForm(props) {
   const [filterShow, setFilterShow] = useState(false);
   const [showDateTime, setShowDateTime] = useState(false);
-  const [activityList,setActivityList]=useState([])
+  const [activityList, setActivityList] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("");
   const accessToken = useSelector((state) => state.token.accessToken);
 
+  console.log("props=>", props);
   const getactivityList = async () => {
-    const response = await getActivity(accessToken);
-    console.log('actvity=>',response.data.data.results)
-    setActivityList(response.data.data.results)
+    const response = await getActivity(accessToken, search, filter);
+    console.log("actvity=>", response.data.data.results);
+    setActivityList(response.data.data.results);
+    setState({ ...state });
   };
-  console.log("props=", props);
   const initialFormState = {
-    week_no: props.week_no,
-    problem_id: props.problem_id,
+    week_no: props?.week_no,
+    program_id: props?.program_id,
     activity_id: "",
-    activity_type: "",
-    language: "",
-    activity_name: "",
-    activity_description: "",
-    brand: "",
-    completion_check: "",
-    who: "",
-    activity: "",
-    coach_type: "",
-    location: "",
-    travel_time: "",
-    user_duration: "",
-    coach_duration: "",
-    teamlead_duration: "",
-    file: "",
-    indicate_when_completed: "",
-    price: "",
-    show_in_task: "",
-    send_reminder: "",
-    add_comment_option: "",
-    upload_possible: "",
-    excercise: "",
-    url: "",
+  };
+
+  const validators = {
+    activity_id: [
+      (value) =>
+        value === null || value.trim() === "" ? "Activity is required" : null,
+    ],
+    day: [
+      (value) =>
+        showDateTime === true
+          ? value === null || value.trim() === ""
+            ? "day is required"
+            : null
+          : null,
+    ],
+    time: [
+      (value) =>
+        showDateTime === true ?
+          value === null || value.trim() === "" ? "time is required" : null :
+          null
+    ],
   };
   const { state, setState, onInputChange, errors, setErrors, validate } =
-    useValidation(initialFormState);
-  const addweek = async () => {
-    const response = await addWeakActivity(accessToken);
+    useValidation(initialFormState, validators);
+  const addweek = async (e) => {
+    e.preventDefault()
+    const response = await addWeakActivity(accessToken, state);
+    console.log('response=>', response)
+    props?.setApiCall(true)
+    props?.setIsOpen(false)
   };
 
   const close = () => {
@@ -59,9 +64,10 @@ export default function WeekForm(props) {
     setState(initialFormState);
   };
 
+
   useEffect(() => {
     getactivityList();
-  }, []);
+  }, [search, filter]);
 
   return (
     <div>
@@ -80,6 +86,7 @@ export default function WeekForm(props) {
                     type="checkbox"
                     id="show_child_program"
                     className=""
+                    defaultChecked
                     checked={filterShow}
                     onChange={(e) => {
                       setFilterShow(!filterShow);
@@ -102,8 +109,8 @@ export default function WeekForm(props) {
                     <select
                       name="intervention_type"
                       id="intervention_type"
-                      value={state?.intervention_type}
-                      onChange={onInputChange}
+                      value={filter}
+                      onChange={(e) => setFilter(e.target.value)}
                       className={`w-full 
                                          p-2 text-sm input  rounded `}
                     >
@@ -129,14 +136,13 @@ export default function WeekForm(props) {
                     </label>
                     <input
                       type="text"
-                      id="program_search"
+                      id="search"
                       className=" input p-2  w-full 
                                          text-sm  rounded "
                       placeholder="Search"
                       // value={programSearch}
                       onChange={(e) => {
-                        setProgramSearch(e.target.value);
-                        searchProgram("search");
+                        setSearch(e.target.value);
                       }}
                     />
                   </div>
@@ -146,28 +152,29 @@ export default function WeekForm(props) {
             <form className="p-4 space-y-3">
               <div className=" flex flex-col ">
                 <label
-                  htmlFor="language"
+                  htmlFor="activity_id"
                   className="block text-base font-medium text-gray-700 mb-1"
                 >
                   Select Intervention for list
                 </label>
                 <select
-                  name="language"
-                  id="language"
-                  value={state.language}
+                  name="activity_id"
+                  id="activity_id"
+                  value={state.activity_id}
                   onChange={onInputChange}
-                  className={`w-1/2 p-2 input text-sm  rounded ${
-                    errors.language ? " border-danger" : ""
-                  }`}
+                  className={`w-1/2 p-2 input text-sm  rounded ${errors.activity ? " border-danger" : ""
+                    }`}
                 >
                   <option value="">Select intervention </option>
-                  {activityList.map((activity)=>(
-                    <option key={activity.id} value={activity.id}>{activity.activity_name} </option>
+                  {activityList.map((activity) => (
+                    <option key={activity.id} value={activity.id}>
+                      {activity.activity_name}{" "}
+                    </option>
                   ))}
                 </select>
-                {errors.language && (
+                {errors.activity_id && (
                   <span className="text-danger font-size-3">
-                    {errors.language.join(", ")}
+                    {errors.activity_id.join(", ")}
                   </span>
                 )}
               </div>
@@ -194,9 +201,8 @@ export default function WeekForm(props) {
                       id="day"
                       value={state?.day}
                       onChange={onInputChange}
-                      className={`w-full  p-2 input text-sm rounded   ${
-                        errors.day ? " border-danger" : ""
-                      }
+                      className={`w-full  p-2 input text-sm rounded   ${errors.day ? " border-danger" : ""
+                        }
                                         `}
                     >
                       <option value="">To-do on </option>
@@ -222,11 +228,10 @@ export default function WeekForm(props) {
                       value={state?.time}
                       onChange={onInputChange}
                       className={`
-                                            p-2 text-sm input rounded  ${
-                                              errors.time
-                                                ? " border-danger"
-                                                : ""
-                                            }  `}
+                                            p-2 text-sm input rounded  ${errors.time
+                          ? " border-danger"
+                          : ""
+                        }  `}
                     />
                     {errors.time && (
                       <span className="text-danger font-size-3">
@@ -249,7 +254,7 @@ export default function WeekForm(props) {
                   type="submit"
                   id={state?.id}
                   variant="outline"
-                  // onClick={handleFormSubmit}
+                  onClick={(e) => addweek(e)}
                   className=" "
                 >
                   {state?.id ? "Update" : "Add"}

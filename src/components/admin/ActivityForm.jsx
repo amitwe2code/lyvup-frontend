@@ -198,9 +198,10 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                             }`}
                         >
                           <option value="">Select Label</option>
-                          <option value="important">Important</option>
-                          <option value="urgent">Urgent</option>
-                          <option value="normal">Normal</option>
+                          <option value="Lyvup">Lyvup</option>
+                          <option value="Gallop">Gallop</option>
+                          <option value="Yenzar">Yenzar</option>
+                          <option value="GLI">GLI</option>
                         </select>
                         {errors.brand && (
                           <span className="text-danger font-size-3">

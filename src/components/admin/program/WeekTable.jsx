@@ -10,11 +10,14 @@ export default function WeekTable(props) {
     const [weeks, setWeeks] = useState({})
     const [apiCall, setApiCall] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
-    const [weekNo, setWeekNo] = useState()  //add new week number 
+    const [isWeekFormOpen, setIsWeekFormOpen] = useState(false)
+    const [addWeekNo, setAddWeekNo] = useState()  //add new week number 
+    const [weekNo,setWeekNo]=useState()
 
     const getWeeks = async () => {
         const response = await getWeek(accessToken,props.program_id)
         // setWeeks(response.data.data.results)
+        console.log('response =>',response)
         const WeekActivityData = response.data.data.results.reduce((acc, activity) => {
             acc[activity.week_no] = acc[activity.week_no] || [];
             acc[activity.week_no].push(activity);
@@ -23,7 +26,7 @@ export default function WeekTable(props) {
         setWeeks(WeekActivityData)
         let WeekNos = response.data.data.results.map((item) => item.week_no)
         let LastWeekCount = Math.max(...WeekNos)
-        setWeekNo(LastWeekCount+1)
+        setAddWeekNo(LastWeekCount+1)
     }
 
     const handleWeekActivityDelete = async (e, id) => {
@@ -35,9 +38,9 @@ export default function WeekTable(props) {
     const handleAdd=(e,weekNo)=>{
         e.preventDefault()
         setWeekNo(weekNo)
-        setIsOpen(true)
+        setIsWeekFormOpen(true)
     }   
-
+    console.log('weekNo',weekNo)
     useEffect(() => {
         getWeeks()
     }, [apiCall,props.program_id])
@@ -73,25 +76,20 @@ export default function WeekTable(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  
-                                    {weeks[week].map((activity) => (
-                                        <React.Fragment key={activity?.id}>
-                                            {activity?.activity_name ?
-                                                <tr>
+                                    {weeks[week].map((activity) => (                       
+                                            activity?.activity_id?
+                                                <tr key={activity?.id}>
                                                     <td >{activity?.activity_name}</td>
                                                     <td>{activity?.activity_type}</td>
                                                     <td>{activity?.brand}</td>
                                                     <td>{activity?.week_no}</td>
                                                     <td>  <button id={activity?.id} onClick={(e) => handleWeekActivityDelete(e, activity?.id)}><TrashIcon className='icon_size_small' /></button></td>
                                                 </tr>
-                                                : null}
-                                        </React.Fragment>
+                                                : null        
                                     ))}
-
                                 </tbody>
                             </table>
                         </>}
-
                     </div>
 
                 </div>
@@ -100,18 +98,21 @@ export default function WeekTable(props) {
                     <button className='button p-2  py-1 border rounded-md btn_theme_color text-white ' onClick={() => setIsOpen(true)}>Add Week</button>
                 </div>
               
-                {/* <AddWeekForm
+                <AddWeekForm
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
                     setApiCall={setApiCall}
                     program_id={props.program_id}
-                    week_no={weekNo}
-                /> */}
-                <WeekForm 
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-                program_id={props.program_id}
-                week_no={weekNo} />
+                    week_no={addWeekNo}
+                />
+                {(weekNo && props?.program_id)&&(
+                    <WeekForm 
+                    isOpen={isWeekFormOpen}
+                    setIsOpen={setIsWeekFormOpen}
+                    setApiCall={setApiCall}
+                    program_id={props.program_id}
+                    week_no={weekNo} />
+                )}
             </div>
 
         </>

@@ -29,6 +29,7 @@ export default function Activity() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activitys, setActivitys] = useState([]);
   const [isBoolean, setIsBoolean] = useState(true);
+  const [filter,setFilter]=useState('')
   const [isOpen, setIsOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState();
   const accessToken = useSelector((state) => state.token.accessToken);
@@ -337,6 +338,7 @@ export default function Activity() {
     const response = await getActivity(
       accessToken,
       search,
+      filter,
       currentPage,
       pageSize,
       ordering
