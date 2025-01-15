@@ -457,13 +457,13 @@ export const addWeakActivity = async (accessToken, data) => {
 
 
 
-export const deleteWeekActivity = async (accessToken, id) => {
+export const deleteWeekActivity = async (accessToken, data) => {
       try {
-            const response = await axios.delete(`${API_URL}/week/${id}/`, {
+            const response = await axios.delete(`${API_URL}/week/${data.activity_id}/`,{
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
-            });
+            },data);
             return response;
       } catch (error) {
             throw error;

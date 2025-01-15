@@ -36,7 +36,7 @@ export default function WeekForm(props) {
     ],
     day: [
       (value) =>
-        showDateTime === true
+        (showDateTime)
           ? value === null || value.trim() === ""
             ? "day is required"
             : null
@@ -44,24 +44,26 @@ export default function WeekForm(props) {
     ],
     time: [
       (value) =>
-        showDateTime === true ?
+        (showDateTime) ?
           value === null || value.trim() === "" ? "time is required" : null :
           null
     ],
   };
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
-  const addweek = async (e) => {
+  const addActivityInWeek = async (e) => {
     e.preventDefault()
-    const response = await addWeakActivity(accessToken, state);
-    console.log('response=>', response)
-    props?.setApiCall(true)
-    props?.setIsOpen(false)
+    if(validate()){
+      const response = await addWeakActivity(accessToken, state);
+      console.log('response=>', response)
+      props?.setApiCall(true)
+      close()
+    }
   };
 
   const close = () => {
-    props.setIsOpen(false);
     setState(initialFormState);
+    props.setIsOpen(false);
   };
 
 
@@ -162,7 +164,7 @@ export default function WeekForm(props) {
                   id="activity_id"
                   value={state.activity_id}
                   onChange={onInputChange}
-                  className={`w-1/2 p-2 input text-sm  rounded ${errors.activity ? " border-danger" : ""
+                  className={`w-1/2 p-2 input text-sm  rounded ${errors.activity_id ? " border-danger" : ""
                     }`}
                 >
                   <option value="">Select intervention </option>
@@ -254,7 +256,7 @@ export default function WeekForm(props) {
                   type="submit"
                   id={state?.id}
                   variant="outline"
-                  onClick={(e) => addweek(e)}
+                  onClick={(e) => addActivityInWeek(e)}
                   className=" "
                 >
                   {state?.id ? "Update" : "Add"}
