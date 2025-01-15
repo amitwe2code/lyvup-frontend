@@ -65,7 +65,7 @@ export default function WeekTable(props) {
                     </div>
                     <div className='week-body p-1 w-full overflow-auto bg-white flex flex-wrap gap-3  justify-start'>
                         {weeks[week] && <>
-                            <table className="table w overflow-auto">
+                            <table className="table w-full h-auto overflow-auto">
                                 <thead>
                                     <tr>
                                         <th>activity_name</th>
@@ -75,7 +75,7 @@ export default function WeekTable(props) {
                                         <th>setting</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
                                     {weeks[week].map((activity) => (                       
                                             activity?.activity_id?
                                                 <tr key={activity?.id}>
