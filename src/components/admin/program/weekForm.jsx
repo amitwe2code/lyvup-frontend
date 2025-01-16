@@ -28,6 +28,7 @@ export default function WeekForm(props) {
     program_id: props?.program_id,
     activity_id: "",
   };
+  
 
   const validators = {
     activity_id: [
@@ -57,6 +58,7 @@ export default function WeekForm(props) {
       const response = await addWeakActivity(accessToken, state);
       console.log('response=>', response)
       props?.setApiCall(true)
+      props?.setWeekNo()
       close()
     }
   };

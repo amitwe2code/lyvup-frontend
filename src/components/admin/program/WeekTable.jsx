@@ -22,12 +22,18 @@ export default function WeekTable(props) {
             return acc;
         }, {});
         setWeeks(WeekActivityData)
-        console.log('get activity seprated by week----------------',WeekActivityData)
         let WeekNos = response.data.data.results.map((item) => item.week_no)
-        let LastWeekCount = Math.max(...WeekNos)
-        setAddWeekNo(LastWeekCount+1)
-        console.log('new last week add weekno-------------',LastWeekCount+1)
+        if(WeekNos){
+            let LastWeekCount = Math.max(...WeekNos)
+            if(LastWeekCount!==-Infinity){
+                setAddWeekNo(LastWeekCount+1)
+            }
+            else{setAddWeekNo(1)}
+           
+        }
+        
     }
+   
 
     const handleWeekActivityDelete = async (e,weekNo='',activityId='') => {
         e.preventDefault()
@@ -38,6 +44,7 @@ export default function WeekTable(props) {
         }
         const response = await deleteWeekActivity(accessToken, data)
         setApiCall(true)
+        
     }
   
     
@@ -46,7 +53,7 @@ export default function WeekTable(props) {
         setWeekNo(weekNo)
         setIsWeekFormOpen(true)
     }   
-    console.log('weekNo',weekNo)
+    
     useEffect(() => {
         getWeeks()
         setApiCall(false)
@@ -110,6 +117,7 @@ export default function WeekTable(props) {
                     setApiCall={setApiCall}
                     program_id={props.program_id}
                     week_no={addWeekNo}
+                    setWeekNo={setAddWeekNo}
                     />
                 )}
                 {(weekNo && props?.program_id)&&(
@@ -118,7 +126,8 @@ export default function WeekTable(props) {
                     setIsOpen={setIsWeekFormOpen}
                     setApiCall={setApiCall}
                     program_id={props.program_id}
-                    week_no={weekNo} />
+                    week_no={weekNo}
+                    setWeekNo={setWeekNo} />
                 )}
             </div>
 
