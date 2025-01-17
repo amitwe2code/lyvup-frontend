@@ -25,7 +25,7 @@ export default function Programs() {
       <BottomNavbar />
       <div className="mt-14 mb-14  h-[calc(100vh-112px)]   w-full  ">
         <div className=' w-full h-full relative   flex '>
-          <div className='  h-full w-full md:w-3/4 overflow-y-auto border  p-3  '>
+          <div className='  h-full w-full md:w-3/4 overflow-y-auto border -z-10  p-3  '>
             <ProgramDetail
               program={program}
               setProgram={setProgram}

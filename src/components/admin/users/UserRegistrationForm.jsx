@@ -200,8 +200,8 @@ export default function UserRegistrationForm(props) {
               className={`w-full input text-sm ${errors.language_preference?'border-danger':''}`}
             >
               <option value="">Select</option>
-              <option value="English">English</option>
-              <option value="Dutch">Dutch</option>
+              <option value="en">English</option>
+              <option value="nl">Dutch</option>
             </select>
             {errors.language_preference && (
               <span

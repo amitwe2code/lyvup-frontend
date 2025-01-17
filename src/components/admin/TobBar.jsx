@@ -80,7 +80,7 @@ export default function TopBar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 h-14 w-full bg-white border-b   text-black">
+      <nav className="fixed top-0 left-0 h-14 w-full bg-white border-b z-10  text-black">
         <div className=" mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center">
