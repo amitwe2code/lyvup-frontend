@@ -29,17 +29,17 @@ export default function Activity() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activitys, setActivitys] = useState([]);
   const [isBoolean, setIsBoolean] = useState(true);
+  const [filter,setFilter]=useState('')
   const [isOpen, setIsOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState();
   const accessToken = useSelector((state) => state.token.accessToken);
   const [step, setStep] = useState(1);
   const initialFormState = {
-    intervention_type: "",
-    language: "",
-    intervention_name:"",
-    intervention_description: "",
-    brand: "",
     activity_type: "",
+    language: "",
+    activity_name:"",
+    activity_description: "",
+    brand: "",
     completion_check: "",
     who: "",
     activity: "",
@@ -62,7 +62,7 @@ export default function Activity() {
 
   // const initialFormState = formData
   const validators = {
-    intervention_type: [
+    activity_type: [
       (value) =>
         step === 1
           ? value === null || value.trim() === ""
@@ -78,19 +78,19 @@ export default function Activity() {
             : null
           : null,
     ],
-    intervention_name: [
+    activity_name: [
       (value) =>
         step === 2
           ? value === "" || value === null || value.trim() === ""
-            ? "Intervention name is required"
+            ? "Activity name is required"
             : null
           : null,
     ],
-    intervention_description: [
+    activity_description: [
       (value) =>
         step === 2
           ? value === null || value.trim() === ""
-            ? "Intervention description is required"
+            ? "Activity description is required"
             : null
           : null,
     ],
@@ -110,14 +110,6 @@ export default function Activity() {
             : null
           : null,
     ],
-    activity_type: [
-      (value) =>
-        step === 2
-          ? value === null || value.trim() === ""
-            ? "activity type is required"
-            : null
-          : null,
-    ],
     completion_check: [
       (value) =>
         step === 2
@@ -128,7 +120,7 @@ export default function Activity() {
     ],
     activity: [
       (value) =>
-        step === 3 && state.intervention_type == "survey"
+        step === 3 && state.activity_type == "survey"
           ? value === null || value.trim() === ""
             ? "complition check is required"
             : null
@@ -137,10 +129,10 @@ export default function Activity() {
     coach_type: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "interview" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "assignment")
+        (state.activity_type === "interview" ||
+          state.activity_type === "other" ||
+          state.activity_type === "workshop" ||
+          state.activity_type === "assignment")
           ? value === null || value.trim() === ""
             ? "Coach type is required"
             : null
@@ -148,7 +140,7 @@ export default function Activity() {
     ],
     challenge: [
       (value) =>
-        step === 3 && state.intervention_type === "challenge"
+        step === 3 && state.activity_type === "challenge"
           ? value === null || value.trim() === ""
             ? "Challenge are required"
             : null
@@ -157,8 +149,8 @@ export default function Activity() {
     amount: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "challenge" ||
-          state.intervention_type === "other")
+        (state.activity_type === "challenge" ||
+          state.activity_type === "other")
           ? value === null
             ? "Amount are required"
             : null
@@ -167,10 +159,10 @@ export default function Activity() {
     location: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "interview" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "assignment")
+        (state.activity_type === "interview" ||
+          state.activity_type === "workshop" ||
+          state.activity_type === "other" ||
+          state.activity_type === "assignment")
           ? value === null || value.trim() === ""
             ? "Location are required"
             : null
@@ -179,12 +171,12 @@ export default function Activity() {
     user_duration: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "interview" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "video")
+        (state.activity_type === "interview" ||
+          state.activity_type === "workshop" ||
+          state.activity_type === "other" ||
+          state.activity_type === "assignment" ||
+          state.activity_type === "podcast" ||
+          state.activity_type === "video")
           ? value === null
             ? "User duration is required"
             : null
@@ -193,10 +185,10 @@ export default function Activity() {
     coach_duration: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "interview" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "assignment")
+        (state.activity_type === "interview" ||
+          state.activity_type === "other" ||
+          state.activity_type === "workshop" ||
+          state.activity_type === "assignment")
           ? value === null
             ? "Duration for coach is required"
             : null
@@ -205,10 +197,10 @@ export default function Activity() {
     teamlead_duration: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "interview" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "assignment")
+        (state.activity_type === "interview" ||
+          state.activity_type === "other" ||
+          state.activity_type === "workshop" ||
+          state.activity_type === "assignment")
           ? value === null
             ? "Duration for team lead is required"
             : null
@@ -217,10 +209,10 @@ export default function Activity() {
     travel_time: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "interview" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop")
+        (state.activity_type === "interview" ||
+          state.activity_type === "assignment" ||
+          state.activity_type === "other" ||
+          state.activity_type === "workshop")
           ? value === null
             ? "Travel time is required"
             : null
@@ -229,12 +221,12 @@ export default function Activity() {
     file: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "interview" ||
-          state.intervention_type === "video" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "workshop")
+        (state.activity_type === "interview" ||
+          state.activity_type === "video" ||
+          state.activity_type === "assignment" ||
+          state.activity_type === "other" ||
+          state.activity_type === "podcast" ||
+          state.activity_type === "workshop")
           ? value === null || value.trim() === ""
             ? "File is required"
             : null
@@ -243,12 +235,12 @@ export default function Activity() {
     url: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "interview" ||
-          state.intervention_type === "video" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "workshop")
+        (state.activity_type === "interview" ||
+          state.activity_type === "video" ||
+          state.activity_type === "assignment" ||
+          state.activity_type === "other" ||
+          state.activity_type === "podcast" ||
+          state.activity_type === "workshop")
           ? value === null || value.trim() === ""
             ? "URL is required"
             : null
@@ -257,13 +249,13 @@ export default function Activity() {
     indicate_when_completed: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "interview" ||
-          state.intervention_type === "video" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "excercise" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "workshop")
+        (state.activity_type === "interview" ||
+          state.activity_type === "video" ||
+          state.activity_type === "assignment" ||
+          state.activity_type === "excercise" ||
+          state.activity_type === "other" ||
+          state.activity_type === "podcast" ||
+          state.activity_type === "workshop")
           ? value === null || value.trim() === ""
             ? "Indicate when completed is required"
             : null
@@ -272,14 +264,14 @@ export default function Activity() {
     send_reminder: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "survey" ||
-          state.intervention_type === "challenge" ||
-          state.intervention_type === "interview" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "video")
+        (state.activity_type === "survey" ||
+          state.activity_type === "challenge" ||
+          state.activity_type === "interview" ||
+          state.activity_type === "assignment" ||
+          state.activity_type === "podcast" ||
+          state.activity_type === "other" ||
+          state.activity_type === "workshop" ||
+          state.activity_type === "video")
           ? value === null || value.trim() === ""
             ? "Send reminder option is required"
             : null
@@ -288,14 +280,14 @@ export default function Activity() {
     show_in_task: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "survey" ||
-          state.intervention_type === "challenge" ||
-          state.intervention_type === "interview" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "video")
+        (state.activity_type === "survey" ||
+          state.activity_type === "challenge" ||
+          state.activity_type === "interview" ||
+          state.activity_type === "assignment" ||
+          state.activity_type === "podcast" ||
+          state.activity_type === "other" ||
+          state.activity_type === "workshop" ||
+          state.activity_type === "video")
           ? value === null || value.trim() === ""
             ? "Show in task option is required"
             : null
@@ -304,9 +296,9 @@ export default function Activity() {
     upload_possible: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "assignment" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop")
+        (state.activity_type === "assignment" ||
+          state.activity_type === "other" ||
+          state.activity_type === "workshop")
           ? value === null || value.trim() === ""
             ? "Upload option is required"
             : null
@@ -315,14 +307,14 @@ export default function Activity() {
     add_comment_option: [
       (value) =>
         step === 3 &&
-        (state.intervention_type === "survey" ||
-          state.intervention_type === "challenge" ||
-          state.intervention_type === "interview" ||
-          state.intervention_type === "assignment" ||
-          state.intervention_type === "podcast" ||
-          state.intervention_type === "other" ||
-          state.intervention_type === "workshop" ||
-          state.intervention_type === "video")
+        (state.activity_type === "survey" ||
+          state.activity_type === "challenge" ||
+          state.activity_type === "interview" ||
+          state.activity_type === "assignment" ||
+          state.activity_type === "podcast" ||
+          state.activity_type === "other" ||
+          state.activity_type === "workshop" ||
+          state.activity_type === "video")
           ? value === null || value.trim() === ""
             ? "Add comment option is required"
             : null
@@ -330,7 +322,7 @@ export default function Activity() {
     ],
     excercise: [
       (value) =>
-        step === 3 && state.intervention_type === "excercise"
+        step === 3 && state.activity_type === "excercise"
           ? value === null || value.trim() === ""
             ? "excercise is required"
             : null
@@ -346,6 +338,7 @@ export default function Activity() {
     const response = await getActivity(
       accessToken,
       search,
+      filter,
       currentPage,
       pageSize,
       ordering
@@ -451,6 +444,7 @@ export default function Activity() {
           <div className=" h-full text-center w-full   overflow-y-scroll">
             <ActivityTable
               activitys={activitys}
+              ordering={setOrdering}
               setOrdering={setOrdering}
               handleActivityDelete={handleActivityDelete}
               handleActivityUpdate={handleActivityUpdate}

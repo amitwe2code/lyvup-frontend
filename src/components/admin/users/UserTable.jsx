@@ -1,59 +1,65 @@
-import CustomButton from "../common/CustomButton";
-import { Delete, LetterText, Trash, ChevronDown } from "lucide-react";
-import DateFormat from "./DateFormat";
+import CustomButton from "../../common/CustomButton";
+import { Delete, LetterText, Trash, ChevronDown, ChevronUp } from "lucide-react";
+import DateFormat from "../DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { deleteUser, updateUser } from "../../../api/api";
+import UserModelForm from "../modelforms/UserModelForm";
+import Loader from "../../common/Loader";
+import { useSelector } from "react-redux";
 
-export default function UserTable({ users, setOrdering, handleUserDelete, handleUserUpdate }) {
-    const [openDropdown, setOpenDropdown] = useState(null);
+export default function UserTable(props) {
+    const [isOpen, setIsOpen] = useState(false)
+    const [updateUser, setUpdateUser] = useState({})
+    const accessToken = useSelector((state) => state.token.accessToken);
+    const [loading,setLoading]=useState(false)
+    const handleUserUpdate = (user) => {
+        setUpdateUser(user)
+        setIsOpen(true)
+    }
 
-    const handleSort = (field, direction) => {
-        setOrdering(direction === 'asc' ? field : `-${field}`);
-        setOpenDropdown(null);
+    //user delete apiFunction Call
+    const handleUserDelete = async (id) => {
+        try {
+            setLoading(true);
+            const response = await deleteUser(accessToken, id);
+            console.log("res=>", response);
+            props?.setApiCall(true);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const SortDropdown = ({ field }) => (
-        <div className="relative inline-block">
-            <button
-                onClick={() => setOpenDropdown(openDropdown === field ? null : field)}
-                className="inline-flex items-center"
-            >
-                {field} <ChevronDown className="w-4 h-4 ml-1" />
-            </button>
 
-            {openDropdown === field && (
-                <div className="absolute z-10 mt-1 bg-white border rounded-md shadow-lg">
-                    <button
-                        className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
-                        onClick={() => handleSort(field, 'asc')}
-                    >
-                        Ascending
-                    </button>
-                    <button
-                        className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
-                        onClick={() => handleSort(field, 'desc')}
-                    >
-                        Descending
-                    </button>
-                </div>
-            )}
-        </div>
+    const SortDropdown = ({ field }) => (
+        <button
+            onClick={() => {
+                const newDirection = props?.ordering === field ? `-${field}` : field;
+                props?.setOrdering(newDirection);
+            }}
+            className="inline-flex items-center"
+        >
+            {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
+        </button>
     );
 
     return (
         <>
+        {loading? <><Loader/></>:<>
             <div className="  border-2 w-full my-1 overflow-auto ">
                 <table className="table table-auto border-collapse">
                     <thead className="">
                         <tr className="h-10">
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="id" />
+                                s.no
                             </th>
                             <th className="leading-none text-sm" scope="col">
                                 <SortDropdown field="name" />
                             </th>
                             <th className="leading-none text-sm" scope="col">
-                                <SortDropdown field="email" />
+                                <SortDropdown field="email" />  
                             </th>
                             <th className="leading-none text-sm" scope="col">
                                 <SortDropdown field="phone" />
@@ -79,9 +85,9 @@ export default function UserTable({ users, setOrdering, handleUserDelete, handle
                         </tr>
                     </thead>
                     <tbody className="text-sm">
-                        {users.map((user) => (
+                        {props?.users.map((user, index) => (
                             <tr key={user?.id} className="border-collapse">
-                                <td> <Link to={`/profile/${user?.id}`}> {user?.id}</Link></td>
+                                <td> <Link to={`/profile/${user?.id}`}> {index + 1}</Link></td>
                                 <td>{user?.name}</td>
                                 <td>{user?.email}</td>
                                 <td>{user?.phone}</td>
@@ -107,7 +113,7 @@ export default function UserTable({ users, setOrdering, handleUserDelete, handle
                                             id={user.id}
                                             variant="outline"
                                             size="small"
-                                            onClick={(e) => handleUserDelete(e)}
+                                            onClick={(e) => handleUserDelete(user?.id)}
                                             className="border border-r-0 rounded-none  "
                                         >
                                             {" "}
@@ -120,6 +126,15 @@ export default function UserTable({ users, setOrdering, handleUserDelete, handle
                     </tbody>
                 </table>
             </div >
+            </>}
+            <UserModelForm
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                apicall={props?.apiCall}
+                setApiCall={props?.setApiCall}
+                updateUser={updateUser}
+                setUpdateUser={setUpdateUser}
+            />
 
         </>
     );

@@ -2,18 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
+/* universal css */
 * {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   padding: 0px;
   margin: 0px;
   font-family: 'poppins', sans-serif;
 }
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
+/* common css  */
+
+/* button css */
+.btn_theme_color{
+  background: #17686d;
+  color: white;
+}
+.btn_cancle{
+  background: #434847;
+  color:white;
+}
+.btn_cancle:hover{
+  background: #7c7e82;
+}
+.border_radius_none{
+  border-radius: 0 !important; 
+}
+.icon_size_small{
+  width: 30px;
+  height: 30px;
+  background:#17686d;
+  padding: 6px;
+  color:white;
+  border-radius: 4px;
+}
+.icon_size_small:hover{
+  background-color: #015a45;
+}
+
+/* input css */
+
+form input:focus-visible,form select:focus-visible,button:focus,input,select{
+  outline: none;
+}
+
+.input{
+  background: rgb(249, 253, 249);
+  border:1px solid #d3d3d3;
+  padding:  8px;
+  border-radius: 6px;
+}
+
+.input:hover,.input:focus{
+  border:1px solid #17686d
+}
+
+
+/* set border to any card  */
+.card_border{
+  border:1px solid white;
+  border-radius: 2px;
+}
+.card_border:hover,.card_border:focus{
+  border:1px solid  #e3e3e3;
+}
+
+
+
+
+
+
+.text_theme_color{
+  color: #17686d;
+}
+
+.bg_secondary_color{
+  background-color: #e2e8f0;
+}
+/* scroll-bar hide */
+.scroll-none::-webkit-scrollbar{
+  display: none;
+}
+
+
+
+
+
+
+
+
+
 
 
 
 /*  select button arrow  */
 .css-1xc3v61-indicatorContainer {
-  color: #039a77 !important;
+  color: #17686d ;
 
 }
 
@@ -21,15 +113,13 @@
 .loader {
   border-radius: 50%;
 }
-.search_icon {
-  /* position: absolute; */
-  right: 0px;
-  top: 0px;
-  line-height: 36px;
-  background: #d3d3d3;
-  padding: 0 .75em;
-  border-radius: 3px;
-}
+
+
+
+
+
+
+
 .box-border{
   overflow-x: hidden;
 }
@@ -54,32 +144,133 @@
   padding: 1em;
   margin: 0 auto;
 }
-.program-list .form-group {
-  position: relative;
-}
-.program_search_class{
-}
 
-.program-list .form-group #_02_-_Search_Button {
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  position: absolute;
-  top: 9px;
-  left: 9px;
-}
-.program-list #show_child_program{
-  display: inline;
-  margin-right: 4px;
-  width: 16px;
-  margin-left: 2px;
-}
 .program-list .form-group  small span{
   font-size: 14px;
 }
-
+/* .program_sidebar {
+  position: relative;
+} */
+.program_sidebar_btn{
+  position: absolute;
+  right: 0px;
+  background-color:#17686d;
+  color: white;
+  border-radius: 50%;
+  top:5px;
+  z-index: 0;
+  display: none;
+  
+}
+@media screen and (max-width:768px) {
+  .program_sidebar_btn{
+      border-radius: 50%;
+      display: block;
+      left: -20px;
+  }
+  .program_sidebar.program_sidebar_show{
+    width: 300px;
+    position: absolute;
+    right: 0px;
+   
+  } 
+  .expandend_btn{
+    right: 0px;
+  }
+  .program_sidebar { 
+  position: absolute;
+  right: -280px;
+  z-index: 0;
+  transition: 0.5s;
+}
+}
 @media screen and (max-width: 1023px) {
   #program-container .program-list {
       padding: 1em;
   }
+}
+
+
+
+
+.add_program_info .program_info_card,
+.add_program .program_card{
+background: #e2e8f0;
+padding: 10px;
+border-radius: 6px;
+}
+
+.add_program .program_card p{
+font-size: 14px;
+font-family: sans-serif;
+margin: 0;
+color: #434343;
+}
+.add_program  .add_program_info {
+display: flex;
+gap: 8px;
+flex-wrap: wrap;
+margin-top: 16px;
+}
+.add_program  .add_program_info .program_info_card{
+color: #434343;
+font-size: 14px;
+display: flex;
+gap: 6px;
+}
+
+.add_program  .program_day_card .program_day_card_contant .program_contant_add_btn{
+
+background:#e2e8f0;
+width: 24px;
+height: 24px;
+padding: 15px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+color: #fff;
+position: absolute;
+right: -34px;
+top: 26%;
+}
+
+.add_program  .program_day_card .program_day_card_head{
+background: #17686d;
+padding: 10px;
+border-radius: 6px;
+margin-top: 16px;
+}
+.add_program  .program_day_card  .total_duration{
+display: flex;
+justify-content: space-between;
+align-self: center;
+}
+.add_program .program_day_card .total_duration h4{
+font-size: 14px;
+margin: 0;
+color: #fff;
+line-height: 28px;
+
+}
+.add_program .program_day_card .total_duration .total_duration_btns{
+display: flex
+;
+align-items: center;
+gap: 8px;
+color: #fff;
+}
+.add_program .program_day_card .total_duration .total_duration_btns h6{
+margin: 0;
+font-style: 13px;
+color: #fff;
+}
+.add_program  .program_day_card p{
+font-size: 14px;
+color: rgb(0, 0, 0);
+margin-bottom: 3px;
+
+}
+.add_program  .program_day_card b{
+margin-right: 4px;
 }

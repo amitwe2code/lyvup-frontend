@@ -15,46 +15,17 @@ import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../../../api/api";
 import DateFormat from "../../../components/admin/DateFormat";
 import CustomButton from "../../../components/common/CustomButton";
-import UserRegistrationForm from "../../../components/admin/UserRegistrationForm";
 import Loader from "../../../components/common/Loader";
+import UserModelForm from "../../../components/admin/modelforms/UserModelForm";
 
 export default function Profile() {
   const [user, setUser] = useState({});
-  const [formData, setFormData] = useState({});
-  const [Boolean, setBoolean] = useState(false);
+  const [apiCall, setApiCall] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
 
-  //open updateform and set formdata
-  const handleEditFormOpen = () => {
-    setFormData({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      user_type: user.user_type,
-      language_preference: user.language_preference,
-    });
-    setIsOpen(true);
-  };
-
-  //updateUser apicall Function
-  const handleUserUpdate = async (e) => {
-    try {
-      e.preventDefault();
-      setLoading(true);
-      const response = await updateUser(accessToken, formData, id);
-      // alert("user update success");
-      setIsOpen(false);
-      setBoolean(true);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   //getUser apicall Function
   const getuser = async () => {
@@ -73,8 +44,8 @@ export default function Profile() {
   //useEffect Call
   useEffect(() => {
     getuser();
-    setBoolean(false);
-  }, [Boolean]);
+    setApiCall(false);
+  }, [apiCall]);
 
   return (
     <div className="flex">
@@ -84,24 +55,24 @@ export default function Profile() {
         {loading ? (
           <Loader />
         ) : user ? (
-          <div className="overflow-auto w-full   p-3">
+          <div className="overflow-auto w-full    p-3">
             <div className="text-right mb-3">
               <CustomButton
-                onClick={handleEditFormOpen}
-                className="bg-none border-none text-[#039a77]"
+                onClick={()=>setIsOpen(true)}
+                className="bg-none border-none text-[#17686d]"
               >
                 <PenBoxIcon />
               </CustomButton>
             </div>
-            <div className=" flex items-center justify-center">
+            <div className=" flex items-center overflow-auto justify-center">
               <div className="w-3/4 p-5 border rounded">
                 <div className=" grid sm:grid-cols-2 gap-4">
                   {/* Left Column - Profile Photo */}
                   <div className="md:col-span-1 flex items-center md:ml-10">
-                    <h2 className="text-2xl md:text-4xl text-[#039a77] capitalize  mr-3 sm:text-left ">
+                    <h2 className="text-2xl md:text-4xl text-[#17686d] capitalize  mr-3 sm:text-left ">
                       <UserIcon />
                     </h2>
-                    <div className="hidden md:flex capitalize items-center text-xl  space-x-3">
+                    <div className="flex capitalize items-center text-xl  space-x-3">
                       <p className=" truncate">{user?.name}</p>
                     </div>
                     {/* <img
@@ -111,13 +82,13 @@ export default function Profile() {
                   </div>
                 </div>
                 <div className="my-8 flex-col items-center text-xl  justify-center">
-                  <div className="grid sm:grid-cols-2 gap-4  md:gap-10 mb-6">
-                    <div className="flex items-cente md:ml-10 space-x-3">
-                      <Mail className=" text-[#039a77] flex-shrink-0 overflow-auto" />
+                  <div className="grid   sm:grid-cols-2 gap-4  md:gap-10 mb-6">
+                    <div className="flex w-full overflow-auto scroll-none items-cente md:ml-10 space-x-3">
+                      <Mail className=" text-[#17686d] flex-shrink-0 overflow-auto" />
                       <p className="text-gray-700  truncate">{user?.email}</p>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <Languages className=" text-[#039a77] flex-shrink-0" />
+                      <Languages className=" text-[#17686d] flex-shrink-0" />
                       <p className="text-gray-700">
                         {user?.language_preference}
                       </p>
@@ -126,11 +97,11 @@ export default function Profile() {
 
                   <div className="grid sm:grid-cols-2  mb-6 gap-4 md:gap-10">
                     <div className="flex items-center md:ml-10 space-x-3">
-                      <Phone className=" text-[#039a77] flex-shrink-0" />
+                      <Phone className=" text-[#17686d] flex-shrink-0" />
                       <p className="text-gray-700">{user.phone}</p>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <MapPin className=" text-[#039a77] flex-shrink-0" />
+                      <MapPin className=" text-[#17686d] flex-shrink-0" />
                       <p className="text-gray-700 bg-gray-200">
                         {user.user_type}
                       </p>
@@ -139,27 +110,26 @@ export default function Profile() {
 
                   <div className="grid sm:grid-cols-2  mb-6 gap-4 md:gap-10">
                     <div className="flex items-center md:ml-10 space-x-3">
-                      <Phone className=" text-[#039a77] flex-shrink-0" />
+                      <Phone className=" text-[#17686d] flex-shrink-0" />
                       <p className="text-gray-700">
                         {<DateFormat updatedAt={user.created_at} />}
                       </p>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <MapPin className=" text-[#039a77] flex-shrink-0" />
+                      <MapPin className=" text-[#17686d] flex-shrink-0" />
                       <p className="text-gray-700">
                         {<DateFormat updatedAt={user.updated_at} />}
                       </p>
                     </div>
                   </div>
                 </div>
-                <UserRegistrationForm
-                  isOpen={isOpen}
-                  setIsOpen={setIsOpen}
-                  formData={formData}
-                  isUpdate="true"
-                  setFormData={setFormData}
-                  handleFormSubmit={handleUserUpdate}
-                />
+                <UserModelForm
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        apicall={apiCall}
+                        setApiCall={setApiCall}
+                        updateUser={user}
+                    />
               </div>
             </div>
           </div>

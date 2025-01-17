@@ -20,15 +20,13 @@ export default function CustomButton({
 
 
     const variantClasses = {
-        primary: 'bg-[#039a77] text-white ',
-        secondary: 'bg-gray-500 text-white hover:bg-gray-700',
-        danger: 'bg-red-500 text-white hover:bg-red-700',
-        outline: 'border border-[#039a77] text-[#039a77] hover:bg-[#039a77] hover:text-white',
+        primary: 'bg-[#17686d] text-white ',
+        outline: 'border-2 border-[#17686d] text-[#17686d] hover:bg-[#17686d] hover:text-white',
     };
 
     return (
         <button
-            className={`${sizeClasses[size]} ${variantClasses[variant]} rounded-md font-semibold transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed ${className}`}
+            className={`${sizeClasses[size]} ${variantClasses[variant]} rounded-md font-semibold transition-all duration-300 ease-in-out  ${className}`}
             onClick={onClick}
             id={id}
             type={type}

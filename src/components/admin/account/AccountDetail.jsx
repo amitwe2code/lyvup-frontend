@@ -1,16 +1,16 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getSingleAccountDetail, updateAccount } from "../../api/api";
-import TopBar from "./TobBar";
-import BottomNavbar from "../user/BottomNavbar";
-import AccountForm from "./AccountForm";
-import CustomButton from "../common/CustomButton";
-import DateFormat from "./DateFormat";
+import { getSingleAccountDetail, updateAccount } from "../../../api/api";
+import TopBar from ".././TobBar";
+import BottomNavbar from "../../user/BottomNavbar";
+import CustomButton from "../../common/CustomButton";
+import AccountModelForm from "../modelforms/AccountModelForm";
+
 export default function AccountDetail() {
   const [account, setAccount] = useState({});
   const [formData, setFormData] = useState({});
-  const [Boolean, setBoolean] = useState(false);
+  const [apiCall, setApiCall] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
   const { id } = useParams();
@@ -33,7 +33,7 @@ export default function AccountDetail() {
     e.preventDefault();
     const response = await updateAccount(accessToken, formData, id);
     setIsOpen(false);
-    setBoolean(true);
+    setApiCall(true);
   };
 
   //getUser apicall Function
@@ -47,7 +47,7 @@ export default function AccountDetail() {
   useEffect(() => {
     getAccountDetail();
     setBoolean(false);
-  }, [Boolean]);
+  }, [apiCall]);
 
   return (
     <div className="flex ">
@@ -95,7 +95,7 @@ export default function AccountDetail() {
           </div>
 
 
-          <AccountForm
+          <AccountModelForm
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             formData={formData}

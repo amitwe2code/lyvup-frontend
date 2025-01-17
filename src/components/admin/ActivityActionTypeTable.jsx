@@ -6,53 +6,33 @@ import {
   Users,
   Settings2Icon,
   SettingsIcon,
+  ChevronUp,
 } from "lucide-react";
 import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import AccountSidebar from "./AccountSidebar";
 import Loader from "../common/Loader";
 
 export default function ActivityActionTypeTable({
   activityTypes,
+  ordering,
   setOrdering,
   handleActivityActionTypeDelete,
   handleActivityActionTypeUpdate,
 }) {
-  const [openDropdown, setOpenDropdown] = useState(null);
-
-  const handleSort = (field, direction) => {
-    setOrdering(direction === "asc" ? field : `-${field}`);
-    setOpenDropdown(null);
-  };
 
   const SortDropdown = ({ field }) => (
-    <div className="relative inline-block">
-      <button
-        onClick={() => setOpenDropdown(openDropdown === field ? null : field)}
+    <button
+        onClick={() => {
+            const newDirection = ordering === field ? `-${field}` : field;
+            props?.setOrdering(newDirection);
+        }}
         className="inline-flex items-center"
-      >
-        {field} <ChevronDown className="w-4 h-4 ml-1" />
-      </button>
+    >
+        {field} {(ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
+    </button>
+);
 
-      {openDropdown === field && (
-        <div className="absolute z-10 mt-1 bg-white border rounded-md shadow-lg">
-          <button
-            className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
-            onClick={() => handleSort(field, "asc")}
-          >
-            'At_ascending'
-          </button>
-          <button
-            className="block px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
-            onClick={() => handleSort(field, "desc")}
-          >
-            'At_descending'
-          </button>
-        </div>
-      )}
-    </div>
-  );
 
   return (
     <>
@@ -61,7 +41,7 @@ export default function ActivityActionTypeTable({
           <thead className="">
             <tr className="h-10">
               <th className="leading-none text-sm" scope="col">
-                <SortDropdown field="id" />
+                  s.no
               </th>
               <th className="leading-none text-sm" scope="col">
                 <SortDropdown field="activity_type" />
@@ -84,9 +64,9 @@ export default function ActivityActionTypeTable({
             </tr>
           </thead>
           <tbody className="text-sm">
-            {activityTypes.map((activityType) => (
+            {activityTypes.map((activityType,index) => (
               <tr key={activityType?.id} className="border-collapse">
-                <td> {activityType?.id} </td>
+                <td> {index+1} </td>
                 <td>{activityType?.activity_type}</td>
                 <td>{activityType?.activity}</td>
                 <td>{activityType?.amount}</td>

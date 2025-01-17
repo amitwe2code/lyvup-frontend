@@ -32,7 +32,7 @@ function Pagination({
         <>
           <nav aria-label="Page navigation example">
             <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
-              <li className="page-item text-[#039a77] px-1">
+              <li className="page-item text-[#17686d]px-1">
                 <Link
                   onClick={() => {
                     setCurrentPage((currentPage) - 1);
@@ -40,8 +40,8 @@ function Pagination({
                   }}
                   className={
                     (currentPage) === 1
-                      ? "disabled-link page-link text-[#039a77]  font-size-3 py-2 font-weight-semibold px-3"
-                      : "page-link text-[#039a77]  font-size-3 py-2 font-weight-semibold px-3"
+                      ? "disabled-link page-link text-[#17686d] font-size-3 py-2 font-weight-semibold px-3"
+                      : "page-link text-[#17686d] font-size-3 py-2 font-weight-semibold px-3"
                   }
                   title="Previous"
                 >
@@ -55,8 +55,8 @@ function Pagination({
                     setCurrentPage(pgNumber);
                     localStorage.setItem("PageNo", pgNumber); // Store the current page number
                   }}
-                  className={`page-link text-[#039a77]  font-size-3 py-2 font-weight-semibold px-3 ${
-                    (currentPage) === pgNumber ? "bg-[#039a77] text-white" : ""
+                  className={`page-link text-[#17686d] font-size-3 py-2 font-weight-semibold px-3 ${
+                    (currentPage) === pgNumber ? "bg-[#17686d]text-white" : ""
                   }`}
                 >
                   {pgNumber}
@@ -70,8 +70,8 @@ function Pagination({
                   }}
                   className={
                     currentPage === nPages
-                      ? "disabled-link page-link text-[#039a77]  font-size-3 py-2 font-weight-semibold px-3"
-                        : "page-link text-[#039a77]  font-size-3 py-2 font-weight-semibold px-3"
+                      ? "disabled-link page-link text-[#17686d] font-size-3 py-2 font-weight-semibold px-3"
+                        : "page-link text-[#17686d] font-size-3 py-2 font-weight-semibold px-3"
                   }
                   title="Next"
                 >
@@ -79,7 +79,7 @@ function Pagination({
                 </Link>
               </li>
               <div className="flex items-center gap-2 border px-2 py-0">
-                <span className="text-sm text-[#039a77]">Per Page:</span>
+                <span className="text-sm text-[#17686d]">Per Page:</span>
                 <select 
                   className=" border-none outline-none text-sm"
                   value={count}

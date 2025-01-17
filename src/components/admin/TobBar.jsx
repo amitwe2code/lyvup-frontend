@@ -80,7 +80,7 @@ export default function TopBar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 h-14 w-full bg-white border-b   text-black">
+      <nav className="fixed top-0 left-0 h-14 w-full bg-white border-b z-10  text-black">
         <div className=" mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center">
@@ -141,9 +141,8 @@ export default function TopBar() {
         </div>
       </nav>
       <div
-        className={`transition-all   h-[calc(100vh-7rem)] duration-300 mb-14 mt-14  ease-in-out hidden bg-[#f5f5f5] ${
-          isExpanded ? "w-64" : "w-20"
-        }`}
+        className={`transition-all   h-[calc(100vh-7rem)] duration-300 mb-14 mt-14  ease-in-out hidden bg-[#f5f5f5] ${isExpanded ? "w-64" : "w-20"
+          }`}
       >
         <nav className={`flex flex-col text-gray-400'`}>
           {sidebarItems.map((item, index) => (
@@ -160,11 +159,10 @@ export default function TopBar() {
               <span
                 className={`
                                     ml-3 transition-all duration-300 
-                                    ${
-                                      isExpanded
-                                        ? "opacity-100"
-                                        : "opacity-0 w-0"
-                                    }
+                                    ${isExpanded
+                    ? "opacity-100"
+                    : "opacity-0 w-0"
+                  }
                                     `}
               >
                 {item.label}

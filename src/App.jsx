@@ -11,11 +11,11 @@ import SignupForm from './pages/common/login/SignupForm'
 import Logout from './pages/common/login/Logout'
 import ResetPassword from './pages/common/login/ResetPassword'
 import Account from './pages/admin/Account'
-import AccountDetail from './components/admin/AccountDetail'
 import Activity from './pages/admin/Activity'
-import ActivityDetail from './components/admin/ActivityDetail'
 import ActivityActionType from './pages/admin/ActivityActionType';
 import Programs from './pages/admin/Programs';
+import Task from './pages/users/Task';
+import AccountDetail from './components/admin/account/AccountDetail';
 
 
 export default function App() {
@@ -63,7 +63,6 @@ export default function App() {
                 <Route path='/profile/:id' element={<Profile />} />
               </>
             ) : null}
-
             {(user?.user_type === 'SUPERADMIN' || user?.user_type === 'superadmin' || user?.user_type === 'Admin' || user?.user_type === 'admin') && token ? (
               <>
                 <Route path='/dashboard' element={<Dashboard />} />
@@ -73,9 +72,9 @@ export default function App() {
                 <Route path='/account/:id' element={<AccountDetail />} />
                 <Route path='/activity' element={<Activity />} />
                 <Route path='/activitytype' element={<ActivityActionType />} />
-                <Route path='/activity/detail' element={<ActivityDetail />} />
+                {/* <Route path='/activity/detail' element={<ActivityDetail />} /> */}
                 <Route path='/programs' element={<Programs />} />
-                
+                <Route path='/task' element={<Task/>}/>
               </>
             ) : null}
 
