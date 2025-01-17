@@ -1,104 +1,116 @@
 import React, { useEffect, useState } from 'react'
 import { deleteWeekActivity, getWeek } from '../../../api/api'
 import { useSelector } from 'react-redux';
-import { CopyIcon, PlusIcon, TrashIcon } from 'lucide-react';
+import { CopyIcon, Edit2Icon, LetterText, PlusIcon, TrashIcon } from 'lucide-react';
 import AddWeekForm from './AddWeekForm';
-import WeekForm from './weekForm';
+import ProgramActivityForm from './ProgramActivityForm';
 
 export default function WeekTable(props) {
     const accessToken = useSelector((state) => state.token.accessToken)
-    const [weeks, setWeeks] = useState({})
+    const [programActivitys, setProgramActivitys] = useState({})
     const [apiCall, setApiCall] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
-    const [isWeekFormOpen, setIsWeekFormOpen] = useState(false)
+    const [isProgramActivityFormOpen, setIsProgramActivityFormOpen] = useState(false)
     const [addWeekNo, setAddWeekNo] = useState()  //add new week number 
-    const [weekNo,setWeekNo]=useState()
+    const [weekNo, setWeekNo] = useState()
+    const [updateProgramActivity,setUpdateProgramActivity]=useState()
 
-    const getWeeks = async () => {
-        const response = await getWeek(accessToken,props.program_id)
+    const getProgramActivitys = async () => {
+        const response = await getWeek(accessToken, props.program_id)
         const WeekActivityData = response.data.data.results.reduce((acc, activity) => {
             acc[activity.week_no] = acc[activity.week_no] || [];
             acc[activity.week_no].push(activity);
             return acc;
         }, {});
-        setWeeks(WeekActivityData)
+        setProgramActivitys(WeekActivityData)
         let WeekNos = response.data.data.results.map((item) => item.week_no)
-        if(WeekNos){
+        if (WeekNos) {
             let LastWeekCount = Math.max(...WeekNos)
-            if(LastWeekCount!==-Infinity){
-                setAddWeekNo(LastWeekCount+1)
+            if (LastWeekCount !== -Infinity) {
+                setAddWeekNo(LastWeekCount + 1)
             }
-            else{setAddWeekNo(1)}
-           
+            else { setAddWeekNo(1) }
         }
-        
     }
-   
 
-    const handleWeekActivityDelete = async (e,weekNo='',activityId='') => {
+
+
+    const handleProgramActivityDelete = async (e, weekNo = '', activityId = '') => {
         e.preventDefault()
-        const data={
-            week_no:weekNo,
-            program_id:props?.program_id,
-            activity_id:activityId
+        const data = {
+            week_no: weekNo,
+            program_id: props?.program_id,
+            activity_id: activityId
         }
         const response = await deleteWeekActivity(accessToken, data)
         setApiCall(true)
-        
     }
-  
-    
-    const handleActivityAddInWeek=(e,weekNo)=>{
+
+    const handleUpdateProgramActivity=(e,programActivity)=>{
+        e.preventDefault()
+        setUpdateProgramActivity(programActivity)   
+        setIsProgramActivityFormOpen(true)  
+    }
+
+
+    const handleActivityAddInWeek = (e, weekNo) => {
         e.preventDefault()
         setWeekNo(weekNo)
-        setIsWeekFormOpen(true)
-    }   
-    
+        setIsProgramActivityFormOpen(true)
+    }
+
     useEffect(() => {
-        getWeeks()
+        getProgramActivitys()
         setApiCall(false)
-    }, [apiCall,,props.program_id])
+    }, [apiCall, , props.program_id])
 
 
     return (
         <>
             <div>
-                {Object.keys(weeks).map((week) => (<div key={week} className="week-card  my-2 border w-full">
+                {Object.keys(programActivitys).map((week) => (<div key={week} className="week-card  my-2 border w-full">
                     <div className=" week-header flex flex-row bg_secondary_color justify-between items-center py-2 px-3">
                         <h4 className='capitalize font-semibold'>week {week}  </h4>
 
                         <div className='flex flex-row items-center gap-4'>
-                            <div className='hidden sm:block'><h6>Duration: 0 min.</h6></div>
+                            {/* <div className='hidden sm:block'><h6>Duration: 0 min.</h6></div> */}
                             <div className='flex flex-row gap-4 '>
-                                <button id={week} onClick={(e)=>handleActivityAddInWeek(e,week)}><PlusIcon className='icon_size_small' /></button>
-                                <button><CopyIcon className='icon_size_small' /></button>
-                                <button id={week} onClick={(e)=>handleWeekActivityDelete(e,week)}><TrashIcon className='icon_size_small' /></button>
+                                <button id={week} onClick={(e) => handleActivityAddInWeek(e, week)}><PlusIcon className='icon_size_small' /></button>
+                                {/* <button><CopyIcon className='icon_size_small' /></button> */}
+                                <button id={week} onClick={(e) => handleProgramActivityDelete(e, week)}><TrashIcon className='icon_size_small' /></button>
                             </div>
                         </div>
                     </div>
                     <div className='week-body p-1 w-full overflow-auto bg-white flex flex-wrap gap-3  justify-start'>
-                        {weeks[week] && <>
+                        {programActivitys[week] && <>
                             <table className="table w-full h-auto overflow-auto">
                                 <thead>
                                     <tr>
                                         <th>activity_name</th>
                                         <th>activity_type</th>
                                         <th>brand</th>
-                                        <th>week no </th>
+                                        <th>day </th>
+                                        <th>time</th>
                                         <th>setting</th>
                                     </tr>
                                 </thead>
                                 <tbody >
-                                    {weeks[week].map((activity) => (                       
-                                            activity?.activity_id?
-                                                <tr key={activity?.id}>
-                                                    <td >{activity?.activity_name}</td>
-                                                    <td>{activity?.activity_type}</td>
-                                                    <td>{activity?.brand}</td>
-                                                    <td>{activity?.week_no}</td>
-                                                    <td>  <button id={activity?.id} onClick={(e) => handleWeekActivityDelete(e,activity?.week_no, activity?.id)}><TrashIcon className='icon_size_small' /></button></td>
-                                                </tr>
-                                                : null        
+                                    {programActivitys[week].map((activity) => (
+                                        activity?.activity_id ?
+                                            <tr key={activity?.id}>
+                                                <td >{activity?.activity_name}</td>
+                                                <td>{activity?.activity_type}</td>
+                                                <td>{activity?.brand}</td>
+                                                <td>{activity?.day ? activity?.day : 'N/A'}</td>
+                                                <td>{activity?.time ? activity?.time : 'N/A'}</td>
+                                                <td>
+                                                    <div className="inline-flex btn-group gap-1" role="group">
+                                                        <button className='' id={activity?.id} onClick={(e) => handleUpdateProgramActivity(e, activity)}><LetterText className='icon_size_small ' /></button>
+                                                        <button className='' id={activity?.id} onClick={(e) => handleProgramActivityDelete(e, activity?.week_no, activity?.id)}><TrashIcon className='icon_size_small ' /></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            : null
                                     ))}
                                 </tbody>
                             </table>
@@ -112,22 +124,24 @@ export default function WeekTable(props) {
                 </div>
                 {isOpen && (
                     <AddWeekForm
-                    isOpen={isOpen}
-                    setIsOpen={setIsOpen}
-                    setApiCall={setApiCall}
-                    program_id={props.program_id}
-                    week_no={addWeekNo}
-                    setWeekNo={setAddWeekNo}
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        setApiCall={setApiCall}
+                        program_id={props.program_id}
+                        week_no={addWeekNo}
+                        setWeekNo={setAddWeekNo}
                     />
                 )}
-                {(weekNo && props?.program_id)&&(
-                    <WeekForm 
-                    isOpen={isWeekFormOpen}
-                    setIsOpen={setIsWeekFormOpen}
-                    setApiCall={setApiCall}
-                    program_id={props.program_id}
-                    week_no={weekNo}
-                    setWeekNo={setWeekNo} />
+                {((weekNo && props?.program_id)||updateProgramActivity) && (
+                    <ProgramActivityForm
+                        isOpen={isProgramActivityFormOpen}
+                        setIsOpen={setIsProgramActivityFormOpen}
+                        setApiCall={setApiCall}
+                        program_id={props.program_id}
+                        week_no={weekNo}
+                        updateProgramActivity={updateProgramActivity}
+                        setUpdateProgramActivity={setUpdateProgramActivity}
+                        setWeekNo={setWeekNo} />
                 )}
             </div>
 

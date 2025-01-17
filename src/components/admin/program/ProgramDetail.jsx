@@ -13,7 +13,9 @@ export default function ProgramDetail(props) {
  
   const programDelete = async (id) => {
     const response = await deleteProgram(accessToken, id)
-    props.setApiCall(true)
+    props?.setProgram('')
+    props?.setApiCall(true)
+    
   }
 
   return (
@@ -22,9 +24,8 @@ export default function ProgramDetail(props) {
         <div className='header w-full mb-3 flex flex-row justify-between '>
           <h3 className='text-2xl capitalize font-bold '>{props?.program?.name} </h3>
           <div className='flex flex-row gap-4'>
-            <button  ><PlusIcon className='icon_size_small' /></button>
             <button id={props?.program?.id} onClick={() => setIsOpen(true)}  ><PenBoxIcon className='icon_size_small' /></button>
-            <button><CopyIcon className='icon_size_small' /></button>
+            {/* <button><CopyIcon className='icon_size_small' /></button> */}
             <button onClick={() => programDelete(props?.program?.id)} ><TrashIcon className='icon_size_small' /></button>
           </div>
         </div>
@@ -50,14 +51,14 @@ export default function ProgramDetail(props) {
 
          
 
-          {/* <ProgramForm
+          <ProgramForm
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             program={props.program}
             setprogram={props.setProgram}
             apiCall={props.apiCall}
             setApiCall={props.setApiCall}
-          /> */}
+          />
          
 
 

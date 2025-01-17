@@ -26,7 +26,27 @@
   background: #17686d;
   color: white;
 }
-
+.btn_cancle{
+  background: #434847;
+  color:white;
+}
+.btn_cancle:hover{
+  background: #7c7e82;
+}
+.border_radius_none{
+  border-radius: 0 !important; 
+}
+.icon_size_small{
+  width: 30px;
+  height: 30px;
+  background:#17686d;
+  padding: 6px;
+  color:white;
+  border-radius: 4px;
+}
+.icon_size_small:hover{
+  background-color: #015a45;
+}
 
 /* input css */
 
@@ -95,17 +115,7 @@ form input:focus-visible,form select:focus-visible,button:focus,input,select{
 }
 
 
-.icon_size_small{
-  width: 30px;
-  height: 30px;
-  background:#17686d;
-  padding: 6px;
-  color:white;
-  border-radius: 4px;
-}
-.icon_size_small:hover{
-  background-color: #015a45;
-}
+
 
 
 

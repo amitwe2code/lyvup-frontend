@@ -276,7 +276,7 @@ export default function ProgramForm(props) {
                   price
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="price"
                   name="price"
                   placeholder="Enter price"
@@ -296,7 +296,7 @@ export default function ProgramForm(props) {
                 <CustomButton
                   type="button"
                   onClick={() =>close()}
-                  className="px-3 py-1  bg-gray-200 text-gray-800 rounded hover:bg-gray-300 "
+                  className="px-3 py-1  btn_cancle"
                 >
                   Cancel
                 </CustomButton>

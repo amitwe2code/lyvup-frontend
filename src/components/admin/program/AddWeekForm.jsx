@@ -116,7 +116,7 @@ export default function AddWeekForm(props) {
                         setStep(1)
                         setState({ ...state, week_no: props?.week_no })
                       }}
-                      className="px-3 py-1   "
+                      className="px-3 py-1  btn_cancle  "
                     >
                       Back
                     </CustomButton>

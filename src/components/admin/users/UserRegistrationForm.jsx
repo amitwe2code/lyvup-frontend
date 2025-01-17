@@ -277,7 +277,7 @@ export default function UserRegistrationForm(props) {
           <CustomButton
             type="button"
             onClick={() => props.setIsOpen(false)}
-            className="px-3 py-1 text-xs bg-gray-300  rounded hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 text-black"
+            className="px-3 py-1 text-xs btn_cancle"
           >
             Cancel
           </CustomButton>

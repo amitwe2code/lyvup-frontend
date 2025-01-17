@@ -454,6 +454,18 @@ export const addWeakActivity = async (accessToken, data) => {
             throw error;
       }
 }
+export const UpdateWeakActivity = async (accessToken, data,id) => {
+      try {
+            const response = await axios.put(`${API_URL}/week/${id}/`, data, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
 
 
 

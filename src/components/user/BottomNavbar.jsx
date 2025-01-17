@@ -76,7 +76,7 @@ export default function BottomNavbar() {
             <Footprints size={20} />
             <span className="text-xs">Activity</span>
           </Link>
-          <Link
+          {/* <Link
             onClick={() => setActiveTab("task")}
             to={"/task"}
             className={`flex flex-col text-black items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${activeTab === "task" ? "text-[#17686d]" : ""
@@ -84,7 +84,7 @@ export default function BottomNavbar() {
           >
             <Footprints size={20} />
             <span className="text-xs">Task</span>
-          </Link>
+          </Link> */}
         </div>
       </nav>
     </div>

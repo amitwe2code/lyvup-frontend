@@ -4,11 +4,12 @@ import {
   addWeakActivity,
   getActivity,
   getSingleActivity,
+  UpdateWeakActivity,
 } from "../../../api/api";
 import { useSelector } from "react-redux";
 import useValidation from "../../common/UseValidation";
 
-export default function WeekForm(props) {
+export default function ProgramActivityForm(props) {
   const [filterShow, setFilterShow] = useState(false);
   const [showDateTime, setShowDateTime] = useState(false);
   const [activityList, setActivityList] = useState([]);
@@ -21,57 +22,85 @@ export default function WeekForm(props) {
     const response = await getActivity(accessToken, search, filter);
     console.log("actvity=>", response.data.data.results);
     setActivityList(response.data.data.results);
-    setState({ ...state });
   };
   const initialFormState = {
     week_no: props?.week_no,
     program_id: props?.program_id,
     activity_id: "",
+    day: '',
+    time: '',
   };
-  
+
 
   const validators = {
     activity_id: [
       (value) =>
-        value === null || value.trim() === "" ? "Activity is required" : null,
+        value === null || value == '' ? "Activity is required" : null,
     ],
     day: [
       (value) =>
         (showDateTime)
           ? value === null || value.trim() === ""
-            ? "day is required"
+            ? "Day is required"
             : null
           : null,
     ],
     time: [
       (value) =>
-        (showDateTime) ?
-          value === null || value.trim() === "" ? "time is required" : null :
-          null
+        (showDateTime)
+          ? value === null || value.trim() === ""
+            ? "Time is required"
+            : null
+          : null,
     ],
   };
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
-  const addActivityInWeek = async (e) => {
+
+  const UpdateProgramActivity = (updateProgramActivity) => {
+    console.log('program activity =>', updateProgramActivity);
+    setShowDateTime(true)
+    setState({ ...updateProgramActivity })
+  }
+  console.log('state=>', state);
+  const addActivityInWeek = async (e, id) => {
     e.preventDefault()
-    if(validate()){
-      const response = await addWeakActivity(accessToken, state);
-      console.log('response=>', response)
-      props?.setApiCall(true)
-      props?.setWeekNo()
+    console.log('errors=>', errors);
+    if (validate()) {
+      if (id) {
+        const response = await UpdateWeakActivity(accessToken, state, id);
+        console.log('response=>', response)
+      }
+      else {
+        const response = await addWeakActivity(accessToken, state);
+        console.log('response=>', response)
+      }
       close()
+
     }
   };
 
   const close = () => {
+
     setState(initialFormState);
+    props?.setUpdateProgramActivity('')
+    props?.setApiCall(true)
+    props?.setWeekNo()
     props.setIsOpen(false);
   };
 
 
   useEffect(() => {
     getactivityList();
+
   }, [search, filter]);
+
+  useEffect(() => {
+    if (props?.updateProgramActivity) {
+      UpdateProgramActivity(props?.updateProgramActivity)
+    }
+  }, [props.isOpen])
+
 
   return (
     <div>
@@ -166,6 +195,7 @@ export default function WeekForm(props) {
                   id="activity_id"
                   value={state.activity_id}
                   onChange={onInputChange}
+                  disabled={state.id}
                   className={`w-1/2 p-2 input text-sm  rounded ${errors.activity_id ? " border-danger" : ""
                     }`}
                 >
@@ -198,7 +228,7 @@ export default function WeekForm(props) {
                 </small>
               </div>
               {showDateTime && (
-                <div className="w-full flex flex-wrap justify-center  text-center gap-1  sm:gap-2">
+                <div className="w-full flex flex-wrap justify-center   gap-1  sm:gap-2">
                   <div>
                     <select
                       name="day"
@@ -207,7 +237,7 @@ export default function WeekForm(props) {
                       onChange={onInputChange}
                       className={`w-full  p-2 input text-sm rounded   ${errors.day ? " border-danger" : ""
                         }
-                                        `}
+                        `}
                     >
                       <option value="">To-do on </option>
                       <option value="sunday">sunday</option>
@@ -232,7 +262,7 @@ export default function WeekForm(props) {
                       value={state?.time}
                       onChange={onInputChange}
                       className={`
-                                            p-2 text-sm input rounded  ${errors.time
+                          p-2 text-sm input rounded  ${errors.time
                           ? " border-danger"
                           : ""
                         }  `}
@@ -250,7 +280,7 @@ export default function WeekForm(props) {
                 <CustomButton
                   type="button"
                   onClick={() => close()}
-                  className=" bg-gray-400 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                  className=" btn_cancle"
                 >
                   Cancel
                 </CustomButton>
@@ -258,7 +288,7 @@ export default function WeekForm(props) {
                   type="submit"
                   id={state?.id}
                   variant="outline"
-                  onClick={(e) => addActivityInWeek(e)}
+                  onClick={(e) => addActivityInWeek(e, state?.id)}
                   className=" "
                 >
                   {state?.id ? "Update" : "Add"}
