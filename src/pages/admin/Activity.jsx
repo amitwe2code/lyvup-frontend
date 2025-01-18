@@ -389,7 +389,9 @@ export default function Activity() {
     }
     setIsBoolean(true);
     setState(initialFormState)
+    setStep(1)
     setIsOpen(false);
+
   };
 
   // //useEffect

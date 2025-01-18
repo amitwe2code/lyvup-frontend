@@ -158,7 +158,7 @@ form input:focus-visible,form select:focus-visible,button:focus,input,select{
   color: white;
   border-radius: 50%;
   top:5px;
-  z-index: 0;
+ 
   display: none;
   
 }
@@ -180,7 +180,6 @@ form input:focus-visible,form select:focus-visible,button:focus,input,select{
   .program_sidebar { 
   position: absolute;
   right: -280px;
-  z-index: 0;
   transition: 0.5s;
 }
 }
