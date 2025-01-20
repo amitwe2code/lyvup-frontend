@@ -36,6 +36,7 @@ export default function SignupForm() {
     }));
   };
 
+
   // Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,6 +44,9 @@ export default function SignupForm() {
     // alert(response.data.data.message)
     console.log(response);
   };
+
+
+
 
   return (
     <div className="flex flex-col justify-center items-center p-4 min-h-screen bg-gray-100">
