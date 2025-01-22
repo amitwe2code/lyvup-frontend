@@ -1,4 +1,4 @@
-import { CopyIcon, Edit2Icon, LetterTextIcon, PenBoxIcon, PencilIcon, PlusIcon, TrashIcon } from 'lucide-react'
+import { Copy, CopyIcon, Edit2Icon, LetterTextIcon, PenBoxIcon, PencilIcon, PlusIcon, TrashIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import ProgramForm from './ProgramForm'
 import { deleteProgram, getWeek } from '../../../api/api'
@@ -9,13 +9,16 @@ import WeekTable from './WeekTable'
 export default function ProgramDetail(props) {
   const [isOpen, setIsOpen] = useState(false)
   const accessToken = useSelector((state) => state.token.accessToken)
- 
+  const [copyProgram,setCopyProgram]=useState(false)
  
   const programDelete = async (id) => {
     const response = await deleteProgram(accessToken, id)
     props?.setProgram('')
-    props?.setApiCall(true)
-    
+    props?.setApiCall(true) 
+  }
+  const handleCopyCall=()=>{
+      setCopyProgram(true)
+      setIsOpen(true)
   }
 
   return (
@@ -24,8 +27,8 @@ export default function ProgramDetail(props) {
         <div className='header w-full mb-3 flex flex-row justify-between '>
           <h3 className='text-2xl capitalize font-bold '>{props?.program?.name} </h3>
           <div className='flex flex-row gap-4'>
-            <button id={props?.program?.id} onClick={() => setIsOpen(true)}  ><PenBoxIcon className='icon_size_small' /></button>
-            {/* <button><CopyIcon className='icon_size_small' /></button> */}
+            <button id={props?.program?.id} onClick={(e) => setIsOpen(true)}  ><PenBoxIcon className='icon_size_small' /></button>
+            <button id={props?.program?.id} onClick={()=>handleCopyCall()} ><CopyIcon className='icon_size_small' /></button>
             <button onClick={() => programDelete(props?.program?.id)} ><TrashIcon className='icon_size_small' /></button>
           </div>
         </div>
@@ -46,11 +49,7 @@ export default function ProgramDetail(props) {
               <WeekTable program_id={props?.program?.id} />
             )}
           </div>
-          {/*  */}
-
-
-         
-
+          
           <ProgramForm
             isOpen={isOpen}
             setIsOpen={setIsOpen}
@@ -58,6 +57,7 @@ export default function ProgramDetail(props) {
             setprogram={props.setProgram}
             apiCall={props.apiCall}
             setApiCall={props.setApiCall}
+            copyProgram={copyProgram}
           />
          
 

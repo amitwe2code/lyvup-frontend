@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 import axios from "axios";
-const API_URL = 'http://128.199.55.101:8000';
+const API_URL = 'http://127.0.0.1:8000';
 
 
 
@@ -415,6 +415,7 @@ export const updateProgram = async (accessToken, data, id) => {
       }
 }
 
+
 export const deleteProgram = async (accessToken, id) => {
       try {
             const response = await axios.delete(`${API_URL}/program/${id}/`, {
@@ -427,6 +428,20 @@ export const deleteProgram = async (accessToken, id) => {
             throw error;
       }
 }
+
+export const CopyProgram = async (accessToken, data) => {
+      try {
+            const response = await axios.post(`${API_URL}/program/copy/`, data, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
 
 export const getWeek = async (accessToken,program_id) => {
       try {
@@ -477,6 +492,18 @@ export const deleteWeekActivity = async (accessToken, data) => {
                         'Authorization': `Bearer ${accessToken}`
                   },
                  
+            });
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+export const CopyWeek = async (accessToken, data) => {
+      try {
+            const response = await axios.post(`${API_URL}/week/copy/`, data, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
             });
             return response;
       } catch (error) {

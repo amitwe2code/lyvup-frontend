@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const NotFound = (props) => {
   let navigate = useNavigate();
   useEffect(() => {
     if (props.token) {
-      navigate(`/profile/${props.user.id}`);
+      navigate(`/profile/${props.user?.id}`);
     }
   }, [props.token]);
 

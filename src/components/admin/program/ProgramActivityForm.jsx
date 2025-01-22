@@ -23,12 +23,13 @@ export default function ProgramActivityForm(props) {
     console.log("actvity=>", response.data.data.results);
     setActivityList(response.data.data.results);
   };
+  // initialFormState
   const initialFormState = {
     week_no: props?.week_no,
     program_id: props?.program_id,
-    activity_id: "",
-    day: '',
-    time: '',
+    // activity_id: "",
+    // day: '',
+    // time: '',
   };
 
 
@@ -57,8 +58,8 @@ export default function ProgramActivityForm(props) {
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
 
+  // call by useEffect at update time set updatedata in state
   const UpdateProgramActivity = (updateProgramActivity) => {
-    console.log('program activity =>', updateProgramActivity);
     setShowDateTime(true)
     setState({ ...updateProgramActivity })
   }
@@ -81,7 +82,6 @@ export default function ProgramActivityForm(props) {
   };
 
   const close = () => {
-
     setState(initialFormState);
     props?.setUpdateProgramActivity('')
     props?.setApiCall(true)

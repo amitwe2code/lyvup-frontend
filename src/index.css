@@ -158,7 +158,6 @@ form input:focus-visible,form select:focus-visible,button:focus,input,select{
   color: white;
   border-radius: 50%;
   top:5px;
- 
   display: none;
   
 }

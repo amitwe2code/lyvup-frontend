@@ -24,14 +24,16 @@ export default function Profile() {
   const [isOpen, setIsOpen] = useState(false);
   const accessToken = useSelector((state) => state.token.accessToken);
   const { id } = useParams();
+  
+
+
   const [loading, setLoading] = useState(false);
-
-
+  
   //getUser apicall Function
-  const getuser = async () => {
+  const getuser = async (id) => {
     try {
       setLoading(true);
-      const response = await getUser(accessToken, id);
+      const response = await getUser(accessToken, id=id);
       setUser(response.data.data);
       console.log("userData", response.data.data);
     } catch (error) {
@@ -43,7 +45,8 @@ export default function Profile() {
 
   //useEffect Call
   useEffect(() => {
-    getuser();
+    const userdata = JSON.parse(localStorage.getItem('user'));
+    getuser(userdata.id);
     setApiCall(false);
   }, [apiCall]);
 

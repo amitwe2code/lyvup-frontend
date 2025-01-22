@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomButton from "../../common/CustomButton";
-import { addProgram, getSingleProgram, updateProgram, updateUser } from "../../../api/api";
+import { addProgram, CopyProgram, getSingleProgram, updateProgram, updateUser } from "../../../api/api";
 import useValidation from "../../common/UseValidation";
 import { useSelector } from "react-redux";
 
@@ -28,20 +28,10 @@ export default function ProgramForm(props) {
       (value) =>
         value === null || value.trim() === ""
           ? "description is required"
+          : value.length<3
+          ? 'desc must be at least 3 letter'
           : null,
     ],
-    // brand: [
-    //   (value) =>
-    //     value === null || value.trim() === ""
-    //       ? "label is required"
-    //       : null,
-    // ],
-    // language: [
-    //   (value) =>
-    //     value === null || value.trim() === ""
-    //       ? "language is required"
-    //       : null,
-    // ],
     written_by: [
       (value) =>
         value === null || value.trim() === ""
@@ -56,7 +46,7 @@ export default function ProgramForm(props) {
     ],
     price: [
       (value) =>
-        value === null || value.trim() ===''
+        value === null || value.trim() === ''
           ? "price is required"
           : null,
     ],
@@ -66,27 +56,39 @@ export default function ProgramForm(props) {
 
 
   const getUpdateProgram = async () => {
-    setState({
-      ...props.program
-    })
+    if(props?.copyProgram){
+      setState({...props.program,
+        id:null,
+        isCopyProgram:props?.program?.id
+      })
+    }
+    else{
+      setState({
+          ...props.program
+        })
+      }
   }
-
-
-  const handleProgramAddAndUpdate = async (e) => {
+  
+  console.log('state=>',state);
+  const handleProgramAddAndUpdate = async (e, id) => {
+    e.preventDefault()
     console.log(errors)
     if (validate()) {
-      console.log("id in update and add ",e.target.id);
+      console.log("id in update and add ", id);
       try {
-        e.preventDefault();
         setLoading(true);
-        if (e.target.id == "" || e.target.id == "undefined" || e.target.id == "null") {
-          const response = await addProgram(accessToken, state);
+        if(props?.copyProgram){
+          const response = await CopyProgram(accessToken, state);
           console.log("response=", response);
-        } else {
-          const response = await updateProgram(accessToken, state, e.target.id);
+        }
+        else if (id) {
+          const response = await updateProgram(accessToken, state, id);
           console.log("response=", response);
           props.setprogram(state)
-       
+        
+        } else {
+          const response = await addProgram(accessToken, state);
+          console.log("response=", response);
         }
         props.setApiCall(true)
         props.setIsOpen(false);
@@ -106,11 +108,13 @@ export default function ProgramForm(props) {
     props.setIsOpen(false)
   }
   useEffect(() => {
+    
     if (props?.program) {
       getUpdateProgram()
     }
 
-  },[props.isOpen])
+
+  }, [props.isOpen])
 
   return (
     <div>
@@ -295,7 +299,7 @@ export default function ProgramForm(props) {
               <div className="flex justify-end space-x-2 mt-4">
                 <CustomButton
                   type="button"
-                  onClick={() =>close()}
+                  onClick={() => close()}
                   className="px-3 py-1  btn_cancle"
                 >
                   Cancel
@@ -304,7 +308,7 @@ export default function ProgramForm(props) {
                   type="submit"
                   id={state?.id}
                   variant="outline"
-                  onClick={(e) => handleProgramAddAndUpdate(e)}
+                  onClick={(e) => handleProgramAddAndUpdate(e, state?.id)}
                   className="px-3 py-1 text-xs   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
                 >
                   {state?.id ? "Update" : "Add"}

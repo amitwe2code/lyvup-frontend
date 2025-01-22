@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { deleteWeekActivity, getWeek } from '../../../api/api'
+import { CopyWeek, deleteWeekActivity, getWeek } from '../../../api/api'
 import { useSelector } from 'react-redux';
-import { CopyIcon, Edit2Icon, LetterText, PlusIcon, TrashIcon } from 'lucide-react';
+import { CloudDownload, CopyIcon, Edit2Icon, LetterText, PlusIcon, TrashIcon } from 'lucide-react';
 import AddWeekForm from './AddWeekForm';
 import ProgramActivityForm from './ProgramActivityForm';
 
@@ -11,10 +11,12 @@ export default function WeekTable(props) {
     const [apiCall, setApiCall] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const [isProgramActivityFormOpen, setIsProgramActivityFormOpen] = useState(false)
-    const [addWeekNo, setAddWeekNo] = useState()  //add new week number 
+    const [nextWeekNo, setNextWeekNo] = useState()  //add new week number 
     const [weekNo, setWeekNo] = useState()
     const [updateProgramActivity,setUpdateProgramActivity]=useState()
 
+
+    // get programActivity api call function 
     const getProgramActivitys = async () => {
         const response = await getWeek(accessToken, props.program_id)
         const WeekActivityData = response.data.data.results.reduce((acc, activity) => {
@@ -27,14 +29,14 @@ export default function WeekTable(props) {
         if (WeekNos) {
             let LastWeekCount = Math.max(...WeekNos)
             if (LastWeekCount !== -Infinity) {
-                setAddWeekNo(LastWeekCount + 1)
+                setNextWeekNo(LastWeekCount + 1)
             }
-            else { setAddWeekNo(1) }
+            else { setNextWeekNo(1) }
         }
     }
 
 
-
+    //  week and  programactivity in a week  delete api call function 
     const handleProgramActivityDelete = async (e, weekNo = '', activityId = '') => {
         e.preventDefault()
         const data = {
@@ -45,25 +47,40 @@ export default function WeekTable(props) {
         const response = await deleteWeekActivity(accessToken, data)
         setApiCall(true)
     }
-
+    //inside week programactivity update function 
     const handleUpdateProgramActivity=(e,programActivity)=>{
         e.preventDefault()
         setUpdateProgramActivity(programActivity)   
-        setIsProgramActivityFormOpen(true)  
+        setIsProgramActivityFormOpen(true)        
     }
 
-
+    //function Activity add 
     const handleActivityAddInWeek = (e, weekNo) => {
         e.preventDefault()
         setWeekNo(weekNo)
         setIsProgramActivityFormOpen(true)
     }
 
+    
+    
+    // copy week api call function pass new week extra 
+    const handleCopyWeek=async(e,week)=>{
+        e.preventDefault()
+        const data={
+            week_no:week,
+            program_id:props?.program_id,
+            newWeek:nextWeekNo
+        }
+        console.log('data=>',data);
+        const response=await CopyWeek(accessToken,data)
+        console.log('response in copy week=>',response);
+        setApiCall(true)
+    }
+    
     useEffect(() => {
         getProgramActivitys()
         setApiCall(false)
     }, [apiCall, , props.program_id])
-
 
     return (
         <>
@@ -76,7 +93,7 @@ export default function WeekTable(props) {
                             {/* <div className='hidden sm:block'><h6>Duration: 0 min.</h6></div> */}
                             <div className='flex flex-row gap-4 '>
                                 <button id={week} onClick={(e) => handleActivityAddInWeek(e, week)}><PlusIcon className='icon_size_small' /></button>
-                                {/* <button><CopyIcon className='icon_size_small' /></button> */}
+                                <button id={week} onClick={(e)=>handleCopyWeek(e,week)}><CopyIcon className='icon_size_small' /></button>
                                 <button id={week} onClick={(e) => handleProgramActivityDelete(e, week)}><TrashIcon className='icon_size_small' /></button>
                             </div>
                         </div>
@@ -128,8 +145,8 @@ export default function WeekTable(props) {
                         setIsOpen={setIsOpen}
                         setApiCall={setApiCall}
                         program_id={props.program_id}
-                        week_no={addWeekNo}
-                        setWeekNo={setAddWeekNo}
+                        week_no={nextWeekNo}
+                        setWeekNo={setNextWeekNo}
                     />
                 )}
                 {((weekNo && props?.program_id)||updateProgramActivity) && (
