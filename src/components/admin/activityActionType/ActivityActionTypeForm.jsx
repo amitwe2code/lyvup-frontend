@@ -1,20 +1,95 @@
-import React, { useState } from "react";
-import CustomButton from "../common/CustomButton";
-import { updateUser } from "../../api/api";
+import React, { useEffect, useState } from "react";
+import CustomButton from "../../common/CustomButton";
+import { addActivityType, updateActivityType, updateUser } from "../../../api/api";
+import useValidation from "../../common/UseValidation";
+import { useSelector } from "react-redux";
 
-export default function ActivityActionTypeForm({
-  initialFormState,
-  isOpen,
-  setIsOpen,
-  state,
-  setState,
-  onInputChange,
-  errors,
-  handleFormSubmit,
-}) {
+export default function ActivityActionTypeForm(props) {
+  const accessToken = useSelector((state) => state.token.accessToken);
+  const initialFormState = {}
+  const validators = {
+    activity_type: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "Activity type is required"
+          : null,
+    ],
+    activity: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "Activity is required"
+          : null,
+    ],
+    amount: [
+      (value) =>
+        value === null
+          ? "Amount is required"
+          : null,
+    ],
+    unit: [
+      (value) =>
+        value === null
+          ? "Unit is required"
+          : null,
+    ],
+    key_activity: [
+      (value) =>
+        value === null || value.trim() === ""
+          ? "Key activity is required"
+          : null,
+    ],
+  }
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
+
+
+  const handleActivityActionTypeUpdate = async (ActivityActionType) => {
+    setState({
+      ...ActivityActionType
+    });
+    props.setIsOpen(true);
+  };
+
+
+
+  const handleActivityActionTypeAddAndUpdate = async (e,id) => {
+    e.preventDefault();
+    if(validate){
+      try {
+        // setLoading(true);
+        
+        if (id) {
+          const response = await updateActivityType(accessToken, state,id);
+          console.log("response=", response);
+        } else {
+          const response = await addActivityType(accessToken, state);
+          console.log("response=", response);
+        }
+        props.setApiCall(true);
+        props?.setIsOpen(false);
+        setState(initialFormState);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        // setLoading(false);
+      }
+    }
+  };
+  
+  const close = () => {
+    setState(initialFormState)
+    props?.setIsOpen(false)
+  }
+
+  useEffect(() => {
+    if (props.updateActivityActionType) {
+      handleActivityActionTypeUpdate(props.updateActivityActionType)
+    }
+  }, [props?.isOpen])
+
   return (
     <div>
-      {isOpen && (
+      {props?.isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg_secondary_color max-h-full overflow-auto rounded-lg shadow-xl w-full max-w-2xl">
             <div className="p-3 btn_theme_color border-b">
@@ -25,7 +100,7 @@ export default function ActivityActionTypeForm({
                 <div>
                   <label
                     htmlFor="activity_type"
-                    className="block  font-medium text-gray-700 mb-1"
+                    className="block capitalize  font-medium text-gray-700 mb-1"
                   >
                     activity_type
                   </label>
@@ -37,8 +112,8 @@ export default function ActivityActionTypeForm({
                     value={state.activity_type}
                     onChange={onInputChange}
                     required
-                     className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity_type ? " border-danger" : ""
-                          } `}
+                    className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity_type ? " border-danger" : ""
+                      } `}
                   />
                   {errors.activity_type && (
                     <span className="text-danger font-size-3">
@@ -49,7 +124,7 @@ export default function ActivityActionTypeForm({
                 <div>
                   <label
                     htmlFor="activity"
-                    className="block  font-medium text-gray-700 mb-1"
+                    className="block capitalize  font-medium text-gray-700 mb-1"
                   >
                     activity
                   </label>
@@ -61,8 +136,8 @@ export default function ActivityActionTypeForm({
                     value={state.activity}
                     onChange={onInputChange}
                     required
-                     className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity ? " border-danger" : ""
-                          } `}
+                    className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.activity ? " border-danger" : ""
+                      } `}
                   />
                   {errors.activity && (
                     <span className="text-danger font-size-3">
@@ -75,7 +150,7 @@ export default function ActivityActionTypeForm({
                 <div>
                   <label
                     htmlFor="amount"
-                    className="block  font-medium text-gray-700 mb-1"
+                    className="block capitalize font-medium text-gray-700 mb-1"
                   >
                     amount
                   </label>
@@ -87,8 +162,8 @@ export default function ActivityActionTypeForm({
                     value={state.amount}
                     onChange={onInputChange}
                     required
-                     className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.amount ? " border-danger" : ""
-                          } `}
+                    className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.amount ? " border-danger" : ""
+                      } `}
                   />
                   {errors.amount && (
                     <span className="text-danger font-size-3">
@@ -99,7 +174,7 @@ export default function ActivityActionTypeForm({
                 <div>
                   <label
                     htmlFor="unit"
-                    className="block  font-medium text-gray-700 mb-1"
+                    className="block capitalize  font-medium text-gray-700 mb-1"
                   >
                     unit
                   </label>
@@ -111,8 +186,8 @@ export default function ActivityActionTypeForm({
                     value={state.unit}
                     onChange={onInputChange}
                     required
-                     className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.unit ? " border-danger" : ""
-                          } `}
+                    className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.unit ? " border-danger" : ""
+                      } `}
                   />
                   {errors.unit && (
                     <span className="text-danger font-size-3">
@@ -125,7 +200,7 @@ export default function ActivityActionTypeForm({
                 <div>
                   <label
                     htmlFor="key_activity"
-                    className="block  font-medium text-gray-700 mb-1"
+                    className="block capitalize  font-medium text-gray-700 mb-1"
                   >
                     key_activity
                   </label>
@@ -138,7 +213,7 @@ export default function ActivityActionTypeForm({
                     onChange={onInputChange}
                     required
                     className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500   ${errors.key_activity ? " border-danger" : ""
-                          } `}
+                      } `}
                   />
                   {errors.key_activity && (
                     <span className="text-danger font-size-3">
@@ -150,21 +225,17 @@ export default function ActivityActionTypeForm({
               <div className="flex justify-end space-x-2 mt-4">
                 <CustomButton
                   type="button"
-                  onClick={() => {
-                    setState(initialFormState)
-                    setIsOpen(false)
-                  }
-                }
-                  className="px-3 py-1  bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+                  onClick={() => close()}
+                  variant="none"
+                  className="btn_cancle"
                 >
                   Cancel
                 </CustomButton>
                 <CustomButton
                   type="submit"
                   id={state?.id}
-                  variant="outline"
-                  onClick={handleFormSubmit}
-                  className="px-3 py-1   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
+                  onClick={(e)=>handleActivityActionTypeAddAndUpdate(e,state?.id)}
+                  className=""
                 >
                   {state?.id ? "Update" : "Add"}
                 </CustomButton>

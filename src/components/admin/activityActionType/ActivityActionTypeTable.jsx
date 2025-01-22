@@ -1,4 +1,4 @@
-import CustomButton from "../common/CustomButton";
+import CustomButton from "../../common/CustomButton";
 import {
   LetterText,
   Trash,
@@ -8,10 +8,9 @@ import {
   SettingsIcon,
   ChevronUp,
 } from "lucide-react";
-import DateFormat from "./DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Loader from "../common/Loader";
+import { useSelector } from "react-redux";
 
 export default function ActivityActionTypeTable({
   activityTypes,
@@ -20,7 +19,7 @@ export default function ActivityActionTypeTable({
   handleActivityActionTypeDelete,
   handleActivityActionTypeUpdate,
 }) {
-
+  const accessToken = useSelector((state) => state.token.accessToken);
   const SortDropdown = ({ field }) => (
     <button
         onClick={() => {

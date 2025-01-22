@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import Pagination from '../../components/common/Pagination'
 import TopBar from '../../components/admin/TobBar';
-import BottomNavbar from '../../components/user/BottomNavbar';
-import CustomInput from '../../components/common/CustomInput';
-import CustomButton from '../../components/common/CustomButton';
-import Select from 'react-select/base';
 import ProgramDetail from '../../components/admin/program/ProgramDetail';
 import ProgramList from '../../components/admin/program/ProgramsList';
-import useValidation from '../../components/common/UseValidation';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import { PanelRightClose } from 'lucide-react';
+import BottomNavbar from '../../components/user/BottomNavbar';
 
 export default function Programs() {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)   //for sidebar 
   const [program, setProgram] = useState("")
-  const [apiCall, setApiCall] = useState(false)
-  
-
-
+  const [apiCall, setApiCall] = useState(false)     
 
   return (
     <div className="flex">
@@ -31,7 +21,6 @@ export default function Programs() {
             <ProgramDetail
               program={program}
               setProgram={setProgram}
-              apiCall={apiCall}
               setApiCall={setApiCall}
             />
           </div>

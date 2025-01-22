@@ -5,6 +5,7 @@ import { deleteProgram, getWeek } from '../../../api/api'
 import { useSelector } from 'react-redux'
 import AddWeekForm from './AddWeekForm'
 import WeekTable from './WeekTable'
+import ProgramModelForm from '../modelforms/ProgramModelForm'
 
 export default function ProgramDetail(props) {
   const [isOpen, setIsOpen] = useState(false)
@@ -50,13 +51,12 @@ export default function ProgramDetail(props) {
             )}
           </div>
           
-          <ProgramForm
+          <ProgramModelForm
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            program={props.program}
-            setprogram={props.setProgram}
-            apiCall={props.apiCall}
-            setApiCall={props.setApiCall}
+            program={props?.program}
+            setProgram={props?.setProgram}
+            setApiCall={props?.setApiCall}
             copyProgram={copyProgram}
           />
          

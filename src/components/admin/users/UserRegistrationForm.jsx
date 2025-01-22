@@ -25,7 +25,10 @@ export default function UserRegistrationForm(props) {
     name: [
       (value) =>
         value === null || value.trim() === ""
-          ? "Name is required" : null,
+          ? "Name is required" 
+          :value.length<3
+          ?'name must be atleast 3 character '
+           : null,
     ],
     phone: [
       (value) =>
@@ -105,9 +108,9 @@ export default function UserRegistrationForm(props) {
       <form className="p-4 space-y-3 bg_secondary_color">
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label
+            <label 
               htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               Name
             </label>
@@ -124,7 +127,7 @@ export default function UserRegistrationForm(props) {
             {errors.name && (
               <span
                 key={errors.name}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.name}
               </span>
@@ -133,7 +136,7 @@ export default function UserRegistrationForm(props) {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               Email
             </label>
@@ -150,7 +153,7 @@ export default function UserRegistrationForm(props) {
             {errors.email && (
               <span
                 key={errors.email}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.email}
               </span>
@@ -161,7 +164,7 @@ export default function UserRegistrationForm(props) {
           <div>
             <label
               htmlFor="phone"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               Phone
             </label>
@@ -178,7 +181,7 @@ export default function UserRegistrationForm(props) {
             {errors.phone && (
               <span
                 key={errors.phone}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.phone}
               </span>
@@ -187,7 +190,7 @@ export default function UserRegistrationForm(props) {
           <div>
             <label
               htmlFor="language"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               Language
             </label>
@@ -206,7 +209,7 @@ export default function UserRegistrationForm(props) {
             {errors.language_preference && (
               <span
                 key={errors.language_preference}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.language_preference}
               </span>
@@ -217,7 +220,7 @@ export default function UserRegistrationForm(props) {
           <div>
             <label
               htmlFor="userType"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               User Type
             </label>
@@ -236,7 +239,7 @@ export default function UserRegistrationForm(props) {
             {errors.user_type && (
               <span
                 key={errors.user_type}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.user_type}
               </span>
@@ -247,7 +250,7 @@ export default function UserRegistrationForm(props) {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="form_label"
                 >
                   Password
                 </label>
@@ -264,7 +267,7 @@ export default function UserRegistrationForm(props) {
                 {errors.password && (
                   <span
                     key={errors.password}
-                    className="text-danger font-size-3"
+                    className="text-danger capitalize text-sm pl-1"
                   >
                     {errors.password}
                   </span>
@@ -277,7 +280,8 @@ export default function UserRegistrationForm(props) {
           <CustomButton
             type="button"
             onClick={() => props.setIsOpen(false)}
-            className="px-3 py-1 text-xs btn_cancle"
+            variant="none"
+            className=" btn_cancle"
           >
             Cancel
           </CustomButton>
@@ -285,8 +289,7 @@ export default function UserRegistrationForm(props) {
             type="submit"
             id={state?.id}
             onClick={(e)=>handleUserAdd(e,state?.id)}
-            variant="outline"
-            className=" text-xs   rounded "
+            className=" "
           >
             {state?.id ? 'Update' : 'Add'}
           </CustomButton>

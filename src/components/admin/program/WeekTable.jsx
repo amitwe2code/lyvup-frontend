@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { CloudDownload, CopyIcon, Edit2Icon, LetterText, PlusIcon, TrashIcon } from 'lucide-react';
 import AddWeekForm from './AddWeekForm';
 import ProgramActivityForm from './ProgramActivityForm';
+import AddweekModelForm from '../modelforms/AddweekModelForm';
+import ProgramActivityModelForm from '../modelforms/ProgramActivityModelForm';
 
 export default function WeekTable(props) {
     const accessToken = useSelector((state) => state.token.accessToken)
@@ -140,21 +142,21 @@ export default function WeekTable(props) {
                     <button className='button p-2  py-1 border rounded-md btn_theme_color text-white ' onClick={() => setIsOpen(true)}>Add Week</button>
                 </div>
                 {isOpen && (
-                    <AddWeekForm
+                    <AddweekModelForm
                         isOpen={isOpen}
                         setIsOpen={setIsOpen}
                         setApiCall={setApiCall}
                         program_id={props.program_id}
                         week_no={nextWeekNo}
-                        setWeekNo={setNextWeekNo}
+                        // setWeekNo={setNextWeekNo}
                     />
                 )}
                 {((weekNo && props?.program_id)||updateProgramActivity) && (
-                    <ProgramActivityForm
+                    <ProgramActivityModelForm
                         isOpen={isProgramActivityFormOpen}
                         setIsOpen={setIsProgramActivityFormOpen}
                         setApiCall={setApiCall}
-                        program_id={props.program_id}
+                        program_id={props?.program_id}
                         week_no={weekNo}
                         updateProgramActivity={updateProgramActivity}
                         setUpdateProgramActivity={setUpdateProgramActivity}

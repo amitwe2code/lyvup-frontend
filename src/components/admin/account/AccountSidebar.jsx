@@ -4,7 +4,7 @@ import Select from "react-select";
 import CustomButton from "../../common/CustomButton";
 import { AddUserAccount, getAccountUsers, RemoveUserAccount } from "../../../api/api";
 
-export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
+export default function AccountSidebar(props) {
   const [search, setSearch] = useState("");
   const [boolean, setBoolean] = useState(true);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -15,7 +15,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
   const selectRef = useRef(null);
 
   const getSelectedUsers = async () => {
-    const response = await getAccountUsers(selectedAccount.id);
+    const response = await getAccountUsers(props?.selectedAccount.id);
     setSelectedUsers(response.data.connected_users);
     setUnSelectedUsers(response.data.unconnected_users);
   };
@@ -25,9 +25,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
       value: option.id,
       label: option.name,
     }));
-    // console.log("options =>", options);
     setUnSelectedUsersList(options);
-    // eslint-disable-next-line
   }, [unSelectedUsers]);
   // const getUnSelectedUsers = async () => {
   //     const response = await GetUnSelectedUsers(selectedAccount.id);
@@ -35,7 +33,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
   // }
 
   const handleAddUserToAccount = async (id) => {
-    const response = await AddUserAccount(selectedAccount.id, selectedOptions);
+    const response = await AddUserAccount(props?.selectedAccount.id, selectedOptions);
     // console.log(response);
     setSelectedOptions([]);
     setBoolean(true);
@@ -49,7 +47,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
   useEffect(() => {
     getSelectedUsers();
     setBoolean(false);
-  }, [isOpen, boolean]);
+  }, [props?.isOpen, boolean]);
 
   const getSelectOptions = () => {
     return unSelectedUsers.map((user) => ({
@@ -67,8 +65,6 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
       setSelectedOptions([]);
     }
   };
-  // console.log("selected option ", selectedOptions);
-
   const handleAddUsers = () => {
     if (selectedOptions.length > 0) {
       handleAddUserToAccount(selectedOptions);
@@ -80,14 +76,14 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
   return (
     <div
       className={`fixed inset-y-0 right-0 w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
-        isOpen ? "translate-x-0" : "translate-x-full"
+        props?.isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
       <div className="p-4">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg text-[#039a77] font-semibold">Manage Users</h2>
           <button
-            onClick={onClose}
+            onClick={props?.onClose}
             className="text-gray-500 hover:text-gray-700"
           >
             ×
@@ -96,7 +92,7 @@ export default function AccountSidebar({ isOpen, onClose, selectedAccount }) {
 
         <div className="mb-2">
           <h3 className="font-bold">
-            Account: {selectedAccount?.account_name}
+            Account: {props?.selectedAccount?.account_name}
           </h3>
         </div>
 

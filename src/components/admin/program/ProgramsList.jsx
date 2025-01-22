@@ -11,6 +11,7 @@ import ProgramActivityForm from "./ProgramActivityForm";
 import ProgramAssignToTeam from "./ProgramAssignToTeam";
 import AddWeekForm from "./AddWeekForm";
 import { getProgram } from "../../../api/api";
+import ProgramModelForm from "../modelforms/ProgramModelForm";
 
 const ProgramList = (props) => {
   const [programs, setPrograms] = useState([])
@@ -26,12 +27,13 @@ const ProgramList = (props) => {
   const accessToken = useSelector((state) => state.token.accessToken);
   const [loading, setLoading] = useState(false);
 
-
+  // get program list 
   const getProgramList = async () => {
     try {
       setLoading(true);
       const response = await getProgram(accessToken, search, currentPage, pageSize, ordering);
       setPrograms(response.data.data.results);
+      //set default program for show if not 
       if (props.program === "") {
         props.setProgram(response.data.data.results[0])
       }
@@ -44,10 +46,6 @@ const ProgramList = (props) => {
       setLoading(false);
     }
   };
-
-
-
-
   useEffect(() => {
     getProgramList();
     props.setApiCall(false);
@@ -56,7 +54,7 @@ const ProgramList = (props) => {
 
   return (
 
-    <div className="p-3  flex flex-col justify-evenly  h-full overflow-auto  ">
+    <div className="p-3  flex flex-col justify-start  h-full overflow-auto  ">
       <h3 className="text-2xl  font-bold">List</h3>
       <div className="flex flex-col gap-2  ">
         <div className="">
@@ -129,21 +127,10 @@ const ProgramList = (props) => {
         </CustomButton>
       </div>
 
-      {/* <AddWeek
-        initialFormState={initialFormState}
+      <ProgramModelForm
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        state={state}
-        setState={setState}
-        onInputChange={onInputChange}
-        errors={errors}
-        handleFormSubmit={handleProgramAddAndUpdate}
-      /> */}
-      <ProgramForm
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        apiCall={props.apiCall}
-        setApiCall={props.setApiCall}
+        setApiCall={props?.setApiCall}
       />
     </div>
   );

@@ -5,7 +5,7 @@ export default function UserModelForm(props) {
     return (
         <div>
             {props.isOpen && (
-                <div className="fixed inset-0 bg-black  bg-opacity-50 flex items-center justify-center p-4">
+                <div className="fixed  inset-0 bg-black px-4 pt-16 pb-2  bg-opacity-50 flex items-center justify-center ">
                     <UserRegistrationForm
                         isOpen={props?.isOpen}
                         setIsOpen={props?.setIsOpen}

@@ -20,8 +20,9 @@ export default function CustomButton({
 
 
     const variantClasses = {
-        primary: 'bg-[#17686d] text-white ',
+        primary: 'bg-[#17686d] text-white hover:bg-[#0e4245] ',
         outline: 'border-2 border-[#17686d] text-[#17686d] hover:bg-[#17686d] hover:text-white',
+        none:'',
     };
 
     return (

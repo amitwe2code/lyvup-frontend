@@ -9,11 +9,7 @@ export default function ProgramForm(props) {
   const [loading, setLoading] = useState(false)
   const accessToken = useSelector((state) => state.token.accessToken);
   const initialFormState = {
-    name: '',
-    description: '',
-    written_by: '',
-    version: '',
-    price: ''
+    
   }
 
   // const initialFormState = formData
@@ -22,6 +18,8 @@ export default function ProgramForm(props) {
       (value) =>
         value === null || value.trim() === ""
           ? "name is required"
+          : value.length<3
+          ? 'Name must be at least 3 letter'
           : null,
     ],
     description: [
@@ -29,13 +27,15 @@ export default function ProgramForm(props) {
         value === null || value.trim() === ""
           ? "description is required"
           : value.length<3
-          ? 'desc must be at least 3 letter'
+          ? 'description must be at least 3 letter'
           : null,
     ],
     written_by: [
       (value) =>
         value === null || value.trim() === ""
           ? "written by is required"
+          : value.length<3
+          ? 'Written by must be at least 3 letter'
           : null,
     ],
     version: [
@@ -57,14 +57,14 @@ export default function ProgramForm(props) {
 
   const getUpdateProgram = async () => {
     if(props?.copyProgram){
-      setState({...props.program,
+      setState({...props?.program,
         id:null,
         isCopyProgram:props?.program?.id
       })
     }
     else{
       setState({
-          ...props.program
+          ...props?.program
         })
       }
   }
@@ -84,15 +84,14 @@ export default function ProgramForm(props) {
         else if (id) {
           const response = await updateProgram(accessToken, state, id);
           console.log("response=", response);
-          props.setprogram(state)
+          props?.setProgram(state)
         
         } else {
           const response = await addProgram(accessToken, state);
           console.log("response=", response);
         }
-        props.setApiCall(true)
-        props.setIsOpen(false);
-        setState(initialFormState);
+        props?.setApiCall(true)
+        close()
       } catch (error) {
         console.log(error);
       } finally {
@@ -105,7 +104,7 @@ export default function ProgramForm(props) {
 
   const close = () => {
     setState(initialFormState);
-    props.setIsOpen(false)
+    props?.setIsOpen(false)
   }
   useEffect(() => {
     
@@ -117,9 +116,7 @@ export default function ProgramForm(props) {
   }, [props.isOpen])
 
   return (
-    <div>
-      {props?.isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+    
           <div className="bg_secondary_color max-h-full overflow-auto rounded-lg shadow-xl w-full max-w-md">
             <div className="p-3 border-b btn_theme_color gap-2 flex flex-row justify-between items-center">
               <h2 className="text-lg font-semibold">Program Registration </h2>
@@ -144,7 +141,7 @@ export default function ProgramForm(props) {
                     }`}
                 />
                 {errors.name && (
-                  <span className="text-danger font-size-3">
+                  <span className="text-danger capitalize text-sm pl-1">
                     {errors.name.join(", ")}
                   </span>
                 )}
@@ -167,8 +164,8 @@ export default function ProgramForm(props) {
                     }`}
                 />
                 {errors.description && (
-                  <span className="text-danger font-size-3">
-                    {errors.description.join(", ")}
+                  <span className="text-danger capitalize text-sm pl-1">
+                    {errors.description.join(",")}
                   </span>
                 )}
               </div>
@@ -193,7 +190,7 @@ export default function ProgramForm(props) {
                   <option value="normal">Normal</option>
                 </select>
                 {errors.brand && (
-                  <span className="text-danger font-size-3">
+                  <span className="text-danger capitalize text-sm pl-1">
                     {errors.brand.join(", ")}
                   </span>
                 )}
@@ -219,7 +216,7 @@ export default function ProgramForm(props) {
                   <option value="hn">hindi</option>
                 </select>
                 {errors.language && (
-                  <span className="text-danger font-size-3">
+                  <span className="text-danger capitalize text-sm pl-1">
                     {errors.language.join(", ")}
                   </span>
                 )}
@@ -243,7 +240,7 @@ export default function ProgramForm(props) {
                     }   `}
                 />
                 {errors.written_by && (
-                  <span className="text-danger font-size-3">
+                  <span className="text-danger capitalize text-sm pl-1">
                     {errors.written_by.join(", ")}
                   </span>
                 )}
@@ -267,7 +264,7 @@ export default function ProgramForm(props) {
                     }`}
                 />
                 {errors.version && (
-                  <span className="text-danger font-size-3">
+                  <span className="text-danger capitalize text-sm pl-1">
                     {errors.version.join(", ")}
                   </span>
                 )}
@@ -291,7 +288,7 @@ export default function ProgramForm(props) {
                     }`}
                 />
                 {errors.price && (
-                  <span className="text-danger font-size-3">
+                  <span className="text-danger capitalize text-sm pl-1">
                     {errors.price.join(", ")}
                   </span>
                 )}
@@ -300,24 +297,22 @@ export default function ProgramForm(props) {
                 <CustomButton
                   type="button"
                   onClick={() => close()}
-                  className="px-3 py-1  btn_cancle"
+                  variant="none"
+                  className=" btn_cancle"
                 >
                   Cancel
                 </CustomButton>
                 <CustomButton
                   type="submit"
                   id={state?.id}
-                  variant="outline"
                   onClick={(e) => handleProgramAddAndUpdate(e, state?.id)}
-                  className="px-3 py-1 text-xs   rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
+                  className=""
                 >
                   {state?.id ? "Update" : "Add"}
                 </CustomButton>
               </div>
             </form>
           </div>
-        </div>
-      )}
-    </div>
+       
   );
 }

@@ -18,12 +18,17 @@ export default function AccountForm(props) {
     account_name: [
       (value) =>
         value === null || value.trim() === ""
-          ? "Account Name is required" : null,
+          ? "Account Name is required"
+          :value.length<3
+          ?'account name must at least 3 character ' 
+          : null,
     ],
     account_type: [
       (value) =>
         value === null || value.trim() === ""
           ? "Account Type is required"
+          :value.length<3
+          ?'account Type must at least 3 character ' 
           : null,
     ],
     organization_id: [
@@ -57,6 +62,7 @@ export default function AccountForm(props) {
   const handleAccountAdd = async (e, id) => {
     try {
       e.preventDefault();
+      if(validate()){
       // setLoading(true);
       if (id) {
         const response = await updateAccount(accessToken, state, id);
@@ -70,11 +76,13 @@ export default function AccountForm(props) {
       setState({ ...initialFormState })
       props.setIsOpen(false);
       props?.setUpdateAccount(state)
+    }
     } catch (error) {
       console.log(error);
     } finally {
       // setLoading(false);
     }
+  
   };
 
 
@@ -90,12 +98,12 @@ export default function AccountForm(props) {
       <div className="p-3 btn_theme_color border-b">
         <h2 className="text-lg font-semibold">Account Registration</h2>
       </div>
-      <form className="p-4 space-y-3">
+      <form className="p-4 space-y-3 bg_secondary_color">
         <div className="grid sm:grid-cols-2 gap-3">
           <div>
             <label
               htmlFor="account_name"
-              className="block  font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               account_name
             </label>
@@ -112,7 +120,7 @@ export default function AccountForm(props) {
             {errors.account_name && (
               <span
                 key={errors.account_name}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.account_name}
               </span>
@@ -121,7 +129,7 @@ export default function AccountForm(props) {
           <div>
             <label
               htmlFor="account_type"
-              className="block  font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               account_type
             </label>
@@ -138,7 +146,7 @@ export default function AccountForm(props) {
             {errors.account_type && (
               <span
                 key={errors.account_type}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.account_type}
               </span>
@@ -149,7 +157,7 @@ export default function AccountForm(props) {
           <div>
             <label
               htmlFor="team_leader_id"
-              className="block  font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               team_leader_id
             </label>
@@ -166,7 +174,7 @@ export default function AccountForm(props) {
             {errors.team_leader_id && (
               <span
                 key={errors.team_leader_id}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.team_leader_id}
               </span>
@@ -175,7 +183,7 @@ export default function AccountForm(props) {
           <div>
             <label
               htmlFor="language"
-              className="block  font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               language
             </label>
@@ -187,13 +195,13 @@ export default function AccountForm(props) {
               className={`w-full input text-sm ${errors.language ? 'border-danger' : ''}`}
             >
               <option value="">-Select Laguage-</option>
-              <option value="English">English</option>
-              <option value="Dutch">Dutch</option>
+              <option value="en">English</option>
+              <option value="nl">Dutch</option>
             </select>
             {errors.language && (
               <span
                 key={errors.language}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.language}
               </span>
@@ -204,7 +212,7 @@ export default function AccountForm(props) {
           <div>
             <label
               htmlFor="organization_id"
-              className="block  font-medium text-gray-700 mb-1"
+              className="form_label"
             >
               organization_id
             </label>
@@ -223,7 +231,7 @@ export default function AccountForm(props) {
             {errors.organization_id && (
               <span
                 key={errors.organization_id}
-                className="text-danger font-size-3"
+                className="text-danger capitalize text-sm pl-1"
               >
                 {errors.organization_id}
               </span>
@@ -235,7 +243,8 @@ export default function AccountForm(props) {
           <CustomButton
             type="button"
             onClick={() => props.setIsOpen(false)}
-            className="px-3 py-1  bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
+            variant="none"
+            className="btn_cancle"
           >
             Cancel
           </CustomButton>
@@ -243,8 +252,7 @@ export default function AccountForm(props) {
             type="submit"
             id={state?.id}
             onClick={(e)=>handleAccountAdd(e,state?.id)}
-            variant="outline"
-            className="px-3 py-1    rounded focus:outline-none focus:ring-2  focus:ring-opacity-50"
+            className=""
           >
             {state?.id ? 'Update' : 'Add'}
           </CustomButton>

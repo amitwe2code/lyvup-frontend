@@ -49,7 +49,6 @@
 }
 
 /* input css */
-
 form input:focus-visible,form select:focus-visible,button:focus,input,select{
   outline: none;
 }
@@ -63,6 +62,17 @@ form input:focus-visible,form select:focus-visible,button:focus,input,select{
 
 .input:hover,.input:focus{
   border:1px solid #17686d
+}
+/* form input label */
+.form_label{
+  display: block;
+  color: #374151;
+  text-transform:capitalize ;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-bottom: 2px;
+  margin-left: 2px;
 }
 
 

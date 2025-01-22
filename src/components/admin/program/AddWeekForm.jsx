@@ -35,7 +35,6 @@ export default function AddWeekForm(props) {
        const response = await addWeakActivity(accessToken, state);
       console.log("response in form =>", response);
       props.setApiCall(true);
-      props.setWeekNo();
       props.setIsOpen(false);
     }
 
@@ -48,9 +47,6 @@ export default function AddWeekForm(props) {
     //    props?.setStep(1)
   };
   return (
-    <div>
-      {props?.isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg_secondary_color max-h-full overflow-y-auto rounded-lg  max-w-2xl shadow-xl w-full  ">
             <div className="flex flex-row justify-between items-center  p-3 btn_theme_color sm:mb-6  border-b-2 gap-2">
               <h2 className="text-2xl sm:text-3xl font-bold ">
@@ -112,20 +108,20 @@ export default function AddWeekForm(props) {
                   <div className="flex justify-end space-x-2 mt-4">
                     <CustomButton
                       type="button"
+                      variant="none"
                       onClick={() => {
                         setStep(1)
                         setState({ ...state, week_no: props?.week_no })
                       }}
-                      className="px-3 py-1  btn_cancle  "
+                      className="btn_cancle"
                     >
                       Back
                     </CustomButton>
                     <CustomButton
                       type="submit"
                       id={props?.state?.id}
-                      variant="outline"
                       onClick={(e) => addWeek(e)}
-                      className="px-3 py-1 text-xs  btn_theme_color"
+                      className=""
                     >
                       Add
                     </CustomButton>
@@ -134,8 +130,5 @@ export default function AddWeekForm(props) {
               )}
             </form>
           </div>
-        </div>
-      )}
-    </div>
   );
 }

@@ -46,7 +46,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="language"
-                          className="block  font-bold mb-1"
+                          className="form_label"
                         >
                           Language
                         </label>
@@ -61,7 +61,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <option value="">Select Language</option>
                           <option value="en">English</option>
 
-                        </select>
+                        </select>     
                         {errors.language && (
                           <span className="text-danger font-size-3">
                             {errors.language.join(", ")}
@@ -71,7 +71,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="activity_type"
-                          className={`block  font-bold text-gray-700 mb-1`}
+                          className='form_label'
                         >
                           Type
                         </label>
@@ -137,7 +137,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="activity_name"
-                          className="block  font-medium text-gray-700 mb-1"
+                          className="form_label"
                         >
                           activity Name
                         </label>
@@ -160,7 +160,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div className="row-span-3">
                         <label
                           htmlFor="activity_description"
-                          className="block  font-medium text-gray-700 mb-1"
+                          className="form_label"
                         >
                           Description
                         </label>
@@ -185,7 +185,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="brand"
-                          className="block  font-medium text-gray-700 mb-1"
+                          className="form_label"
                         >
                           Label
                         </label>
@@ -212,7 +212,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="completion_check"
-                          className="block  font-medium text-gray-700 mb-1"
+                          className="form_label"
                         >
                           completion_check
                         </label>
@@ -221,7 +221,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           id="completion_check"
                           value={state.completion_check}
                           onChange={onInputChange}
-                          className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.brand ? " border-danger" : ""
+                          className={`w-full input  ${errors.brand ? " border-danger" : ""
                             }`}
                         >
                           <option value="">Select Label</option>
@@ -269,7 +269,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                       <div>
                         <label
                           htmlFor="who"
-                          className="block  font-medium text-gray-700 mb-1"
+                          className="form_label"
                         >
                           For Whom
                         </label>
@@ -297,7 +297,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                         <div>
                           <label
                             htmlFor="activity"
-                            className="block  font-medium text-gray-700 mb-1"
+                            className="form_label"
                           >
                             survey
                           </label>
@@ -328,7 +328,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="send_reminder"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Send Reminder
                             </label>
@@ -362,7 +362,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="show_in_task"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Show in Task
                             </label>
@@ -396,7 +396,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="add_comment_option"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Add Comment Option
                             </label>
@@ -424,7 +424,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                         <div>
                           <label
                             htmlFor="challenge"
-                            className="block  font-medium text-gray-700 mb-1"
+                            className="form_label"
                           >
                             Challenge
                           </label>
@@ -453,7 +453,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="amount"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Amount
                             </label>
@@ -481,7 +481,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="location"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Location
                             </label>
@@ -513,7 +513,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="coach_type"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Practitioner type
                             </label>
@@ -548,7 +548,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="user_duration"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               User Duration
                             </label>
@@ -575,7 +575,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="coach_duration"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Duration for Coach
                             </label>
@@ -599,7 +599,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                         <div>
                           <label
                             htmlFor="excercise"
-                            className="block  font-medium text-gray-700 mb-1"
+                            className="form_label"
                           >
                             excercise
                           </label>
@@ -627,7 +627,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="teamlead_duration"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Duration for Team Lead
                             </label>
@@ -654,7 +654,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="travel_time"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Travel Time
                             </label>
@@ -683,7 +683,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="file"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Attach File
                             </label>
@@ -712,7 +712,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="url"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               URL
                             </label>
@@ -742,7 +742,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="indicate_when_completed"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Indicate When Completed
                             </label>
@@ -774,7 +774,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <div>
                             <label
                               htmlFor="upload_possible"
-                              className="block  font-medium text-gray-700 mb-1"
+                              className="form_label"
                             >
                               Upload Option
                             </label>
