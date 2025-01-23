@@ -14,8 +14,8 @@ export default function AccountSidebar(props) {
 
   const selectRef = useRef(null);
 
-  const getSelectedUsers = async () => {
-    const response = await getAccountUsers(props?.selectedAccount.id);
+  const getSelectedUsers = async (account) => {
+    const response = await getAccountUsers(account.id);
     setSelectedUsers(response.data.connected_users);
     setUnSelectedUsers(response.data.unconnected_users);
   };
@@ -45,8 +45,10 @@ export default function AccountSidebar(props) {
     setBoolean(true);
   };
   useEffect(() => {
-    getSelectedUsers();
-    setBoolean(false);
+    if(props?.selectedAccount){
+      getSelectedUsers(props?.selectedAccount);
+      setBoolean(false);
+    }
   }, [props?.isOpen, boolean]);
 
   const getSelectOptions = () => {

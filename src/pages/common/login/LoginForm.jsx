@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LanguageSwitcher from "../../../components/common/languageSwitcher/LanguageSwitcher";
 import useValidation from "../../../components/common/UseValidation";
 import logo from "../../../assets/logo.png";
+import { toast } from "react-toastify";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,16 +26,16 @@ export default function LoginForm() {
         value === null || value.trim() === ""
           ? "email is required"
           : !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
-          ? "Please enter a valid email address"
-          : null,
+            ? "Please enter a valid email address"
+            : null,
     ],
     password: [
       (value) =>
         value === null || value.trim() === ""
           ? "password is required"
           : /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
-          ? "at least one speacial character one number and one upper and lower case letter"
-          : null,
+            ? "at least one speacial character one number and one upper and lower case letter"
+            : null,
     ],
   };
   /*----LOGIN ONCHANGE FuNCTION----*/
@@ -56,18 +57,25 @@ export default function LoginForm() {
         const accessToken = response.data.data.access_token;
         const refreshToken = response.data.data.refresh_token;
         const user = response.data.data.user;
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        dispatch(setToken({ accessToken, refreshToken, user }));
+        console.log(response.status === 200);
+        if (response.status === 200) {
+          toast.success("Replied Successfully", {
+            // position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+          });
+          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          dispatch(setToken({ accessToken, refreshToken, user }));
 
-        setEmail("");
-        setPassword("");
-        // setErrors({ ...errors, password: ["invalid crendentials"] })
-        setTimeout(() => {
-          navigate(`/profile/${user?.id}`);
-        }, 100);
-        window.location.reload();
+          setEmail("");
+          setPassword("");
+          // setErrors({ ...errors, password: ["invalid crendentials"] })
+          setTimeout(() => {
+            navigate(`/profile/${user?.id}`);
+          }, 100);
+          window.location.reload();
+        }
       } catch (error) {
         console.error("Login failed:", error);
       } finally {
@@ -93,9 +101,8 @@ export default function LoginForm() {
               type="email"
               id="email"
               name="email"
-              className={` border ${
-                errors.email ? " border-danger" : ""
-              } rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
+              className={` border ${errors.email ? " border-danger" : ""
+                } rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
               placeholder={t("lg_Enter your username or email")}
               value={state.email}
               onChange={onInputChange}
@@ -111,9 +118,8 @@ export default function LoginForm() {
               type="password"
               id="password"
               name="password"
-              className={` border ${
-                errors.email ? " border-danger" : ""
-              } rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
+              className={` border ${errors.email ? " border-danger" : ""
+                } rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-[#0095f6]`}
               placeholder={t("lg_Enter your password")}
               value={state.password}
               onChange={onInputChange}

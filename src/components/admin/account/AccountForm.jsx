@@ -33,7 +33,7 @@ export default function AccountForm(props) {
     ],
     organization_id: [
       (value) =>
-        value === null || value.trim() === ""
+        value === null 
           ? "Organization Id  is required" : null,
     ],
     language: [
@@ -44,7 +44,7 @@ export default function AccountForm(props) {
 
     team_leader_id: [
       (value) =>
-        value === null || value.trim() === ""
+        value === null 
           ? "Team_leader_id is required"
           : null,
     ],
@@ -56,7 +56,6 @@ export default function AccountForm(props) {
     setState({
       ...account
     });
-    props.setIsOpen(true);
   };
 
   const handleAccountAdd = async (e, id) => {
@@ -73,9 +72,6 @@ export default function AccountForm(props) {
         console.log("response=", response);
       }
       props.setApiCall(true);
-      setState({ ...initialFormState })
-      props.setIsOpen(false);
-      props?.setUpdateAccount(state)
     }
     } catch (error) {
       console.log(error);
@@ -85,10 +81,15 @@ export default function AccountForm(props) {
   
   };
 
+  const close=()=>{
+    setState(initialFormState)
+    props?.setIsOpen(false)
+  }
+
 
   useEffect(() => {
-    if (props.updateAccount) {
-      handleAccountUpdate(props.updateAccount)
+    if (props?.updateAccount) {
+      handleAccountUpdate(props?.updateAccount)
     }
   }, [props?.isOpen])
 
@@ -242,7 +243,7 @@ export default function AccountForm(props) {
         <div className="flex justify-end space-x-2 mt-4">
           <CustomButton
             type="button"
-            onClick={() => props.setIsOpen(false)}
+            onClick={() => close()}
             variant="none"
             className="btn_cancle"
           >

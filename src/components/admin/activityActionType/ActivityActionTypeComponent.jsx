@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
+import ActivityActionTypeTable from './ActivityActionTypeTable';
+import { Loader } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import CustomInput from '../../common/CustomInput';
+import Pagination from '../../common/Pagination';
+import { getActivityTypes } from '../../../api/api';
 
 export default function ActivityActionTypeComponent(props) {
-    const { t } = useTranslation();
-    const [activityTypes, setActivityTypes] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-    const [loading, setLoading] = useState(false)
-    const [totalPage, setTotalPage] = useState(1);
-    const [search, setSearch] = useState("");
-    const [ordering, setOrdering] = useState("");
-    const [count, setCount] = useState(0);
-    const accessToken = useSelector((state) => state.token.accessToken);
+  const { t } = useTranslation();
+  const [activityTypes, setActivityTypes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [loading, setLoading] = useState(false)
+  const [totalPage, setTotalPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [ordering, setOrdering] = useState("");
+  const [count, setCount] = useState(0);
+  const accessToken = useSelector((state) => state.token.accessToken);
 
 
-   
+
+
   const getActivityActionTypes = async () => {
     try {
       setLoading(true);
@@ -33,63 +40,49 @@ export default function ActivityActionTypeComponent(props) {
   };
 
 
-  const handleActivityActionTypeDelete = async (id) => {
-    try {
-      setLoading(true);
-      console.log("e in type delete =>", id);
-      const response = await deleteActivityType(accessToken, id);
-      console.log("res=>", response);
-      setIsBoolean(true);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
 
 
   useEffect(() => {
     getActivityActionTypes();
-    setApiCall(false);
+    props?.setApiCall(false);
   }, [props?.apiCall, pageSize, currentPage, ordering, search]);
 
 
 
 
-    return (
-        <>
-            <div className='flex flex-wrap justify-start gap-4 mb-2 items-center'>
-                <CustomInput
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="search"
-                    size="medium"
-                    className="input"
-                />
-            </div>
-            {loading ? (
-                <div className="flex justify-center items-center h-64">
-                    <Loader />
-                </div>) : (
-                <AccountTable
-                    accounts={accounts}
-                    ordering={ordering}
-                    setOrdering={setOrdering}
-                    apiCall={props?.apiCall}
-                    setApiCall={props?.setApiCall}
-                />
-            )}
-            <Pagination
-                nPages={totalPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                total={count}
-                count={pageSize}
-                setPageSize={setPageSize}
-            />
+  return (
+    <>
+      <div className='flex flex-wrap justify-start gap-4 mb-2 items-center'>
+        <CustomInput
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="search"
+          size="medium"
+          className="input"
+        />
+      </div>
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <Loader />
+        </div>) : (
+        <ActivityActionTypeTable
+          activityTypes={activityTypes}
+          ordering={ordering}
+          setOrdering={setOrdering}
+          apiCall={props?.apiCall}
+          setApiCall={props?.setApiCall}
+        />
+      )}
+      <Pagination
+        nPages={totalPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        total={count}
+        count={pageSize}
+        setPageSize={setPageSize}
+      />
 
-
-
-        </>
-    )
+    </>
+  )
 }

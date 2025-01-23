@@ -66,11 +66,10 @@ export default function UserRegistrationForm(props) {
     setState({
       ...user
     });
-    props.setIsOpen(true);
   };
 
   //newUser add apifunction Call
-  const handleUserAdd = async (e,id) => {
+  const handleUserAddAndUpdate = async (e,id) => {
     try {
      
       e.preventDefault();
@@ -83,14 +82,19 @@ export default function UserRegistrationForm(props) {
           const response = await addUser(accessToken, state);
         }
         props.setApiCall(true);
-        setState({ ...initialFormState })
-        props.setIsOpen(false);
+        close()
       }
     } catch (error) {
       console.log(error);
     } finally {
     }
   };
+
+  const close=()=>{
+    setState(initialFormState)
+    props?.setIsOpen(false)
+  }
+
   useEffect(()=>{
     if(props.updateUser){
       handleUserUpdate(props.updateUser)
@@ -288,7 +292,7 @@ export default function UserRegistrationForm(props) {
           <CustomButton
             type="submit"
             id={state?.id}
-            onClick={(e)=>handleUserAdd(e,state?.id)}
+            onClick={(e)=>handleUserAddAndUpdate(e,state?.id)}
             className=" "
           >
             {state?.id ? 'Update' : 'Add'}

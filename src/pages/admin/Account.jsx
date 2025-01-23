@@ -19,7 +19,7 @@ export default function Account() {
     <div className="flex">
       <TopBar />
       <BottomNavbar />
-      <div className="mt-14 mb-14 h-[calc(100vh-112px)] overflow-auto w-full border p-3 ">
+      <div className="mt-14 mb-14 h-[calc(100vh-112px)] scroll-none overflow-auto w-full border p-3 ">
         <div className=" w-full mb-4">
           <Header heading='Accounts' setIsOpen={setIsOpen} btnLabel='add Account' />
         </div>

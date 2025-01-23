@@ -3,35 +3,54 @@ import {
   LetterText,
   Trash,
   ChevronDown,
-  Users,
-  Settings2Icon,
   SettingsIcon,
   ChevronUp,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"; 
+import ActivityActionTypeModelForm from "../modelforms/ActivityActionTypeModelForm";
 
-export default function ActivityActionTypeTable({
-  activityTypes,
-  ordering,
-  setOrdering,
-  handleActivityActionTypeDelete,
-  handleActivityActionTypeUpdate,
-}) {
+export default function ActivityActionTypeTable(props) {
+  const [updateActivityActionType, setUpdateActivityActionType] = useState(null)
   const accessToken = useSelector((state) => state.token.accessToken);
+  const [isOpen, setIsOpen] = useState(false)
+
+
+  const handleDeleteActivityActionType = async (e,id) => {
+    e.preventDefault()
+    try {
+      setLoading(true);
+      console.log("e in type delete =>", id);
+      const response = await deleteActivityType(accessToken, id);
+      console.log("res=>", response);
+      props?.setApiCall(true)
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdateActivityActionType = (e,activityActionType) => {
+    e.preventDefault()
+    setUpdateActivityActionType(activityActionType)
+    setIsOpen(true)
+  }
+
+
+
   const SortDropdown = ({ field }) => (
     <button
         onClick={() => {
-            const newDirection = ordering === field ? `-${field}` : field;
+            const newDirection = props?.ordering === field ? `-${field}` : field;
             props?.setOrdering(newDirection);
         }}
         className="inline-flex items-center"
     >
-        {field} {(ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
+        {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
     </button>
 );
-
 
   return (
     <>
@@ -63,7 +82,7 @@ export default function ActivityActionTypeTable({
             </tr>
           </thead>
           <tbody className="text-sm">
-            {activityTypes.map((activityType,index) => (
+            {props?.activityTypes.map((activityType,index) => (
               <tr key={activityType?.id} className="border-collapse">
                 <td> {index+1} </td>
                 <td>{activityType?.activity_type}</td>
@@ -77,8 +96,8 @@ export default function ActivityActionTypeTable({
                       id={activityType?.id}
                       variant="outline"
                       size="small"
-                      onClick={() =>
-                        handleActivityActionTypeUpdate(activityType)
+                      onClick={(e) =>
+                        handleUpdateActivityActionType(e,activityType)
                       }
                       className="border   border-r-0 rounded-none "
                     >
@@ -89,7 +108,7 @@ export default function ActivityActionTypeTable({
                       id={activityType?.id}
                       variant="outline"
                       size="small"
-                      onClick={() => handleActivityActionTypeDelete(activityType?.id)}
+                      onClick={(e) => handleDeleteActivityActionType(e, activityType?.id)}
                       className="border border-r-0 rounded-none  "
                     >
                       {" "}
@@ -101,6 +120,12 @@ export default function ActivityActionTypeTable({
             ))}
           </tbody>
         </table>
+        <ActivityActionTypeModelForm
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            setApiCall={props?.setApiCall}
+            updateActivityActionType={updateActivityActionType}
+          />
       </div>
     </>
   );

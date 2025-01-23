@@ -336,7 +336,7 @@ export const addActivityType = async (accessToken, data) => {
 
 export const updateActivityType = async (accessToken, data, id) => {
       try {
-            const response = await axios.put(`${API_URL}/activityapp/${id}/`, {
+            const response = await axios.put(`${API_URL}/activityapp/${id}/`,data, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }

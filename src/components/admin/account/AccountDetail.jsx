@@ -46,7 +46,7 @@ export default function AccountDetail() {
   //useEffect Call
   useEffect(() => {
     getAccountDetail();
-    setBoolean(false);
+    setApiCall(false);
   }, [apiCall]);
 
   return (

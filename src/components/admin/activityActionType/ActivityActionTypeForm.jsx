@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomButton from "../../common/CustomButton";
-import { addActivityType, updateActivityType, updateUser } from "../../../api/api";
+import { addActivityType, updateActivityType } from "../../../api/api";
 import useValidation from "../../common/UseValidation";
 import { useSelector } from "react-redux";
 
@@ -47,7 +47,6 @@ export default function ActivityActionTypeForm(props) {
     setState({
       ...ActivityActionType
     });
-    props.setIsOpen(true);
   };
 
 
@@ -78,6 +77,7 @@ export default function ActivityActionTypeForm(props) {
   
   const close = () => {
     setState(initialFormState)
+    console.log('close');
     props?.setIsOpen(false)
   }
 
@@ -88,9 +88,6 @@ export default function ActivityActionTypeForm(props) {
   }, [props?.isOpen])
 
   return (
-    <div>
-      {props?.isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg_secondary_color max-h-full overflow-auto rounded-lg shadow-xl w-full max-w-2xl">
             <div className="p-3 btn_theme_color border-b">
               <h2 className="text-lg font-semibold">Activity Registration</h2>
@@ -225,7 +222,7 @@ export default function ActivityActionTypeForm(props) {
               <div className="flex justify-end space-x-2 mt-4">
                 <CustomButton
                   type="button"
-                  onClick={() => close()}
+                  onClick={() =>close()}
                   variant="none"
                   className="btn_cancle"
                 >
@@ -242,8 +239,6 @@ export default function ActivityActionTypeForm(props) {
               </div>
             </form>
           </div>
-        </div>
-      )}
-    </div>
+        
   );
 }
