@@ -1,0 +1,9 @@
+
+services:
+  frontend:
+    build: .
+    volumes:
+      - .:/frontend
+    container_name: frontend-lyvup
+    ports:
+      - "5050:5050"

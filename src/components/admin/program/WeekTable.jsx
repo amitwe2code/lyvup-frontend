@@ -102,9 +102,9 @@ export default function WeekTable(props) {
                     </div>
                     <div className='week-body p-1 w-full overflow-auto bg-white flex flex-wrap gap-3  justify-start'>
                         {programActivitys[week] && <>
-                            <table className="table w-full h-auto overflow-auto">
+                            <table className="table w-full h-auto  overflow-auto">
                                 <thead>
-                                    <tr>
+                                    <tr className='capitalize'>
                                         <th>activity_name</th>
                                         <th>activity_type</th>
                                         <th>brand</th>

@@ -25,8 +25,8 @@ export default function ProgramDetail(props) {
   return (
     <>
       <div className='' >
-        <div className='header w-full mb-3 flex flex-row justify-between '>
-          <h3 className='text-2xl capitalize font-bold '>{props?.program?.name} </h3>
+        <div className='header w-full mb-3 flex flex-wrap gap-3 justify-between '>
+          <h3 className='text-2xl capitalize text_theme_color font-bold '>{props?.program?.name} </h3>
           <div className='flex flex-row gap-4'>
             <button id={props?.program?.id} onClick={(e) => setIsOpen(true)}  ><PenBoxIcon className='icon_size_small' /></button>
             <button id={props?.program?.id} onClick={()=>handleCopyCall()} ><CopyIcon className='icon_size_small' /></button>
@@ -34,14 +34,13 @@ export default function ProgramDetail(props) {
           </div>
         </div>
         <div className="add_program ">
-          <div className="program_card program_summary ">
-            <h6 className="">Summary:</h6>
-            <p className='text-base'>{props?.program?.description}</p>
+          <div className="w-full bg_secondary_color py-3 rounded-md ">
+          <span className=" text-gray-700 font-semibold capitalize p-2 rounded-md"><b className='text-gray-500'>Summary : </b> {props?.program?.description}</span>
           </div>
           <div className="add_program_info ">
-            <span className="program_info_card"><b>Written_by:</b> {props?.program?.written_by}</span>
-            <span className="program_info_card"><b> price:</b>{props?.program?.price}</span>
-            <span className="program_info_card"><b>version</b>{props?.program?.version} </span>
+            <span className="bg_secondary_color text-gray-700 font-semibold capitalize p-2 rounded-md"><b className='text-gray-500'>Written_by: </b> {props?.program?.written_by}</span>
+            <span className="bg_secondary_color text-gray-700 font-semibold capitalize p-2 rounded-md"><b className='text-gray-500'> price: </b>{props?.program?.price}</span>
+            <span className="bg_secondary_color text-gray-700 font-semibold capitalize p-2 rounded-md"><b className='text-gray-500'>version: </b>{props?.program?.version} </span>
             {/* <span className="program_info_card"><b>Language:</b>{props?.program?.language}</span>
             <span className="program_info_card"><b>label : </b>{props?.program?.label}</span> */}
           </div>

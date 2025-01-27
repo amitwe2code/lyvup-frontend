@@ -1,14 +1,349 @@
-import React, { useState } from "react";
-import CustomButton from "../common/CustomButton";
-import useValidation from "../common/UseValidation";
+import React, { useEffect, useState } from "react";
+import CustomButton from "../../common/CustomButton";
+import useValidation from "../../common/UseValidation";
+import { useSelector } from "react-redux";
+import { addActivity, updateActivity } from "../../../api/api";
 
-export default function ActivityForm({ initialFormState, isOpen, setIsOpen, state, setState, onInputChange, errors, validate, step, setStep, handleFormSubmit }) {
- 
+export default function ActivityForm(props) {
+  const accessToken = useSelector((state) => state.token.accessToken);
+  const [step, setStep] = useState(1);
+  const initialFormState = {
+    activity_type: "",
+    language: "",
+    activity_name: "",
+    activity_description: "",
+    brand: "",
+    completion_check: "",
+    who: "",
+    activity: "",
+    coach_type: "",
+    location: "",
+    travel_time: "",
+    user_duration: "",
+    coach_duration: "",
+    teamlead_duration: "",
+    file: "",
+    indicate_when_completed: "",
+    price: "",
+    show_in_task: "",
+    send_reminder: "",
+    add_comment_option: "",
+    upload_possible: "",
+    excercise: '',
+    url: "",
+  };
+
+  // const initialFormState = formData
+  const validators = {
+    activity_type: [
+      (value) =>
+        step === 1
+          ? value === null || value.trim() === ""
+            ? "Activity type is required"
+            : null
+          : null,
+    ],
+    language: [
+      (value) =>
+        step === 1
+          ? value === null || value.trim() === ""
+            ? "Language is required"
+            : null
+          : null,
+    ],
+    activity_name: [
+      (value) =>
+        step === 2
+          ? value === "" || value === null || value.trim() === ""
+            ? "Activity name is required"
+            : null
+          : null,
+    ],
+    activity_description: [
+      (value) =>
+        step === 2
+          ? value === null || value.trim() === ""
+            ? "Activity description is required"
+            : null
+          : null,
+    ],
+    brand: [
+      (value) =>
+        step === 2
+          ? value === null || value.trim() === ""
+            ? "Brand is required"
+            : null
+          : null,
+    ],
+    who: [
+      (value) =>
+        step === 3
+          ? value === null || value.trim() === ""
+            ? "For whom is required"
+            : null
+          : null,
+    ],
+    completion_check: [
+      (value) =>
+        step === 2
+          ? value === null || value.trim() === ""
+            ? "completion check is required"
+            : null
+          : null,
+    ],
+    activity: [
+      (value) =>
+        step === 3 && state.activity_type == "survey"
+          ? value === null || value.trim() === ""
+            ? "complition check is required"
+            : null
+          : null,
+    ],
+    coach_type: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "interview" ||
+            state.activity_type === "other" ||
+            state.activity_type === "workshop" ||
+            state.activity_type === "assignment")
+          ? value === null || value.trim() === ""
+            ? "Coach type is required"
+            : null
+          : null,
+    ],
+    challenge: [
+      (value) =>
+        step === 3 && state.activity_type === "challenge"
+          ? value === null || value.trim() === ""
+            ? "Challenge are required"
+            : null
+          : null,
+    ],
+    amount: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "challenge" ||
+            state.activity_type === "other")
+          ? value === null
+            ? "Amount are required"
+            : null
+          : null,
+    ],
+    location: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "interview" ||
+            state.activity_type === "workshop" ||
+            state.activity_type === "other" ||
+            state.activity_type === "assignment")
+          ? value === null || value.trim() === ""
+            ? "Location are required"
+            : null
+          : null,
+    ],
+    user_duration: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "interview" ||
+            state.activity_type === "workshop" ||
+            state.activity_type === "other" ||
+            state.activity_type === "assignment" ||
+            state.activity_type === "podcast" ||
+            state.activity_type === "video")
+          ? value === null
+            ? "User duration is required"
+            : null
+          : null,
+    ],
+    coach_duration: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "interview" ||
+            state.activity_type === "other" ||
+            state.activity_type === "workshop" ||
+            state.activity_type === "assignment")
+          ? value === null
+            ? "Duration for coach is required"
+            : null
+          : null,
+    ],
+    teamlead_duration: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "interview" ||
+            state.activity_type === "other" ||
+            state.activity_type === "workshop" ||
+            state.activity_type === "assignment")
+          ? value === null
+            ? "Duration for team lead is required"
+            : null
+          : null,
+    ],
+    travel_time: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "interview" ||
+            state.activity_type === "assignment" ||
+            state.activity_type === "other" ||
+            state.activity_type === "workshop")
+          ? value === null
+            ? "Travel time is required"
+            : null
+          : null,
+    ],
+    file: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "interview" ||
+            state.activity_type === "video" ||
+            state.activity_type === "assignment" ||
+            state.activity_type === "other" ||
+            state.activity_type === "podcast" ||
+            state.activity_type === "workshop")
+          ? value === null || value.trim() === ""
+            ? "File is required"
+            : null
+          : null,
+    ],
+    url: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "interview" ||
+            state.activity_type === "video" ||
+            state.activity_type === "assignment" ||
+            state.activity_type === "other" ||
+            state.activity_type === "podcast" ||
+            state.activity_type === "workshop")
+          ? value === null || value.trim() === ""
+            ? "URL is required"
+            : null
+          : null,
+    ],
+    indicate_when_completed: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "interview" ||
+            state.activity_type === "video" ||
+            state.activity_type === "assignment" ||
+            state.activity_type === "excercise" ||
+            state.activity_type === "other" ||
+            state.activity_type === "podcast" ||
+            state.activity_type === "workshop")
+          ? value === null || value.trim() === ""
+            ? "Indicate when completed is required"
+            : null
+          : null,
+    ],
+    send_reminder: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "survey" ||
+            state.activity_type === "challenge" ||
+            state.activity_type === "interview" ||
+            state.activity_type === "assignment" ||
+            state.activity_type === "podcast" ||
+            state.activity_type === "other" ||
+            state.activity_type === "workshop" ||
+            state.activity_type === "video")
+          ? value === null || value.trim() === ""
+            ? "Send reminder option is required"
+            : null
+          : null,
+    ],
+    show_in_task: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "survey" ||
+            state.activity_type === "challenge" ||
+            state.activity_type === "interview" ||
+            state.activity_type === "assignment" ||
+            state.activity_type === "podcast" ||
+            state.activity_type === "other" ||
+            state.activity_type === "workshop" ||
+            state.activity_type === "video")
+          ? value === null || value.trim() === ""
+            ? "Show in task option is required"
+            : null
+          : null,
+    ],
+    upload_possible: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "assignment" ||
+            state.activity_type === "other" ||
+            state.activity_type === "workshop")
+          ? value === null || value.trim() === ""
+            ? "Upload option is required"
+            : null
+          : null,
+    ],
+    add_comment_option: [
+      (value) =>
+        step === 3 &&
+          (state.activity_type === "survey" ||
+            state.activity_type === "challenge" ||
+            state.activity_type === "interview" ||
+            state.activity_type === "assignment" ||
+            state.activity_type === "podcast" ||
+            state.activity_type === "other" ||
+            state.activity_type === "workshop" ||
+            state.activity_type === "video")
+          ? value === null || value.trim() === ""
+            ? "Add comment option is required"
+            : null
+          : null,
+    ],
+    excercise: [
+      (value) =>
+        step === 3 && state.activity_type === "excercise"
+          ? value === null || value.trim() === ""
+            ? "excercise is required"
+            : null
+          : null,
+    ],
+  };
+  const { state, setState, onInputChange, errors, setErrors, validate } =
+    useValidation(initialFormState, validators);
+
+  const handleActivityUpdate = (activity) => {
+    setState({ ...activity })
+  }
+
+  const handleActivityAddAndUpdate = async (e, id) => {
+    e.preventDefault();
+    try {
+      if (validate()) {
+        if (id) {
+          const response = await updateActivity(accessToken, state, id);
+
+        } else {
+          const response = await addActivity(accessToken, state);
+        }
+        props?.setApiCall(true)
+        close()
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+
+  };
+
+  const close = () => {
+    setState(initialFormState)
+    setStep(1)
+    props?.setIsOpen(false)
+  }
+
+  useEffect(() => {
+    if (props.updateActivity) {
+      handleActivityUpdate(props.updateActivity)
+    }
+  }, [props?.isOpen])
+
   return (
-    <div>
-      {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white max-h-full overflow-auto rounded-lg  shadow-xl w-full max-w-2xl">
+   
+          <div className="bg_secondary_color max-h-full overflow-auto rounded-lg  shadow-xl w-full max-w-2xl">
             <div className="p-3 border-b btn_theme_color flex justify-between item-center ">
               <h2 className="text-lg font-semibold ">
                 {step === 1
@@ -21,14 +356,9 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                 size="small "
                 variant="outline "
                 className="font-bold"
-                onClick={() => {
-                  setState(initialFormState)
-                  setIsOpen(false)
-                  setStep(1)
-                }
+                onClick={() => { close() }
                 }
               >
-
                 X
               </CustomButton>
             </div>
@@ -61,7 +391,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           <option value="">Select Language</option>
                           <option value="en">English</option>
 
-                        </select>     
+                        </select>
                         {errors.language && (
                           <span className="text-danger font-size-3">
                             {errors.language.join(", ")}
@@ -104,21 +434,16 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                     <div className="flex justify-end gap-2 mt-4">
                       <CustomButton
                         type="button"
-                        variant="outline"
-                        onClick={() => {
-                          setState(initialFormState)
-                          setIsOpen(false)
+                        variant="none"
+                        className='btn_cancle'
+                        onClick={() => { close() }
                         }
-                        }
-
-                        className="px-3 py-1.5 text-sm border hover:bg-gray-300 rounded hover:text-[#039a77] "
                       >
                         Cancel
                       </CustomButton>
                       <CustomButton
                         type="button"
                         onClick={() => {
-                          console.log("validate call =", errors)
                           if (validate()) {
                             setStep(2);
                           }
@@ -172,8 +497,8 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           placeholder="Enter description"
                           rows={2}
                           className={`w-full min-h-32 p-2 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.activity_description
-                              ? " border-danger"
-                              : ""
+                            ? " border-danger"
+                            : ""
                             }`}
                         />
                         {errors.activity_description && (
@@ -221,7 +546,7 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                           id="completion_check"
                           value={state.completion_check}
                           onChange={onInputChange}
-                          className={`w-full input  ${errors.brand ? " border-danger" : ""
+                          className={`w-full input  ${errors.completion_check ? " border-danger" : ""
                             }`}
                         >
                           <option value="">Select Label</option>
@@ -239,18 +564,17 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                     <div className="flex justify-end gap-2 mt-4">
                       <CustomButton
                         type="button"
-                        variant="outline"
+                        variant="none"
                         onClick={() => {
                           setStep(1);
                         }}
-                        className="px-3 py-1.5 text-sm border hover:bg-gray-300 rounded hover:text-[#039a77] "
+                        className="btn_cancle "
                       >
                         Cancel
                       </CustomButton>
                       <CustomButton
                         type="button"
                         onClick={() => {
-                          console.log("errors =", errors)
                           if (validate()) {
                             setStep(3);
                           }
@@ -752,8 +1076,8 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
                               value={state.indicate_when_completed}
                               onChange={onInputChange}
                               className={`w-full input text-sm border rounded focus:outline-none focus:ring-1 focus:ring-[#039a77] ${errors.indicate_when_completed
-                                  ? " border-danger"
-                                  : ""
+                                ? " border-danger"
+                                : ""
                                 }`}
                             >
                               <option value="">-Select-</option>
@@ -801,35 +1125,28 @@ export default function ActivityForm({ initialFormState, isOpen, setIsOpen, stat
 
 
                     <div className="flex justify-end gap-2 mt-4">
-                      <button
+                      <CustomButton
                         type="button"
                         onClick={() => setStep(2)}
-                        className="px-3 py-1.5 text-sm border rounded text-[#039a77] border-[#039a77]"
+                        variant='none'
+                        className="btn_cancle"
                       >
                         Back
-                      </button>
-                      <button
+                      </CustomButton>
+                      <CustomButton
                         type="submit"
                         id={state.id}
-                        onClick={(e) => {
-                          if (validate()) {
-                            handleFormSubmit(e)
-                            setIsOpen(false)
-
-                          }
-                        }}
-                        className="px-3 py-1.5 text-sm bg-[#039a77] text-white rounded hover:bg-[#028567]"
+                        onClick={(e) => { handleActivityAddAndUpdate(e, state?.id) }}
+                        className=""
                       >
                         Submit
-                      </button>
+                      </CustomButton>
                     </div>
                   </div>
                 ) : null}
               </div>
             </form>
           </div>
-        </div>
-      )}
-    </div>
+      
   );
 }

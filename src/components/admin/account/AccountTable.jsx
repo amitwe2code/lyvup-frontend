@@ -46,7 +46,7 @@ export default function AccountTable(props) {
         const newDirection = props?.ordering === field ? `-${field}` : field;
         props?.setOrdering(newDirection);
       }}
-      className="inline-flex items-center"
+      className="inline-flex capitalize items-center"
     >
       {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
     </button>
@@ -59,24 +59,24 @@ export default function AccountTable(props) {
         <div className="  border-2 w-full my-1 overflow-auto ">
           <table className="table table-auto border-collapse">
             <thead className="">
-              <tr className="h-10">
-                <th className="leading-none text-sm" scope="col">
+              <tr className="h-10 capitalize">
+                <th className="leading-none " scope="col">
                   s.no
                 </th>
-                <th className="leading-none text-sm" scope="col">
+                <th className="leading-none " scope="col">
                   <SortDropdown field="account_type" />
                 </th>
-                <th className="leading-none text-sm" scope="col">
+                <th className="leading-none " scope="col">
                   <SortDropdown field="account_name" />
                 </th>
-                <th className="leading-none text-sm" scope="col">
+                <th className="leading-none " scope="col">
                   <SortDropdown field="team_leader_id" />
                 </th>
-                <th className="leading-none text-sm" scope="col">
+                <th className="leading-none " scope="col">
                   <SortDropdown field="language" />
                 </th>
-                <th className="leading-none text-sm" scope="col">
-                  setting
+                <th className="leading-none " scope="col">
+                  Action
                 </th>
               </tr>
             </thead>

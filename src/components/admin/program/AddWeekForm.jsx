@@ -35,16 +35,13 @@ export default function AddWeekForm(props) {
        const response = await addWeakActivity(accessToken, state);
       console.log("response in form =>", response);
       props.setApiCall(true);
-      props.setIsOpen(false);
+     close()
     }
-
   };
 
-
   const close = () => {
-    //    props?.setState(props?.initialFormState)
     props?.setIsOpen(false);
-    //    props?.setStep(1)
+    setStep(1)
   };
   return (
           <div className="bg_secondary_color max-h-full overflow-y-auto rounded-lg  max-w-2xl shadow-xl w-full  ">
@@ -57,6 +54,8 @@ export default function AddWeekForm(props) {
               </button>
             </div>
             <form>
+
+              {/*/////////////////////////////////////// step 1 form ///////////////////////// */}
               {step === 1 && (
                 <div className="w-full flex flex-row justify-center gap-4 p-2 my-4 items-center">
                   <CustomButton type="submit" onClick={(e) => addWeek(e)}>
@@ -70,6 +69,8 @@ export default function AddWeekForm(props) {
                   </CustomButton>
                 </div>
               )}
+
+              {/* ////////////////////////////////step 2 form ///////////////////////////////*/}
               {step === 2 && (
                 <div className="flex flex-col justify-center p-3 items-center">
                   <div className="w-full">

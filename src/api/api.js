@@ -226,11 +226,12 @@ export const AddUserAccount = async (accountId, userIds) => {
 
 
 //activity api
-export const getActivity = async (accessToken, search='',filter='', currentPage=1, pageSize='', ordering='') => {
+export const getActivity = async (props) => {
+      console.log('props=>');
       try {
-            const response = await axios.get(`${API_URL}/activity/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}&activity_type=${filter}`, {
+            const response = await axios.get(`${API_URL}/activity/?search=${props?.search}&page=${props?.currentPage}&page_size=${props?.pageSize}&ordering=${props?.ordering}&activity_type=${props?.filter}`, {
                   headers: {
-                        'Authorization': `Bearer ${accessToken}`
+                        'Authorization': `Bearer ${props?.accessToken}`
                   }
             });
             return response;

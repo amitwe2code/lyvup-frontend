@@ -2,18 +2,46 @@ import React, { useState } from "react";
 import CustomButton from "../../common/CustomButton";
 import { updateUser } from "../../../api/api";
 import { CrossIcon, SidebarCloseIcon } from "lucide-react";
+import useValidation from "../../common/UseValidation";
 
-export default function ProgramAssignToTeam({
-    initialFormState,
-    isOpen,
-    setIsOpen,
-    state,
-    setState,
-    onInputChange,
-    errors,
-    handleFormSubmit,
-}) {
+export default function ProgramAssignToTeamForm(props) {
     const [individual, setIndividual] = useState(false);
+    const initialFormState = {}
+    const validators = {
+        activity_type: [
+            (value) =>
+                value === null || value.trim() === ""
+                    ? "Activity type is required"
+                    : null,
+        ],
+        activity: [
+            (value) =>
+                value === null || value.trim() === ""
+                    ? "Activity is required"
+                    : null,
+        ],
+        amount: [
+            (value) =>
+                value === null
+                    ? "Amount is required"
+                    : null,
+        ],
+        unit: [
+            (value) =>
+                value === null
+                    ? "Unit is required"
+                    : null,
+        ],
+        key_activity: [
+            (value) =>
+                value === null || value.trim() === ""
+                    ? "Key activity is required"
+                    : null,
+        ],
+    }
+    const { state, setState, onInputChange, errors, setErrors, validate } =
+        useValidation(initialFormState, validators);
+
     const close = () => {
         setState(initialFormState)
         setIsOpen(false)

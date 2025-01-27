@@ -58,7 +58,7 @@ export default function AccountForm(props) {
     });
   };
 
-  const handleAccountAdd = async (e, id) => {
+  const handleAccountAddAndUpdate = async (e, id) => {
     try {
       e.preventDefault();
       if(validate()){
@@ -252,7 +252,7 @@ export default function AccountForm(props) {
           <CustomButton
             type="submit"
             id={state?.id}
-            onClick={(e)=>handleAccountAdd(e,state?.id)}
+            onClick={(e)=>handleAccountAddAndUpdate(e,state?.id)}
             className=""
           >
             {state?.id ? 'Update' : 'Add'}

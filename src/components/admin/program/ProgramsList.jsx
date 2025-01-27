@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import useValidation from "../../common/UseValidation";
 import ProgramActivityForm from "./ProgramActivityForm";
-import ProgramAssignToTeam from "./ProgramAssignToTeam";
+import ProgramAssignToTeam from "./ProgramAssignToTeamForm";
 import AddWeekForm from "./AddWeekForm";
 import { getProgram } from "../../../api/api";
 import ProgramModelForm from "../modelforms/ProgramModelForm";

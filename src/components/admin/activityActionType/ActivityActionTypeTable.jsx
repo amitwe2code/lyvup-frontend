@@ -46,7 +46,7 @@ export default function ActivityActionTypeTable(props) {
             const newDirection = props?.ordering === field ? `-${field}` : field;
             props?.setOrdering(newDirection);
         }}
-        className="inline-flex items-center"
+        className="inline-flex capitalize items-center"
     >
         {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
     </button>
@@ -57,7 +57,7 @@ export default function ActivityActionTypeTable(props) {
       <div className="  border-2 w-full my-1 overflow-auto ">
         <table className="table table-auto border-collapse">
           <thead className="">
-            <tr className="h-10">
+            <tr className="h-10 capitalize">
               <th className="leading-none text-sm" scope="col">
                   s.no
               </th>
@@ -77,7 +77,7 @@ export default function ActivityActionTypeTable(props) {
                 <SortDropdown field="key_activity" />
               </th>
               <th className="leading-none text-sm" scope="col">
-                <SettingsIcon />
+                Actions
               </th>
             </tr>
           </thead>

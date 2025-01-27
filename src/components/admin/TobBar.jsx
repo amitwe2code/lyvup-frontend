@@ -76,7 +76,7 @@ export default function TopBar() {
       label: "Settings",
       active: false,
     },
-  ];
+  ];                                                                                                                                                                                                                                                                                                            
 
   return (
     <>
