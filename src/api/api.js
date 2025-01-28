@@ -511,3 +511,16 @@ export const CopyWeek = async (accessToken, data) => {
             throw error;
       }
 }
+export const getAllOrganization=async(props)=>{
+      try {
+            const response = await axios.get(`${API_URL}/organization/`, {
+                  headers: {
+                        'Authorization': `Bearer ${props?.accessToken}`
+                  }
+            });
+         
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}

@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux'
 import AddWeekForm from './AddWeekForm'
 import WeekTable from './WeekTable'
 import ProgramModelForm from '../modelforms/ProgramModelForm'
+import ProgramAssignToTeamForm from './ProgramAssignToTeamForm'
 
 export default function ProgramDetail(props) {
   const [isOpen, setIsOpen] = useState(false)
+  const [assignFormOpen,setAssignFormOpen]=useState(false)
   const accessToken = useSelector((state) => state.token.accessToken)
   const [copyProgram,setCopyProgram]=useState(false)
  
@@ -28,6 +30,7 @@ export default function ProgramDetail(props) {
         <div className='header w-full mb-3 flex flex-wrap gap-3 justify-between '>
           <h3 className='text-2xl capitalize text_theme_color font-bold '>{props?.program?.name} </h3>
           <div className='flex flex-row gap-4'>
+            <button id={props?.program?.id} onClick={(e) => setAssignFormOpen(true)}  ><PlusIcon className='icon_size_small' /></button>
             <button id={props?.program?.id} onClick={(e) => setIsOpen(true)}  ><PenBoxIcon className='icon_size_small' /></button>
             <button id={props?.program?.id} onClick={()=>handleCopyCall()} ><CopyIcon className='icon_size_small' /></button>
             <button onClick={() => programDelete(props?.program?.id)} ><TrashIcon className='icon_size_small' /></button>
@@ -57,6 +60,10 @@ export default function ProgramDetail(props) {
             setProgram={props?.setProgram}
             setApiCall={props?.setApiCall}
             copyProgram={copyProgram}
+          />
+          <ProgramAssignToTeamForm
+              isOpen={assignFormOpen}
+              setIsOpen={setAssignFormOpen}
           />
          
 

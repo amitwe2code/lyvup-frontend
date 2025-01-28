@@ -6,7 +6,7 @@ import { AddUserAccount, getAccountUsers, RemoveUserAccount } from "../../../api
 
 export default function AccountSidebar(props) {
   const [search, setSearch] = useState("");
-  const [boolean, setBoolean] = useState(true);
+  const [apiCall, setApiCall] = useState(true);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [unSelectedUsers, setUnSelectedUsers] = useState([]);
   const [unSelectedUsersList, setUnSelectedUsersList] = useState([]);
@@ -36,20 +36,20 @@ export default function AccountSidebar(props) {
     const response = await AddUserAccount(props?.selectedAccount.id, selectedOptions);
     // console.log(response);
     setSelectedOptions([]);
-    setBoolean(true);
+    setApiCall(true);
   };
 
   const handleRemoveUserFromAccount = async (id) => {
     const response = await RemoveUserAccount(id);
     // alert(response.data.message);
-    setBoolean(true);
+    setApiCall(true);
   };
   useEffect(() => {
     if(props?.selectedAccount){
       getSelectedUsers(props?.selectedAccount);
-      setBoolean(false);
+      setApiCall(false);
     }
-  }, [props?.isOpen, boolean]);
+  }, [props?.isOpen, apiCall]);
 
   const getSelectOptions = () => {
     return unSelectedUsers.map((user) => ({
