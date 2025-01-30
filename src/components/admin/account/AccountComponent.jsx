@@ -17,13 +17,14 @@ export default function AccountComponent(props) {
     const [search, setSearch] = useState("");
     const [ordering, setOrdering] = useState("");
     const [count, setCount] = useState(0);
+    const [filter,setFilter]=useState('');
     const accessToken = useSelector((state) => state.token.accessToken);
 
 
     const getAccounts = async () => {
         try {
             setLoading(true);
-            const response = await getAllAccountDetail(accessToken, search, currentPage, pageSize, ordering);
+            const response = await getAllAccountDetail({accessToken, search, currentPage, pageSize, ordering,filter});
             setAccounts(response.data.data.results);
             setTotalPage(response.data.data.pagination.total_pages);
             setCount(response.data.data.pagination.count);

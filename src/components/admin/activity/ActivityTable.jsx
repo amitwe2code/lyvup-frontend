@@ -1,12 +1,12 @@
 import CustomButton from "../../common/CustomButton";
 import { Delete, LetterText, Trash, ChevronDown, ChevronUp } from "lucide-react";
-import DateFormat from "../DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { deleteActivity } from "../../../api/api";
 import { useSelector } from "react-redux";
 import ActivityForm from "./ActivityForm";
 import ActivityModelForm from "../modelforms/ActivityModelForm";
+import DeleteDialog from "../../common/DeleteDialog";
 
 export default function ActivityTable(props) {
 
@@ -14,18 +14,25 @@ export default function ActivityTable(props) {
     const [updateActivity, setUpdateActivity] = useState({})
     const accessToken = useSelector((state) => state.token.accessToken);
     const [loading, setLoading] = useState(false)
+    const [deleteOpen, setDeleteOpen] = useState(false)
+    const [deleteData, setDeleteData] = useState("")
+
+    //Activity delete apiFunction Call
+    const handleActivityDelete = async () => {
+        const response = await deleteActivity(accessToken, deleteData?.id);
+        setDeleteOpen(false)
+        props?.setApiCall(true)
+    };
+    const handleOpenDeleteDialog = (e, data) => {
+        setDeleteData(data)
+        setDeleteOpen(true)
+    }
     const handleActivityUpdate = (activity) => {
         setUpdateActivity(activity)
         setIsOpen(true)
     }
 
-    //Activity delete apiFunction Call
-    const handleActivityDelete = async (id) => {
-        const response = await deleteActivity(accessToken, id);
-        props?.setApiCall(true)
-    };
-
-  const SortDropdown = ({ field }) => (
+    const SortDropdown = ({ field }) => (
         <button
             onClick={() => {
                 const newDirection = props?.ordering === field ? `-${field}` : field;
@@ -46,7 +53,7 @@ export default function ActivityTable(props) {
                                 s.no
                             </th>
                             <th className="leading-none " scope="col">
-                                <SortDropdown field="activity_name"  />
+                                <SortDropdown field="activity_name" />
                             </th>
                             <th className="leading-none " scope="col">
                                 <SortDropdown field="activity_type" />
@@ -87,7 +94,7 @@ export default function ActivityTable(props) {
                                             id={activity?.id}
                                             variant="outline"
                                             size="small"
-                                            onClick={(e) => handleActivityDelete(activity?.id)}
+                                            onClick={(e) => handleOpenDeleteDialog(e, activity)}
                                             className="border border-r-0 rounded-none  "
                                         >
                                             {" "}
@@ -100,13 +107,19 @@ export default function ActivityTable(props) {
 
                     </tbody>
                 </table>
-            <ActivityModelForm
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-                setApiCall={props?.setApiCall}
-                updateActivity={updateActivity}
-                setUpdateActivity={setUpdateActivity}
-                        />
+                <ActivityModelForm
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    setApiCall={props?.setApiCall}
+                    updateActivity={updateActivity}
+                    setUpdateActivity={setUpdateActivity}
+                />
+                <DeleteDialog
+                    name={deleteData.activity}
+                    isOpen={deleteOpen}
+                    setIsOpen={setDeleteOpen}
+                    handleDelete={handleActivityDelete}
+                />
 
             </div >
 

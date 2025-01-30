@@ -19,7 +19,7 @@ export default function ProgramActivityForm(props) {
 
   console.log("props=>", props);
   const getactivityList = async () => {
-    const response = await getActivity(accessToken, search, filter);
+    const response = await getActivity({accessToken, search, filter});
     console.log("actvity=>", response.data.data.results);
     setActivityList(response.data.data.results);
   };

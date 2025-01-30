@@ -10,7 +10,7 @@ import { getUsers } from '../../../api/api';
 
 export default function UserComponent(props) {
   const [search, setSearch] = useState("");
-  const [userType, setUserType] = useState("");
+  const [filter, setFilter] = useState("");
   const [count, setCount] = useState(0)
   const [totalPage, setTotalPage] = useState(0)
   const [ordering, setOrdering] = useState("name");
@@ -26,7 +26,7 @@ export default function UserComponent(props) {
   async function getUserList(accessToken) {
     try {
       setLoading(true);
-      const response = await getUsers(accessToken, search, userType, currentPage, pageSize, ordering);
+      const response = await getUsers({accessToken, search, filter, currentPage, pageSize, ordering});
       let filteredUsers = response.data.data.results;
       setUsers(filteredUsers);
       setCount(response.data.data.pagination.count);
@@ -51,18 +51,18 @@ export default function UserComponent(props) {
         return;
       }
       if (userdata.user_type === 'admin') {
-        setUserType('patient');
+        setFilter('patient');
       }
     }
   }, []);
 
   useEffect(() => {
     if (loginUser?.user_type === '') {
-      setUserType('patient');
+      setFilter('patient');
     }
     getUserList(accessToken);
     props?.setApiCall(false);
-  }, [props?.apiCall, search, userType, currentPage, pageSize, ordering]);
+  }, [props?.apiCall, search, filter, currentPage, pageSize, ordering]);
 
   if (!loginUser || loginUser.user_type === 'patient') {
     return null;
@@ -74,27 +74,27 @@ export default function UserComponent(props) {
       <div className='flex flex-wrap justify-start gap-4 mb-2 items-center'>
         <div className="inline-flex rounded-md" role="group">
           <CustomButton
-            className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === '' ? 'btn_theme_color' : ''}`}
+            className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${filter === '' ? 'btn_theme_color' : ''}`}
             variant="outline"
-            onClick={() => setUserType("")}
+            onClick={() => setFilter("")}
           >
             all
           </CustomButton>
           {(loginUser?.user_type === 'superadmin') && (
 
             <CustomButton
-              className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${userType === 'admin' ? 'btn_theme_color' : ''}`}
+              className={`sm:w-40 px-10 capitalize rounded-none border-r-0 ${filter === 'admin' ? 'btn_theme_color' : ''}`}
               variant="outline"
-              onClick={() => setUserType("admin")}
+              onClick={() => setFilter("admin")}
             >
               admin
             </CustomButton>
           )}
 
           <CustomButton
-            className={`sm:w-40 px-10 capitalize rounded-none ${userType === 'patient' ? 'btn_theme_color' : ''}`}
+            className={`sm:w-40 px-10 capitalize rounded-none ${filter === 'patient' ? 'btn_theme_color' : ''}`}
             variant="outline"
-            onClick={() => setUserType("patient")}
+            onClick={() => setFilter("patient")}
           >
             patient
           </CustomButton>

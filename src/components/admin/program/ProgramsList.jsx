@@ -31,7 +31,7 @@ const ProgramList = (props) => {
   const getProgramList = async () => {
     try {
       setLoading(true);
-      const response = await getProgram(accessToken, search, currentPage, pageSize, ordering);
+      const response = await getProgram({accessToken, search, currentPage, pageSize, ordering});
       setPrograms(response.data.data.results);
       //set default program for show if not 
       if (props.program === "") {

@@ -72,6 +72,7 @@ export default function AccountForm(props) {
         console.log("response=", response);
       }
       props.setApiCall(true);
+      close()
     }
     } catch (error) {
       console.log(error);

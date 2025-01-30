@@ -24,7 +24,7 @@ export default function ActivityComponent(props) {
     const getActivitys = async () => {
         try {
             setLoading(true);
-            const response = await getActivity({ accessToken, search, currentPage, pageSize, ordering,filter });
+            const response = await getActivity( {accessToken, search, currentPage, pageSize, ordering,filter });
             console.log("activity =>", response.data.data)
             setActivitys(response.data.data.results);
             setCount(response.data.data.pagination.count);

@@ -1,12 +1,12 @@
 import CustomButton from "../../common/CustomButton";
 import { LetterText, Trash, ChevronDown, Users, ChevronUp, Loader } from "lucide-react";
-import DateFormat from "../DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import AccountSidebar from "./AccountSidebar";
 import { deleteAccount } from "../../../api/api";
 import AccountModelForm from "../modelforms/AccountModelForm";
 import { useSelector } from "react-redux";
+import DeleteDialog from "../../common/DeleteDialog";
 
 export default function AccountTable(props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,18 +14,26 @@ export default function AccountTable(props) {
   const [updateAccount, setUpdateAccount] = useState()
   const accessToken = useSelector((state) => state.token.accessToken);
   const [isOpen, setIsOpen] = useState(false)
+  const [deleteOpen,setDeleteOpen]=useState(false)
+  const [deleteData,setDeleteData]=useState("")
   const [loading, setLoading] = useState(false)
-  const handleAccountDelete = async (id) => {
+  const handleAccountDelete = async () => {
     try {
       setLoading(true);
-      const response = await deleteAccount(accessToken, id);
-      props.setApicall(true)
+      const response = await deleteAccount(accessToken, deleteData?.id);
+      console.log('response=>',response);
+      setDeleteOpen(false)
+      props.setApiCall(true)
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+  const handleOpenDeleteDialog=(e,data)=>{
+    setDeleteData(data)
+    setDeleteOpen(true) 
+  }
   const handleUpdateAccount = (account) => {
     setUpdateAccount(account)
     setIsOpen(true)
@@ -106,7 +114,7 @@ export default function AccountTable(props) {
                         id={account.id}
                         variant="outline"
                         size="small"
-                        onClick={(e) => handleAccountDelete(account?.id)}
+                        onClick={(e) => handleOpenDeleteDialog(e,account)}
                         className="border border-r-0 rounded-none  "
                       >
                         {" "}
@@ -142,6 +150,12 @@ export default function AccountTable(props) {
         onClose={() => setIsSidebarOpen(false)}
         selectedAccount={selectedAccount}
       />
+      <DeleteDialog
+              name={deleteData.account_name}
+              isOpen={deleteOpen}
+              setIsOpen={setDeleteOpen}
+              handleDelete={handleAccountDelete}
+              />
 
     </>
   );

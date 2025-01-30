@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../../../api/api";
-import DateFormat from "../../../components/admin/DateFormat";
 import CustomButton from "../../../components/common/CustomButton";
 import Loader from "../../../components/common/Loader";
 import UserModelForm from "../../../components/admin/modelforms/UserModelForm";
@@ -115,13 +114,13 @@ export default function Profile() {
                     <div className="flex items-center md:ml-10 space-x-3">
                       <Phone className=" text-[#17686d] flex-shrink-0" />
                       <p className="text-gray-700">
-                        {<DateFormat updatedAt={user.created_at} />}
+                        {/* {<DateFormat updatedAt={user.created_at} />} */}
                       </p>
                     </div>
                     <div className="flex items-center space-x-3">
                       <MapPin className=" text-[#17686d] flex-shrink-0" />
                       <p className="text-gray-700">
-                        {<DateFormat updatedAt={user.updated_at} />}
+                        {/* {<DateFormat updatedAt={user.updated_at} />} */}
                       </p>
                     </div>
                   </div>

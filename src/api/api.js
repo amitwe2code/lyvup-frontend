@@ -49,14 +49,15 @@ export const logoutUser = async (accessToken, refreshToken) => {
       }
 }
 
-export const getUsers = async (accessToken, search, userType, page, pageSize, ordering) => {
+export const getUsers = async ({accessToken, search='', currentPage=1, pageSize=10, ordering='',filter=''}) => {
       try {
-            const response = await axios.get(`${API_URL}/user/?search=${search}&page=${page}&page_size=${pageSize}&user_type=${userType}&ordering=${ordering}`, {
+            const response = await axios.get(`${API_URL}/user/?search=${search}&page=${currentPage}&page_size=${pageSize}&user_type=${filter}&ordering=${ordering}`, {
                   headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${accessToken}`
                   }
             })
+            console.log('response=>',response);
             return response
       } catch (error) {
             return error
@@ -113,6 +114,7 @@ export const deleteUser = async (accessToken, id) => {
                   },
 
             })
+            console.log('response=>',response);
             return response
       } catch (error) {
             console.log('error=>', error)
@@ -147,10 +149,9 @@ export const getSingleAccountDetail = async (accessToken, id) => {
       }
 }
 
-export const getAllAccountDetail = async (accessToken, search, currentPage, pageSize, ordering) => {
-      // eslint-disable-next-line no-useless-catch
+export const getAllAccountDetail = async ({accessToken, search='', currentPage=1, pageSize=10, ordering='',filter=''}) => {
       try {
-            const response = await axios.get(`${API_URL}/account/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
+            const response = await axios.get(`${API_URL}/account/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}&organization_id=${filter}`, {
                   headers: {
                         'Authorization': `Bearer ${accessToken}`
                   }
@@ -193,29 +194,43 @@ export const deleteAccount = async (accessToken, id) => {
 
 
 //add user in team api   
-export const getAccountUsers = async (id) => {
+export const getAccountUsers = async (accessToken,id) => {
       try {
-            const response = await axios.get(`${API_URL}/useraccount/account/${id}/`);
+            const response = await axios.get(`${API_URL}/useraccount/account/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            }
+                  
+            );
             return response;
       } catch (error) {
             throw error;
       }
 }
 
-export const RemoveUserAccount = async (id) => {
+export const RemoveUserAccount = async (accessToken,id) => {
       try {
-            const response = await axios.delete(`${API_URL}/useraccount/delete/${id}/`);
+            const response = await axios.delete(`${API_URL}/useraccount/delete/${id}/`, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
             console.log('response in delete user account=>', response);
             return response;
       } catch (error) {
             throw error;
       }
 }
-export const AddUserAccount = async (accountId, userIds) => {
+export const AddUserAccount = async (accessToken,accountId, userIds) => {
       try {
             const response = await axios.post(`${API_URL}/useraccount/create/`, {
                   users: userIds,
                   account: accountId
+            }, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
             });
             return response;
       } catch (error) {
@@ -226,12 +241,12 @@ export const AddUserAccount = async (accountId, userIds) => {
 
 
 //activity api
-export const getActivity = async (props) => {
+export const getActivity = async ({accessToken, search='', currentPage=1, pageSize=10, ordering='',filter=''}) => {
       console.log('props=>');
       try {
-            const response = await axios.get(`${API_URL}/activity/?search=${props?.search}&page=${props?.currentPage}&page_size=${props?.pageSize}&ordering=${props?.ordering}&activity_type=${props?.filter}`, {
+            const response = await axios.get(`${API_URL}/activity/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}&activity_type=${filter}`, {
                   headers: {
-                        'Authorization': `Bearer ${props?.accessToken}`
+                        'Authorization': `Bearer ${accessToken}`
                   }
             });
             return response;
@@ -295,7 +310,7 @@ export const deleteActivity = async (accessToken, id) => {
 }
 
 
-export const getActivityTypes = async (accessToken, search, currentPage, pageSize, ordering) => {
+export const getActivityTypes = async ({accessToken, search='', currentPage=1, pageSize=10, ordering='',filter=''}) => {
       try {
             const response = await axios.get(`${API_URL}/activityapp/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
                   headers: {
@@ -362,7 +377,7 @@ export const deleteActivityType = async (accessToken, id) => {
 }
 
 //program api call 
-export const getProgram = async (accessToken, search, currentPage, pageSize, ordering) => {
+export const getProgram = async ({accessToken, search='', currentPage=1, pageSize=10, ordering='',filter=''}) => {
       try {
             const response = await axios.get(`${API_URL}/program/?search=${search}&page=${currentPage}&page_size=${pageSize}&ordering=${ordering}`, {
                   headers: {
@@ -511,14 +526,28 @@ export const CopyWeek = async (accessToken, data) => {
             throw error;
       }
 }
-export const getAllOrganization=async(props)=>{
+export const getAllOrganization=async({accessToken})=>{
       try {
             const response = await axios.get(`${API_URL}/organization/`, {
                   headers: {
-                        'Authorization': `Bearer ${props?.accessToken}`
+                        'Authorization': `Bearer ${accessToken}`
                   }
             });
          
+            return response;
+      } catch (error) {
+            throw error;
+      }
+}
+
+
+export const addAssignedProgram = async (accessToken, data) => {
+      try {
+            const response = await axios.post(`${API_URL}/assigendprogram/`, data, {
+                  headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            });
             return response;
       } catch (error) {
             throw error;

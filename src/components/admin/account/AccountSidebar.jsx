@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Select from "react-select";
 import CustomButton from "../../common/CustomButton";
 import { AddUserAccount, getAccountUsers, RemoveUserAccount } from "../../../api/api";
+import { useSelector } from "react-redux";
 
 export default function AccountSidebar(props) {
   const [search, setSearch] = useState("");
@@ -11,13 +12,14 @@ export default function AccountSidebar(props) {
   const [unSelectedUsers, setUnSelectedUsers] = useState([]);
   const [unSelectedUsersList, setUnSelectedUsersList] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
-
+  const accessToken = useSelector((state) => state.token.accessToken);
   const selectRef = useRef(null);
 
   const getSelectedUsers = async (account) => {
-    const response = await getAccountUsers(account.id);
-    setSelectedUsers(response.data.connected_users);
-    setUnSelectedUsers(response.data.unconnected_users);
+    const response = await getAccountUsers(accessToken,account.id);
+    console.log('response in account sidebar=>',response);
+    setSelectedUsers(response.data.data.connected_users);
+    setUnSelectedUsers(response.data.data.unconnected_users);
   };
   /*Function to redender the data in the option of the select box*/
   useEffect(() => {
@@ -33,14 +35,14 @@ export default function AccountSidebar(props) {
   // }
 
   const handleAddUserToAccount = async (id) => {
-    const response = await AddUserAccount(props?.selectedAccount.id, selectedOptions);
+    const response = await AddUserAccount(accessToken,props?.selectedAccount.id, selectedOptions);
     // console.log(response);
     setSelectedOptions([]);
     setApiCall(true);
   };
 
   const handleRemoveUserFromAccount = async (id) => {
-    const response = await RemoveUserAccount(id);
+    const response = await RemoveUserAccount(accessToken,id);
     // alert(response.data.message);
     setApiCall(true);
   };

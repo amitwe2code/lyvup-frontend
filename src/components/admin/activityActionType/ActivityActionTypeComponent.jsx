@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import CustomInput from '../../common/CustomInput';
 import Pagination from '../../common/Pagination';
 import { getActivityTypes } from '../../../api/api';
+import DeleteDialog from '../../common/DeleteDialog';
 
 export default function ActivityActionTypeComponent(props) {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ export default function ActivityActionTypeComponent(props) {
   const getActivityActionTypes = async () => {
     try {
       setLoading(true);
-      const response = await getActivityTypes(accessToken, search, currentPage, pageSize, ordering);
+      const response = await getActivityTypes({accessToken, search, currentPage, pageSize, ordering});
       console.log("activitytypes =>", response.data.data)
       setActivityTypes(response.data.data.results);
       setCount(response.data.data.pagination.count);
@@ -82,7 +83,6 @@ export default function ActivityActionTypeComponent(props) {
         count={pageSize}
         setPageSize={setPageSize}
       />
-
     </>
   )
 }
