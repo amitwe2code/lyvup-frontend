@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Pagination from '../../common/Pagination';
 import { getAllAccountDetail } from '../../../api/api';
+import { toast } from 'react-toastify';
 
 export default function AccountComponent(props) {
     const { t } = useTranslation();
@@ -17,15 +18,17 @@ export default function AccountComponent(props) {
     const [search, setSearch] = useState("");
     const [ordering, setOrdering] = useState("");
     const [count, setCount] = useState(0);
-    const [filter,setFilter]=useState('');
+    const [filter, setFilter] = useState('');
     const accessToken = useSelector((state) => state.token.accessToken);
+
 
 
     const getAccounts = async () => {
         try {
             setLoading(true);
-            const response = await getAllAccountDetail({accessToken, search, currentPage, pageSize, ordering,filter});
+            const response = await getAllAccountDetail({ accessToken, search, currentPage, pageSize, ordering, filter });
             setAccounts(response.data.data.results);
+            console.log('response =>', response);
             setTotalPage(response.data.data.pagination.total_pages);
             setCount(response.data.data.pagination.count);
         } catch (error) {
@@ -38,7 +41,7 @@ export default function AccountComponent(props) {
 
     useEffect(() => {
         getAccounts();
-        props.setApiCall(false);
+        if (props.apiCall === true) { props.setApiCall(false); }
     }, [props.apiCall, pageSize, currentPage, ordering, search]);
 
 

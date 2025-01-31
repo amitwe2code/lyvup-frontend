@@ -71,6 +71,11 @@ export default function UserComponent(props) {
 
   return (
     <>
+    {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <Loader />
+        </div>
+      ) : (<> 
       <div className='flex flex-wrap justify-start gap-4 mb-2 items-center'>
         <div className="inline-flex rounded-md" role="group">
           <CustomButton
@@ -106,11 +111,7 @@ export default function UserComponent(props) {
           className="input "
         />
       </div>
-      {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <Loader />
-        </div>
-      ) : (
+      
         <UserTable
           users={users}
           ordering={ordering}
@@ -118,7 +119,7 @@ export default function UserComponent(props) {
           apiCall={props?.apiCall}
           setApiCall={props?.setApiCall}
         />
-      )}
+    
       <Pagination
         nPages={totalPage}
         currentPage={currentPage}
@@ -128,12 +129,12 @@ export default function UserComponent(props) {
         setPageSize={setPageSize}
       />
 
+      </>
+
+    )}
 
 
-
-
-
-    </>
+</>
 
   )
 }

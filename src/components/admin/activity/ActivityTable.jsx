@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import ActivityForm from "./ActivityForm";
 import ActivityModelForm from "../modelforms/ActivityModelForm";
 import DeleteDialog from "../../common/DeleteDialog";
+import Toast from "../../common/Toast";
 
 export default function ActivityTable(props) {
 
@@ -20,7 +21,10 @@ export default function ActivityTable(props) {
     //Activity delete apiFunction Call
     const handleActivityDelete = async () => {
         const response = await deleteActivity(accessToken, deleteData?.id);
+        Toast(response)
+        console.log('response in delete=>',response);
         setDeleteOpen(false)
+        setDeleteData('')
         props?.setApiCall(true)
     };
     const handleOpenDeleteDialog = (e, data) => {

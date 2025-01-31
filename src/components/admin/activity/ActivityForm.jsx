@@ -3,6 +3,7 @@ import CustomButton from "../../common/CustomButton";
 import useValidation from "../../common/UseValidation";
 import { useSelector } from "react-redux";
 import { addActivity, updateActivity } from "../../../api/api";
+import Toast from "../../common/Toast";
 
 export default function ActivityForm(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
@@ -315,9 +316,11 @@ export default function ActivityForm(props) {
       if (validate()) {
         if (id) {
           const response = await updateActivity(accessToken, state, id);
+          Toast(response)
 
         } else {
           const response = await addActivity(accessToken, state);
+          Toast(response)
         }
         props?.setApiCall(true)
         close()

@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import ActivityActionTypeModelForm from "../modelforms/ActivityActionTypeModelForm";
 import DeleteDialog from "../../common/DeleteDialog";
 import { deleteActivityType } from "../../../api/api";
+import Toast from "../../common/Toast";
 
 export default function ActivityActionTypeTable(props) {
   const [updateActivityActionType, setUpdateActivityActionType] = useState(null)
@@ -26,7 +27,9 @@ export default function ActivityActionTypeTable(props) {
     try {
       setLoading(true);
       const response = await deleteActivityType(accessToken, deleteData?.id);
+      Toast(response)
       setDeleteOpen(false)
+      setDeleteData('')
       props?.setApiCall(true)
     } catch (error) {
       console.log(error); 

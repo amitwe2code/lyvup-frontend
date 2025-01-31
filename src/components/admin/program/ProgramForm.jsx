@@ -3,13 +3,18 @@ import CustomButton from "../../common/CustomButton";
 import { addProgram, CopyProgram, getSingleProgram, updateProgram, updateUser } from "../../../api/api";
 import useValidation from "../../common/UseValidation";
 import { useSelector } from "react-redux";
+import Toast from "../../common/Toast";
 
 export default function ProgramForm(props) {
 
   const [loading, setLoading] = useState(false)
   const accessToken = useSelector((state) => state.token.accessToken);
   const initialFormState = {
-    
+    name:'',
+    description:'',
+    written_by:'',
+    version:'',
+    price:''
   }
 
   // const initialFormState = formData
@@ -68,27 +73,23 @@ export default function ProgramForm(props) {
         })
       }
   }
-  
-  console.log('state=>',state);
   const handleProgramAddAndUpdate = async (e, id) => {
     e.preventDefault()
-    console.log(errors)
     if (validate()) {
-      console.log("id in update and add ", id);
       try {
         setLoading(true);
         if(props?.copyProgram){
           const response = await CopyProgram(accessToken, state);
-          console.log("response=", response);
+          Toast(response)
         }
         else if (id) {
           const response = await updateProgram(accessToken, state, id);
-          console.log("response=", response);
+          Toast(response)
           props?.setProgram(state)
         
         } else {
           const response = await addProgram(accessToken, state);
-          console.log("response=", response);
+          Toast(response)
         }
         props?.setApiCall(true)
         close()
@@ -111,7 +112,6 @@ export default function ProgramForm(props) {
     if (props?.program) {
       getUpdateProgram()
     }
-
 
   }, [props.isOpen])
 

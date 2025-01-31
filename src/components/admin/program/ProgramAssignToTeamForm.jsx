@@ -4,6 +4,7 @@ import { addAssignedProgram, getAccountUsers, getAllAccountDetail, getAllOrganiz
 import { CrossIcon, SidebarCloseIcon } from "lucide-react";
 import useValidation from "../../common/UseValidation";
 import { useSelector } from "react-redux";
+import Toast from "../../common/Toast";
 
 export default function ProgramAssignToTeamForm(props) {
     const accessToken = useSelector((state) => state.token.accessToken);
@@ -62,6 +63,8 @@ export default function ProgramAssignToTeamForm(props) {
         e.preventDefault()    
         if (validate()) {
             const response = await addAssignedProgram(accessToken, state)
+            Toast(response)
+            console.log('chl ky ',response);
             close()
         }
     }

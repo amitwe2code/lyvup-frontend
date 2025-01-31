@@ -8,21 +8,28 @@ import WeekTable from './WeekTable'
 import ProgramModelForm from '../modelforms/ProgramModelForm'
 import ProgramAssignToTeamForm from './ProgramAssignToTeamForm'
 import DeleteDialog from '../../common/DeleteDialog'
+import Toast from '../../common/Toast'
 
 export default function ProgramDetail(props) {
   const [isOpen, setIsOpen] = useState(false)
   const [assignFormOpen, setAssignFormOpen] = useState(false)
   const accessToken = useSelector((state) => state.token.accessToken)
   const [copyProgram, setCopyProgram] = useState(false)
-  const [deleteOpen,setDeleteOpen]=useState(false)
-  const [deleteData,setDeleteData]=useState("")
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [deleteData, setDeleteData] = useState("")
+
+
   const programDelete = async () => {
-    console.log('delete program=>',response);
+    console.log('delete data id =>', deleteData?.id);
+    const response = await deleteProgram(accessToken, deleteData?.id)
+    console.log('delete program=>', response);
+    Toast(response)
     setDeleteOpen(false)
     props?.setProgram('')
+    setDeleteData('')
     props?.setApiCall(true)
   }
-  const handleOpenDeleteDialog=(e,data)=>{
+  const handleOpenDeleteDialog = (e, data) => {
     e.preventDefault()
     setDeleteData(data)
     setDeleteOpen(true)
@@ -45,7 +52,7 @@ export default function ProgramDetail(props) {
             <button id={props?.program?.id} onClick={(e) => handleAssignForm()}  ><PlusIcon className='icon_size_small' /></button>
             <button id={props?.program?.id} onClick={(e) => setIsOpen(true)}  ><PenBoxIcon className='icon_size_small' /></button>
             <button id={props?.program?.id} onClick={() => handleCopyCall()} ><CopyIcon className='icon_size_small' /></button>
-            <button onClick={(e) => handleOpenDeleteDialog(e,props?.program)} ><TrashIcon className='icon_size_small' /></button>
+            <button onClick={(e) => handleOpenDeleteDialog(e, props?.program)} ><TrashIcon className='icon_size_small' /></button>
           </div>
         </div>
         <div className="add_program ">
@@ -81,11 +88,11 @@ export default function ProgramDetail(props) {
             />
           </>) : null}
           <DeleteDialog
-              name={deleteData.name}
-              isOpen={deleteOpen}
-              setIsOpen={setDeleteOpen}
-              handleDelete={programDelete}
-              />
+            name={deleteData.name}
+            isOpen={deleteOpen}
+            setIsOpen={setDeleteOpen}
+            handleDelete={programDelete}
+          />
 
 
         </div>

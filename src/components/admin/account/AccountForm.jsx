@@ -3,6 +3,7 @@ import CustomButton from "../../common/CustomButton";
 import { addAccount, updateAccount } from "../../../api/api";
 import { useSelector } from "react-redux";
 import useValidation from "../../common/UseValidation";
+import Toast from "../../common/Toast";
 
 export default function AccountForm(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
@@ -65,10 +66,11 @@ export default function AccountForm(props) {
       // setLoading(true);
       if (id) {
         const response = await updateAccount(accessToken, state, id);
+        Toast(response)
         console.log("response=", response);
       } else {
-        console.log('add call');
         const response = await addAccount(accessToken, state);
+        Toast(response)
         console.log("response=", response);
       }
       props.setApiCall(true);

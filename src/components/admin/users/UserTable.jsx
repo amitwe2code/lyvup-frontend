@@ -6,12 +6,17 @@ import { deleteUser, updateUser } from "../../../api/api";
 import UserModelForm from "../modelforms/UserModelForm";
 import Loader from "../../common/Loader";
 import { useSelector } from "react-redux";
+import DeleteDialog from "../../common/DeleteDialog";
+import Toast from "../../common/Toast";
 
 export default function UserTable(props) {
     const [isOpen, setIsOpen] = useState(false)
     const [updateUser, setUpdateUser] = useState({})
     const accessToken = useSelector((state) => state.token.accessToken);
     const [loading, setLoading] = useState(false)
+    const [deleteOpen, setDeleteOpen] = useState(false)
+
+    const [deleteData, setDeleteData] = useState("")
     const handleUserUpdate = (user) => {
         setUpdateUser(user)
         setIsOpen(true)
@@ -21,8 +26,11 @@ export default function UserTable(props) {
     const handleUserDelete = async (id) => {
         try {
             setLoading(true);
-            const response = await deleteUser(accessToken, id);
+            const response = await deleteUser(accessToken, deleteData?.id);
+            Toast(response)
             console.log("res=>", response);
+            setDeleteData('')
+            setDeleteOpen(false)
             props?.setApiCall(true);
         } catch (error) {
             console.log(error);
@@ -30,7 +38,10 @@ export default function UserTable(props) {
             setLoading(false);
         }
     };
-
+    const handleOpenDeleteDialog = (e, data) => {
+        setDeleteData(data)
+        setDeleteOpen(true)
+    }
 
     const SortDropdown = ({ field }) => (
         <button
@@ -85,7 +96,7 @@ export default function UserTable(props) {
                         </thead>
                         <tbody className="text-sm">
                             {props?.users.map((user, index) => (
-                                <tr key={user?.id} className={`border-collapse ${(index+1) % 2 ==0?'bg_secondary_color':null}`}>
+                                <tr key={user?.id} className={`border-collapse ${(index + 1) % 2 == 0 ? 'bg_secondary_color' : null}`}>
                                     <td> <Link to={`/profile/${user?.id}`}> {index + 1}</Link></td>
                                     <td>{user?.name}</td>
                                     <td>{user?.email}</td>
@@ -112,7 +123,7 @@ export default function UserTable(props) {
                                                 id={user.id}
                                                 variant="outline"
                                                 size="small"
-                                                onClick={(e) => handleUserDelete(user?.id)}
+                                                onClick={(e) => handleOpenDeleteDialog(e, user)}
                                                 className="border-gray-400  rounded-none  "
                                             >
                                                 {" "}
@@ -132,6 +143,12 @@ export default function UserTable(props) {
                 setApiCall={props?.setApiCall}
                 updateUser={updateUser}
                 setUpdateUser={setUpdateUser}
+            />
+            <DeleteDialog
+                name={deleteData.name}
+                isOpen={deleteOpen}
+                setIsOpen={setDeleteOpen}
+                handleDelete={handleUserDelete}
             />
 
         </>

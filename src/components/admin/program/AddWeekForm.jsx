@@ -3,6 +3,7 @@ import CustomButton from "../../common/CustomButton";
 import { useSelector } from "react-redux";
 import { addWeakActivity } from "../../../api/api";
 import useValidation from "../../common/UseValidation";
+import Toast from "../../common/Toast";
 
 export default function AddWeekForm(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
@@ -28,12 +29,10 @@ export default function AddWeekForm(props) {
 
   const addWeek = async (e) => {
     e.preventDefault();
-    console.log('errors=>', errors);
-    console.log('state=>', state);
-    console.log('validate=>', validate());
     if (validate()) {
        const response = await addWeakActivity(accessToken, state);
       console.log("response in form =>", response);
+      Toast(response)
       props.setApiCall(true);
      close()
     }

@@ -57,7 +57,6 @@ export const getUsers = async ({accessToken, search='', currentPage=1, pageSize=
                         'Authorization': `Bearer ${accessToken}`
                   }
             })
-            console.log('response=>',response);
             return response
       } catch (error) {
             return error
@@ -86,8 +85,8 @@ export const addUser = async (accessToken, data) => {
                   'Authorization': `Bearer ${accessToken}`
             }
       });
-      console.log("response_____________", response);
-      return response.data;
+      
+      return response;
 };
 export const updateUser = async (accessToken, data, id) => {
    
@@ -439,6 +438,7 @@ export const deleteProgram = async (accessToken, id) => {
                         'Authorization': `Bearer ${accessToken}`
                   }
             });
+            console.log('response=>',response);
             return response;
       } catch (error) {
             throw error;

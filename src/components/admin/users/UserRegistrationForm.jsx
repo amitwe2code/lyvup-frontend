@@ -3,6 +3,9 @@ import CustomButton from "../../common/CustomButton";
 import { addUser, updateUser } from "../../../api/api";
 import useValidation from '../../common/UseValidation'
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import Toast from "../../common/Toast";
+import LoadingButton from "../../common/LoadingButton";
 export default function UserRegistrationForm(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
   const initialFormState = {
@@ -71,21 +74,21 @@ export default function UserRegistrationForm(props) {
   //newUser add apifunction Call
   const handleUserAddAndUpdate = async (e,id) => {
     try {
-     
       e.preventDefault();
       if (validate()) {
         if (id) {
           const response = await updateUser(accessToken, state, id);
-         
+          Toast(response) 
         } else {
-          console.log("add call");
           const response = await addUser(accessToken, state);
+          Toast(response)
         }
         props.setApiCall(true);
         close()
       }
     } catch (error) {
-      console.log(error);
+      console.log('error=>',error);
+      Toast(error.response)
     } finally {
     }
   };
@@ -289,6 +292,7 @@ export default function UserRegistrationForm(props) {
           >
             Cancel
           </CustomButton>
+          {/* <LoadingButton/> */}
           <CustomButton
             type="submit"
             id={state?.id}

@@ -3,6 +3,7 @@ import CustomButton from "../../common/CustomButton";
 import { addActivityType, updateActivityType } from "../../../api/api";
 import useValidation from "../../common/UseValidation";
 import { useSelector } from "react-redux";
+import Toast from "../../common/Toast";
 
 export default function ActivityActionTypeForm(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
@@ -59,9 +60,11 @@ export default function ActivityActionTypeForm(props) {
         
         if (id) {
           const response = await updateActivityType(accessToken, state,id);
+         Toast(response)
           console.log("response=", response);
         } else {
           const response = await addActivityType(accessToken, state);
+          Toast(response)
           console.log("response=", response);
         }
         props.setApiCall(true);

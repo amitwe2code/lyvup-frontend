@@ -6,6 +6,7 @@ import AddWeekForm from './AddWeekForm';
 import ProgramActivityForm from './ProgramActivityForm';
 import AddweekModelForm from '../modelforms/AddweekModelForm';
 import ProgramActivityModelForm from '../modelforms/ProgramActivityModelForm';
+import Toast from '../../common/Toast';
 
 export default function WeekTable(props) {
     const accessToken = useSelector((state) => state.token.accessToken)
@@ -47,6 +48,7 @@ export default function WeekTable(props) {
             activity_id: activityId
         }
         const response = await deleteWeekActivity(accessToken, data)
+        Toast(response)
         setApiCall(true)
     }
     //inside week programactivity update function 
@@ -75,6 +77,7 @@ export default function WeekTable(props) {
         }
         console.log('data=>',data);
         const response=await CopyWeek(accessToken,data)
+        Toast(response)
         console.log('response in copy week=>',response);
         setApiCall(true)
     }

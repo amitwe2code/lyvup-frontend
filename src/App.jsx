@@ -39,7 +39,7 @@ export default function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className='box-border'>
-      <ToastContainer />
+        <ToastContainer />
         <BrowserRouter>
           <Routes>
             <>

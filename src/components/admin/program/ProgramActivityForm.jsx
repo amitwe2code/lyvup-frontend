@@ -8,6 +8,7 @@ import {
 } from "../../../api/api";
 import { useSelector } from "react-redux";
 import useValidation from "../../common/UseValidation";
+import Toast from "../../common/Toast";
 
 export default function ProgramActivityForm(props) {
   const [filterShow, setFilterShow] = useState(false);
@@ -70,10 +71,12 @@ export default function ProgramActivityForm(props) {
     if (validate()) {
       if (id) {
         const response = await UpdateWeakActivity(accessToken, state, id);
+        Toast(response)
         console.log('response=>', response)
       }
       else {
         const response = await addWeakActivity(accessToken, state);
+        Toast(response)
         console.log('response=>', response)
       }
       close()

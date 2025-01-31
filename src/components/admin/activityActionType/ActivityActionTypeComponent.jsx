@@ -21,8 +21,6 @@ export default function ActivityActionTypeComponent(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
 
 
-
-
   const getActivityActionTypes = async () => {
     try {
       setLoading(true);
