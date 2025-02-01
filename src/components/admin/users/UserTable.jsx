@@ -23,7 +23,7 @@ export default function UserTable(props) {
     }
 
     //user delete apiFunction Call
-    const handleUserDelete = async (id) => {
+    const deleteUserModelApiCall = async (id) => {
         try {
             setLoading(true);
             const response = await deleteUser(accessToken, deleteData?.id);
@@ -126,7 +126,6 @@ export default function UserTable(props) {
                                                 onClick={(e) => handleOpenDeleteDialog(e, user)}
                                                 className="border-gray-400  rounded-none  "
                                             >
-                                                {" "}
                                                 <Trash className="w-4 h-4 m-0" />
                                             </CustomButton>
                                         </div>
@@ -147,8 +146,9 @@ export default function UserTable(props) {
             <DeleteDialog
                 name={deleteData.name}
                 isOpen={deleteOpen}
+                loading={loading}
                 setIsOpen={setDeleteOpen}
-                handleDelete={handleUserDelete}
+                handleDelete={deleteUserModelApiCall}
             />
 
         </>

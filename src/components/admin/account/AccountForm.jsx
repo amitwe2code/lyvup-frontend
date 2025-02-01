@@ -7,6 +7,7 @@ import Toast from "../../common/Toast";
 
 export default function AccountForm(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
+  const [loading, setLoading] = useState(false)
   const initialFormState = {
     organization_id: "",
     account_name: "",
@@ -20,21 +21,21 @@ export default function AccountForm(props) {
       (value) =>
         value === null || value.trim() === ""
           ? "Account Name is required"
-          :value.length<3
-          ?'account name must at least 3 character ' 
-          : null,
+          : value.length < 3
+            ? 'account name must at least 3 character '
+            : null,
     ],
     account_type: [
       (value) =>
         value === null || value.trim() === ""
           ? "Account Type is required"
-          :value.length<3
-          ?'account Type must at least 3 character ' 
-          : null,
+          : value.length < 3
+            ? 'account Type must at least 3 character '
+            : null,
     ],
     organization_id: [
       (value) =>
-        value === null 
+        value === null
           ? "Organization Id  is required" : null,
     ],
     language: [
@@ -45,7 +46,7 @@ export default function AccountForm(props) {
 
     team_leader_id: [
       (value) =>
-        value === null 
+        value === null
           ? "Team_leader_id is required"
           : null,
     ],
@@ -62,29 +63,29 @@ export default function AccountForm(props) {
   const handleAccountAddAndUpdate = async (e, id) => {
     try {
       e.preventDefault();
-      if(validate()){
-      // setLoading(true);
-      if (id) {
-        const response = await updateAccount(accessToken, state, id);
-        Toast(response)
-        console.log("response=", response);
-      } else {
-        const response = await addAccount(accessToken, state);
-        Toast(response)
-        console.log("response=", response);
+      if (validate()) {
+        setLoading(true);
+        if (id) {
+          const response = await updateAccount(accessToken, state, id);
+          Toast(response)
+          console.log("response=", response);
+        } else {
+          const response = await addAccount(accessToken, state);
+          Toast(response)
+          console.log("response=", response);
+        }
+        props.setApiCall(true);
+        close()
       }
-      props.setApiCall(true);
-      close()
-    }
     } catch (error) {
       console.log(error);
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
-  
+
   };
 
-  const close=()=>{
+  const close = () => {
     setState(initialFormState)
     props?.setIsOpen(false)
   }
@@ -255,10 +256,18 @@ export default function AccountForm(props) {
           <CustomButton
             type="submit"
             id={state?.id}
-            onClick={(e)=>handleAccountAddAndUpdate(e,state?.id)}
+            onClick={(e) => handleAccountAddAndUpdate(e, state?.id)}
             className=""
           >
-            {state?.id ? 'Update' : 'Add'}
+            {loading ?
+              <span
+                className="spinner-border spinner-border-sm "
+                role="status"
+                aria-hidden="true"
+              ></span> : <>
+                {state?.id ? 'Update' : 'Add'}
+              </>
+            }
           </CustomButton>
         </div>
       </form>

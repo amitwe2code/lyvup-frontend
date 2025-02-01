@@ -308,7 +308,15 @@ export default function ProgramForm(props) {
                   onClick={(e) => handleProgramAddAndUpdate(e, state?.id)}
                   className=""
                 >
-                  {state?.id ? "Update" : "Add"}
+                  {loading ?
+                    <span
+                      className="spinner-border spinner-border-sm "
+                      role="status"
+                      aria-hidden="true"
+                    ></span> : <>
+                      {state?.id ? 'Update' : 'Add'}
+                    </>
+                  }
                 </CustomButton>
               </div>
             </form>

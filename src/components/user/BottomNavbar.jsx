@@ -9,11 +9,11 @@ import {
 import Activity from "../../pages/admin/Activity";
 import { Link } from "react-router";
 
-export default function BottomNavbar() {
+export default function BottomNavbar(props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("");
   const [userType, setUserType] = useState(null);
-
+  
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     if (userData) {
@@ -34,16 +34,16 @@ export default function BottomNavbar() {
           <Link
             onClick={() => setActiveTab("users")}
             to={"/users"}
-            className={`flex flex-col text-black items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${activeTab === "users" ? "text-[#17686d]" : ""
+            className={`flex flex-col  items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${props?.activeTab === "user" ? "text-[#17686d]" : ""
               }`}
           >
             <User size={20} />
             <span className="text-xs">Users</span>
           </Link>
           <Link
-            onClick={() => setActiveTab("accounts")}
+            onClick={() => setActiveTab("account")}
             to={"/accounts"}
-            className={`flex flex-col text-black items-center justify-center ${activeTab === "accounts" ? "text-[#17686d]" : ""
+            className={`flex flex-col  items-center justify-center ${props?.activeTab === "account" ? "text-[#17686d]" : ""
               } hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline `}
           >
             <SquareUser size={20} />
@@ -52,7 +52,7 @@ export default function BottomNavbar() {
           <Link
             onClick={() => setActiveTab("programs")}
             to={"/programs"}
-            className={`flex flex-col text-black items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${activeTab === "programs" ? "text-[#17686d]" : ""
+            className={`flex flex-col  items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${props?.activeTab === "program" ? "text-[#17686d]" : ""
               }`}
           >
             <NotebookTabs />
@@ -61,7 +61,7 @@ export default function BottomNavbar() {
           <Link
             onClick={() => setActiveTab("activitytype")}
             to={"/activitytype"}
-            className={`flex flex-col text-black items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${activeTab === "activitytype" ? "text-[#17686d]" : ""
+            className={`flex flex-col  items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${props?.activeTab === "activityActionType" ? "text-[#17686d]" : ""
               }`}
           >
             <Dices size={20} />
@@ -70,7 +70,7 @@ export default function BottomNavbar() {
           <Link
             onClick={() => setActiveTab("activity")}
             to={"/activity"}
-            className={`flex flex-col text-black items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${activeTab === "activity" ? "text-[#17686d]" : ""
+            className={`flex flex-col  items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${props?.activeTab === "activity" ? "text-[#17686d]" : ""
               }`}
           >
             <Footprints size={20} />
@@ -79,7 +79,7 @@ export default function BottomNavbar() {
           {/* <Link
             onClick={() => setActiveTab("task")}
             to={"/task"}
-            className={`flex flex-col text-black items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${activeTab === "task" ? "text-[#17686d]" : ""
+            className={`flex flex-col  items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${props?.activeTab === "task" ? "text-[#17686d]" : ""
               }`}
           >
             <Footprints size={20} />

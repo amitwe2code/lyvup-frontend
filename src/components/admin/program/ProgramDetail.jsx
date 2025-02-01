@@ -17,17 +17,22 @@ export default function ProgramDetail(props) {
   const [copyProgram, setCopyProgram] = useState(false)
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [deleteData, setDeleteData] = useState("")
+  const [loading, setLoading] = useState(false)
 
 
   const programDelete = async () => {
-    console.log('delete data id =>', deleteData?.id);
-    const response = await deleteProgram(accessToken, deleteData?.id)
-    console.log('delete program=>', response);
-    Toast(response)
-    setDeleteOpen(false)
-    props?.setProgram('')
-    setDeleteData('')
-    props?.setApiCall(true)
+    try {
+      const response = await deleteProgram(accessToken, deleteData?.id)
+      Toast(response)
+      setDeleteOpen(false)
+      props?.setProgram('')
+      setDeleteData('')
+      props?.setApiCall(true)
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
   }
   const handleOpenDeleteDialog = (e, data) => {
     e.preventDefault()
@@ -90,6 +95,7 @@ export default function ProgramDetail(props) {
           <DeleteDialog
             name={deleteData.name}
             isOpen={deleteOpen}
+            loading={loading}
             setIsOpen={setDeleteOpen}
             handleDelete={programDelete}
           />

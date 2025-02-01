@@ -21,9 +21,7 @@ export default function TaskDetail() {
                 <p className='text-base'> Welikeyou11 o</p>
             </div>
             <p className='my-2'><PenIcon/> Comment on activity</p>
-            
         </div>
-
    </div>
   )
 }

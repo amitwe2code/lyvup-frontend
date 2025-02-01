@@ -7,6 +7,7 @@ import Toast from "../../common/Toast";
 
 export default function ActivityActionTypeForm(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
+  const [loading,setLoading ]=useState(false)
   const initialFormState = {}
   const validators = {
     activity_type: [
@@ -56,8 +57,7 @@ export default function ActivityActionTypeForm(props) {
     e.preventDefault();
     if(validate){
       try {
-        // setLoading(true);
-        
+        setLoading(true);
         if (id) {
           const response = await updateActivityType(accessToken, state,id);
          Toast(response)
@@ -73,7 +73,7 @@ export default function ActivityActionTypeForm(props) {
       } catch (error) {
         console.log(error);
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     }
   };
@@ -93,10 +93,10 @@ export default function ActivityActionTypeForm(props) {
   return (
           <div className="bg_secondary_color max-h-full overflow-auto rounded-lg shadow-xl w-full max-w-2xl">
             <div className="p-3 btn_theme_color border-b">
-              <h2 className="text-lg font-semibold">Activity Registration</h2>
+              <h2 className="text-lg font-semibold">Activity Action Type</h2>
             </div>
             <form className="p-4 space-y-3">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid  sm:grid-cols-2 gap-3">
                 <div>
                   <label
                     htmlFor="activity_type"
@@ -146,7 +146,7 @@ export default function ActivityActionTypeForm(props) {
                   )}
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid sm:grid-cols-2 gap-3">
                 <div>
                   <label
                     htmlFor="amount"
@@ -196,7 +196,7 @@ export default function ActivityActionTypeForm(props) {
                   )}
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid sm:grid-cols-2 gap-3">
                 <div>
                   <label
                     htmlFor="key_activity"
@@ -237,7 +237,15 @@ export default function ActivityActionTypeForm(props) {
                   onClick={(e)=>handleActivityActionTypeAddAndUpdate(e,state?.id)}
                   className=""
                 >
-                  {state?.id ? "Update" : "Add"}
+                {loading ?
+                    <span
+                      className="spinner-border spinner-border-sm "
+                      role="status"
+                      aria-hidden="true"
+                    ></span> : <>
+                      {state?.id ? 'Update' : 'Add'}  
+                    </>
+                  }
                 </CustomButton>
               </div>
             </form>

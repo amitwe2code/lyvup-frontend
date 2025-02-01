@@ -156,6 +156,7 @@ export default function AccountTable(props) {
       <DeleteDialog
         name={deleteData.account_name}
         isOpen={deleteOpen}
+        loading={loading}
         setIsOpen={setDeleteOpen}
         handleDelete={handleAccountDelete}
       />

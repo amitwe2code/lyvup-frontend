@@ -14,7 +14,7 @@ export default function Programs() {
   return (
     <div className="flex">
       <TopBar />
-      <BottomNavbar />
+      <BottomNavbar activeTab='program' />
       <div className="mt-14 mb-14  h-[calc(100vh-112px)]   w-full  ">
         <div className=' w-full h-full relative   flex '>
           <div className='  h-full w-full md:w-3/4 scroll-none overflow-y-auto border   p-3  '>

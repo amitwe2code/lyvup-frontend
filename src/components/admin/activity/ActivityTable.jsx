@@ -20,12 +20,19 @@ export default function ActivityTable(props) {
 
     //Activity delete apiFunction Call
     const handleActivityDelete = async () => {
-        const response = await deleteActivity(accessToken, deleteData?.id);
-        Toast(response)
-        console.log('response in delete=>',response);
-        setDeleteOpen(false)
-        setDeleteData('')
-        props?.setApiCall(true)
+        try {
+            setLoading(true)
+            const response = await deleteActivity(accessToken, deleteData?.id);
+            Toast(response)
+            console.log('response in delete=>', response);
+            setDeleteOpen(false)
+            setDeleteData('')
+            props?.setApiCall(true)
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
+        }
     };
     const handleOpenDeleteDialog = (e, data) => {
         setDeleteData(data)
@@ -101,7 +108,6 @@ export default function ActivityTable(props) {
                                             onClick={(e) => handleOpenDeleteDialog(e, activity)}
                                             className="border border-r-0 rounded-none  "
                                         >
-                                            {" "}
                                             <Trash className="w-4 h-4 m-0" />
                                         </CustomButton>
                                     </div>
@@ -122,6 +128,7 @@ export default function ActivityTable(props) {
                     name={deleteData.activity}
                     isOpen={deleteOpen}
                     setIsOpen={setDeleteOpen}
+                    loading={loading}
                     handleDelete={handleActivityDelete}
                 />
 

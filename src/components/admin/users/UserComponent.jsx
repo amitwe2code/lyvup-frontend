@@ -23,7 +23,7 @@ export default function UserComponent(props) {
   const [loading, setLoading] = useState(false);
 
   //user list get/reterview fuction call
-  async function getUserList(accessToken) {
+  async function getUserModelApiCall(accessToken) {
     try {
       setLoading(true);
       const response = await getUsers({accessToken, search, filter, currentPage, pageSize, ordering});
@@ -60,7 +60,7 @@ export default function UserComponent(props) {
     if (loginUser?.user_type === '') {
       setFilter('patient');
     }
-    getUserList(accessToken);
+    getUserModelApiCall(accessToken);
     props?.setApiCall(false);
   }, [props?.apiCall, search, filter, currentPage, pageSize, ordering]);
 

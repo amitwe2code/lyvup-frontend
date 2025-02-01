@@ -139,6 +139,7 @@ export default function ActivityActionTypeTable(props) {
           <DeleteDialog
               name={deleteData.activity}
               isOpen={deleteOpen}
+              loading={loading}
               setIsOpen={setDeleteOpen}
               handleDelete={handleDeleteActivityActionType}
               />

@@ -8,6 +8,7 @@ import Toast from "../../common/Toast";
 
 export default function ProgramAssignToTeamForm(props) {
     const accessToken = useSelector((state) => state.token.accessToken);
+    const [loading, setLoading] = useState(false)
     const [organisations, setOrganizations] = useState([])
     const [accounts, setAccounts] = useState([])
     const [users, setUsers] = useState([])
@@ -18,7 +19,7 @@ export default function ProgramAssignToTeamForm(props) {
         program_id: props?.program_id,
         account_id: '',
         company_id: '',
-        start_date:''
+        start_date: ''
     }
     const validators = {
         assign_to: [
@@ -60,12 +61,19 @@ export default function ProgramAssignToTeamForm(props) {
         useValidation(initialFormState, validators);
 
     const addAssignedProgramApiCall = async (e, state) => {
-        e.preventDefault()    
-        if (validate()) {
-            const response = await addAssignedProgram(accessToken, state)
-            Toast(response)
-            console.log('chl ky ',response);
-            close()
+        e.preventDefault()
+        try {
+            setLoading(true)
+            if (validate()) {
+                const response = await addAssignedProgram(accessToken, state)
+                Toast(response)
+                console.log('chl ky ', response);
+                close()
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -269,7 +277,15 @@ export default function ProgramAssignToTeamForm(props) {
                                 onClick={(e) => { addAssignedProgramApiCall(e, state) }}
                                 className=""
                             >
-                                {state?.id ? "Update" : "Add"}
+                                {loading ?
+                                    <span
+                                        className="spinner-border spinner-border-sm "
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span> : <>
+                                        {state?.id ? 'Update' : 'Add'}
+                                    </>
+                                }
                             </CustomButton>
                         </div>
 

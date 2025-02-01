@@ -13,7 +13,7 @@ export default function LoadingButton() {
                 role="status"
                 aria-hidden="true"
             ></span>
-            <span className="sr-only">Loading...</span>
+            {/* <span className="sr-only">Loading...</span> */}
         </CustomButton>
     )
 }

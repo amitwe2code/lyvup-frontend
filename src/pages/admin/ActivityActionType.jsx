@@ -10,13 +10,10 @@ export default function ActivityActionType() {
   const [isOpen, setIsOpen] = useState(false);
 
 
-
-
-
   return (
     <div className="flex">
       <TopBar />
-      <BottomNavbar />
+      <BottomNavbar activeTab='activityActionType' />
       <div className="mt-14 mb-14 h-[calc(100vh-112px)] scroll-none overflow-auto w-full border p-3 ">
         <div className=" w-full mb-4">
           <Header heading='Activity Action Type' setIsOpen={setIsOpen} btnLabel='ADD Activity Type' />
@@ -26,13 +23,13 @@ export default function ActivityActionType() {
           setApiCall={setApiCall}
         />
 
-</div>
-        <ActivityActionTypeModelForm
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          setApiCall={setApiCall}
+      </div>
+      <ActivityActionTypeModelForm
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        setApiCall={setApiCall}
 
-        />
+      />
     </div>
   )
 }
