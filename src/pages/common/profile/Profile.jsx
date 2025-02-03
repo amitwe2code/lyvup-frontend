@@ -35,7 +35,7 @@ export default function Profile() {
       const response = await getUser(accessToken, id=id);
       setUser(response.data.data);
       console.log("userData", response.data.data);
-    } catch (error) {
+    } catch (error) { 
       console.log(error);
     } finally {
       setLoading(false);

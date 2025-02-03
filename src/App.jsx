@@ -16,28 +16,47 @@ import ActivityActionType from './pages/admin/ActivityActionType';
 import Programs from './pages/admin/Programs';
 import Task from './pages/users/Task';
 import AccountDetail from './components/admin/account/AccountDetail';
+import Loader from './components/common/Loader';
 
 
 export default function App() {
   const [user, setUser] = useState(null)
-  const token = localStorage.getItem('accessToken')
+  const [token, setToken] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const userdata = JSON.parse(localStorage.getItem('user'));
-    setUser(userdata)
+    try {
+      setLoading(true)
+      const token = localStorage.getItem('accessToken')
+      setToken(token)
+      const userdata = JSON.parse(localStorage.getItem('user'));
+      setUser(userdata)
+    } catch (error) {
+      console.log('error');
+    } finally {
+      setLoading(false)
+    }
   }, [])
 
   // if user logged in 
   const RedirectToProfile = () => {
-    const userData = JSON.parse(localStorage.getItem('user'));
-    if (userData && token) {
-      return <Navigate to={`/profile/${userData.id}`} />;
+    if (user && token) {
+      return <Navigate to={`/profile/${user.id}/`} />;
     }
     return null;
   };
 
+  
+  if (loading) {
+    return <Loader />;
+  }
+
+  // useEffect(()=>{
+  //   RedirectToProfile()
+  // },[user,token])
+
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div><Loader /></div>}>
       <div className='box-border'>
         <ToastContainer />
         <BrowserRouter>
@@ -79,13 +98,15 @@ export default function App() {
                   <Route path='/programs' element={<Programs />} />
                   <Route path='/task' element={<Task />} />
                 </>
-              ) : null}
+              ) : (<>{(user?.user_type === 'SUPERADMIN' || user?.user_type === 'superadmin' || user?.user_type === 'Admin' || user?.user_type === 'admin') && token
+                ? (<Route path='*' element={<NotFound />} />) 
+                : (<Route path='*' element={<Loader />} />)}</>)}
 
               <Route path='*' element={<NotFound token={token} user={user} />} />
             </>
           </Routes>
         </BrowserRouter>
       </div>
-    </Suspense>
+    </Suspense >
   )
 }
