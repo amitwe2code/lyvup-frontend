@@ -47,7 +47,7 @@ export default function Logout() {
   return (
     <button
       onClick={(e) => LogoutModelApiCall(e)}
-      className="flex items-center gap-2 w-full text-left px-4 py-2 text-lg hover:text-[#039a77] hover:bg-gray-100"
+      className="flex items-center gap-2 w-full text-left px-4 py-2 text-lg hover:text-[#17686d] hover:bg-gray-100"
     >
       <LogOutIcon />
     </button>

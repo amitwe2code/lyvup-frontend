@@ -4,6 +4,7 @@ import Select from "react-select";
 import CustomButton from "../../common/CustomButton";
 import { AddUserAccount, getAccountUsers, RemoveUserAccount } from "../../../api/api";
 import { useSelector } from "react-redux";
+import { SidebarClose } from "lucide-react";
 
 export default function AccountSidebar(props) {
   const [search, setSearch] = useState("");
@@ -79,18 +80,18 @@ export default function AccountSidebar(props) {
 
   return (
     <div
-      className={`fixed inset-y-0 right-0 w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+      className={`fixed inset-y-0 right-0 w-80 bg-white shadow-lg  h-[calc(100vh-7rem)] mt-14 mb-14 z-50 transform transition-transform duration-1000 ease-in-out ${
         props?.isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
       <div className="p-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg text-[#039a77] font-semibold">Manage Users</h2>
+          <h2 className="text-lg text_theme_color font-semibold">Manage Users</h2>
           <button
             onClick={props?.onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className=" text-xl font-bold "
           >
-            ×
+            <SidebarClose className="text_theme_color"/>
           </button>
         </div>
 

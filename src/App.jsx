@@ -31,6 +31,7 @@ export default function App() {
       setToken(token)
       const userdata = JSON.parse(localStorage.getItem('user'));
       setUser(userdata)
+      // validateModelApiCall()
     } catch (error) {
       console.log('error');
     } finally {
@@ -46,14 +47,19 @@ export default function App() {
     return null;
   };
 
-  
   if (loading) {
     return <Loader />;
   }
 
-  // useEffect(()=>{
-  //   RedirectToProfile()
-  // },[user,token])
+  // const validateModelApiCall=async()=>{
+  //   const response=await validateUser({'accessToken':token})
+  //   console.log('response=>',response);
+  // }
+
+
+      
+ 
+  
 
   return (
     <Suspense fallback={<div><Loader /></div>}>

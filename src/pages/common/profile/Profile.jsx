@@ -7,7 +7,7 @@ import {
   PenBoxIcon,
   UserIcon,
 } from "lucide-react";
-import TopBar from "../../../components/admin/TobBar";
+import TopBar from "../../../components/admin/TopBar";
 import BottomNavbar from "../../../components/user/BottomNavbar";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -85,7 +85,7 @@ export default function Profile() {
                 </div>
                 <div className="my-8 flex-col items-center text-xl  justify-center">
                   <div className="grid   sm:grid-cols-2 gap-4  md:gap-10 mb-6">
-                    <div className="flex w-full overflow-auto scroll-none items-cente md:ml-10 space-x-3">
+                    <div className="flex w-full overflow-auto scroll_none items-cente md:ml-10 space-x-3">
                       <Mail className=" text-[#17686d] flex-shrink-0 overflow-auto" />
                       <p className="text-gray-700  truncate">{user?.email}</p>
                     </div>

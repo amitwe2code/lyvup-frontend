@@ -1,0 +1,1 @@
+export default homeIconUrl='https://app.lyvup.com/images/dashboard_icon.svg'

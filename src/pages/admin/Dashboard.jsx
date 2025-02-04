@@ -1,5 +1,5 @@
 
-import TopBar from "../../components/admin/TobBar";
+import TopBar from "../../components/admin/TopBar";
 import BottomNavbar from "../../components/user/BottomNavbar";
 export default function Dashboard() {
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import BottomNavbar from "../../components/user/BottomNavbar";
-import TopBar from "../../components/admin/TobBar";
+import TopBar from "../../components/admin/TopBar";
 import { useSelector } from "react-redux";
 import {
   addActivity,
@@ -31,7 +31,7 @@ export default function Activity() {
     <div className="flex">
       <TopBar />
       <BottomNavbar activeTab='activity'/>
-      <div className="mt-14 mb-14 h-[calc(100vh-112px)] scroll-none overflow-auto w-full border p-3 ">
+      <div className="mt-14 mb-14 h-[calc(100vh-112px)] scroll_none overflow-auto w-full border p-3 ">
         <div className=" w-full mb-4">
           <Header heading='Activity' setIsOpen={setIsOpen} btnLabel='ADD Activity' />
         </div>

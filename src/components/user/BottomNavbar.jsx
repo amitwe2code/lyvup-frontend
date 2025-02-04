@@ -28,7 +28,7 @@ export default function BottomNavbar(props) {
 
   return (
     <div>
-      <nav className="fixed h-14  bottom-0 left-0 right-0 bg-secondary-color shadow-[0_-2px_10px_rgba(0,0,0,0.1)] py-2">
+      <nav className="fixed h-14  bottom-0 left-0 right-0  shadow-[0_-2px_10px_rgba(0,0,0,0.1)] py-2">
         <div className="flex h-full font-semibold justify-around items-center">
 
           <Link
@@ -76,7 +76,7 @@ export default function BottomNavbar(props) {
             <Footprints size={20} />
             <span className="text-xs">Activity</span>
           </Link>
-          {/* <Link
+          <Link
             onClick={() => setActiveTab("task")}
             to={"/task"}
             className={`flex flex-col  items-center justify-center hover:text-[#17686d] transition-colors duration-200 no-underline hover:no-underline ${props?.activeTab === "task" ? "text-[#17686d]" : ""
@@ -84,7 +84,7 @@ export default function BottomNavbar(props) {
           >
             <Footprints size={20} />
             <span className="text-xs">Task</span>
-          </Link> */}
+          </Link>
         </div>
       </nav>
     </div>

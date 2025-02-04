@@ -97,13 +97,9 @@ form input:focus-visible,form select:focus-visible,button:focus,input,select{
   background-color: #e2e8f0;
 }
 /* scroll-bar hide */
-.scroll-none::-webkit-scrollbar{
+.scroll_none::-webkit-scrollbar{
   display: none;
 }
-
-
-
-
 
 
 

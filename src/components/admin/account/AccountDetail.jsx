@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getSingleAccountDetail, updateAccount } from "../../../api/api";
-import TopBar from ".././TobBar";
+import TopBar from ".././TopBar";
 import BottomNavbar from "../../user/BottomNavbar";
 import CustomButton from "../../common/CustomButton";
 import AccountModelForm from "../modelforms/AccountModelForm";

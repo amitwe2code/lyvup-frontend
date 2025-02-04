@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import BottomNavbar from "../../components/user/BottomNavbar";
-import TopBar from "../../components/admin/TobBar";
+import TopBar from "../../components/admin/TopBar";
 import UserTable from "../../components/admin/users/UserTable";
 import { useSelector } from "react-redux";
 import { addUser, deleteUser, getUsers, updateUser } from "../../api/api";
