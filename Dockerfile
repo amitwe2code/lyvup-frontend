@@ -1,6 +1,6 @@
 FROM node:23
 
-WORKDIR /frontend
+WORKDIR /code
 
 COPY . .
 # RUN npm -f install --legacy-peer-deps

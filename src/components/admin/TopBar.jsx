@@ -9,8 +9,12 @@ import {
   FileText,
   MessageSquare,
   User,
+  BellIcon,
 } from "lucide-react";
 import Logout from "../../pages/common/login/Logout";
+import { notification } from "../../api/api";
+import { useSelector } from "react-redux";
+import Notification from "../common/notification/Notification";
 
 export default function TopBar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -23,7 +27,7 @@ export default function TopBar() {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target) ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
     };
@@ -32,6 +36,8 @@ export default function TopBar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDropdownOpen]);
+
+
 
   const sidebarItems = [
     {
@@ -81,6 +87,10 @@ export default function TopBar() {
               </Link>
             </div>
             <div className="flex items-center justify-center gap-3 lg:gap-6">
+              <div>
+               <Notification user={user} />
+              </div>
+
               <div>
                 <LanguageSwitcher />
               </div>
@@ -148,8 +158,8 @@ export default function TopBar() {
               {item.icon}
               <span
                 className={`
-                                    ml-3 transition-all duration-300 
-                                    ${isExpanded
+                    ml-3 transition-all duration-300 
+                    ${isExpanded
                     ? "opacity-100"
                     : "opacity-0 w-0"
                   }

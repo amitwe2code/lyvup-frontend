@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { forgetPassword } from "../../../api/api";
 import logo from "../../../assets/logo.png";
+import Toast from "../../../components/common/Toast";
 
 export default function ForgetPasswordForm() {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ export default function ForgetPasswordForm() {
     e.preventDefault();
     console.log("forget call");
     const response = await forgetPassword(email);
+    Toast(response)
     if (response) {
       return;
     }

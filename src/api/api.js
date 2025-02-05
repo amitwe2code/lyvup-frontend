@@ -58,9 +58,44 @@ export const validateUser = async ({ accessToken }) => {
             })
             return response
       } catch (error) {
-            console.log('ERROR',error );
+            console.log('ERROR', error);
       }
 }
+
+export const notification = async ({ accessToken, id }) => {
+      try {
+            const response = await axios.get(`${API_URL}/notification/${id}/`, {
+                  headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            })
+            return response
+      } catch (error) {
+            console.log(error);
+      }
+}
+export const updatenotification = async ({ accessToken, id }) => {
+      try {
+            const response = await axios.put(`${API_URL}/notification/${id}/`,{}, {
+                  headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                  }
+            })
+            return response
+      } catch (error) {
+            console.log(error);
+      }
+}
+
+
+
+
+
+
+
+
 
 export const getUsers = async ({ accessToken, search = '', currentPage = 1, pageSize = 10, ordering = '', filter = '' }) => {
       try {
