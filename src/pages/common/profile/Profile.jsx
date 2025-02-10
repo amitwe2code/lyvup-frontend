@@ -7,13 +7,12 @@ import {
   PenBoxIcon,
   UserIcon,
 } from "lucide-react";
-import TopBar from "../../../components/admin/TobBar";
+import TopBar from "../../../components/admin/TopBar";
 import BottomNavbar from "../../../components/user/BottomNavbar";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../../../api/api";
-import DateFormat from "../../../components/admin/DateFormat";
 import CustomButton from "../../../components/common/CustomButton";
 import Loader from "../../../components/common/Loader";
 import UserModelForm from "../../../components/admin/modelforms/UserModelForm";
@@ -36,7 +35,7 @@ export default function Profile() {
       const response = await getUser(accessToken, id=id);
       setUser(response.data.data);
       console.log("userData", response.data.data);
-    } catch (error) {
+    } catch (error) { 
       console.log(error);
     } finally {
       setLoading(false);
@@ -86,7 +85,7 @@ export default function Profile() {
                 </div>
                 <div className="my-8 flex-col items-center text-xl  justify-center">
                   <div className="grid   sm:grid-cols-2 gap-4  md:gap-10 mb-6">
-                    <div className="flex w-full overflow-auto scroll-none items-cente md:ml-10 space-x-3">
+                    <div className="flex w-full overflow-auto scroll_none items-cente md:ml-10 space-x-3">
                       <Mail className=" text-[#17686d] flex-shrink-0 overflow-auto" />
                       <p className="text-gray-700  truncate">{user?.email}</p>
                     </div>
@@ -115,13 +114,13 @@ export default function Profile() {
                     <div className="flex items-center md:ml-10 space-x-3">
                       <Phone className=" text-[#17686d] flex-shrink-0" />
                       <p className="text-gray-700">
-                        {<DateFormat updatedAt={user.created_at} />}
+                        {/* {<DateFormat updatedAt={user.created_at} />} */}
                       </p>
                     </div>
                     <div className="flex items-center space-x-3">
                       <MapPin className=" text-[#17686d] flex-shrink-0" />
                       <p className="text-gray-700">
-                        {<DateFormat updatedAt={user.updated_at} />}
+                        {/* {<DateFormat updatedAt={user.updated_at} />} */}
                       </p>
                     </div>
                   </div>

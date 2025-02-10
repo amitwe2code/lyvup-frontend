@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import BottomNavbar from "../../components/user/BottomNavbar";
-import TopBar from "../../components/admin/TobBar";
+import TopBar from "../../components/admin/TopBar";
 import UserTable from "../../components/admin/users/UserTable";
 import { useSelector } from "react-redux";
 import { addUser, deleteUser, getUsers, updateUser } from "../../api/api";
@@ -27,7 +27,7 @@ export default function UserList() {
   return (
     <div className="flex">
       <TopBar />
-      <BottomNavbar />
+      <BottomNavbar activeTab='user' />
       <div className="mt-14 mb-14 h-[calc(100vh-112px)] overflow-auto w-full border p-3 ">
         <div className=" w-full mb-4">
           <Header heading='User List' setIsOpen={setIsOpen} btnLabel='add User' />

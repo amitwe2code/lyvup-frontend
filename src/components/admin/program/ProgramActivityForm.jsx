@@ -8,8 +8,10 @@ import {
 } from "../../../api/api";
 import { useSelector } from "react-redux";
 import useValidation from "../../common/UseValidation";
+import Toast from "../../common/Toast";
 
 export default function ProgramActivityForm(props) {
+  const[loading,setLoading]=useState(false)
   const [filterShow, setFilterShow] = useState(false);
   const [showDateTime, setShowDateTime] = useState(false);
   const [activityList, setActivityList] = useState([]);
@@ -19,7 +21,7 @@ export default function ProgramActivityForm(props) {
 
   console.log("props=>", props);
   const getactivityList = async () => {
-    const response = await getActivity(accessToken, search, filter);
+    const response = await getActivity({ accessToken, search, filter });
     console.log("actvity=>", response.data.data.results);
     setActivityList(response.data.data.results);
   };
@@ -66,18 +68,25 @@ export default function ProgramActivityForm(props) {
   console.log('state=>', state);
   const addActivityInWeek = async (e, id) => {
     e.preventDefault()
-    console.log('errors=>', errors);
-    if (validate()) {
-      if (id) {
-        const response = await UpdateWeakActivity(accessToken, state, id);
-        console.log('response=>', response)
+    try {
+      setLoading(true)
+      if (validate()) {
+        if (id) {
+          const response = await UpdateWeakActivity(accessToken, state, id);
+          Toast(response)
+          console.log('response=>', response)
+        }
+        else {
+          const response = await addWeakActivity(accessToken, state);
+          Toast(response)
+          console.log('response=>', response)
+        }
+        close()
       }
-      else {
-        const response = await addWeakActivity(accessToken, state);
-        console.log('response=>', response)
-      }
-      close()
-
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -292,7 +301,15 @@ export default function ProgramActivityForm(props) {
             onClick={(e) => addActivityInWeek(e, state?.id)}
             className=" "
           >
-            {state?.id ? "Update" : "Add"}
+            {loading ?
+              <span
+                className="spinner-border spinner-border-sm "
+                role="status"
+                aria-hidden="true"
+              ></span> : <>
+                {state?.id ? 'Update' : 'Add'}
+              </>
+            }
           </CustomButton>
         </div>
       </form>

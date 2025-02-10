@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Pagination from '../../common/Pagination';
 import { getAllAccountDetail } from '../../../api/api';
+import { toast } from 'react-toastify';
 
 export default function AccountComponent(props) {
     const { t } = useTranslation();
@@ -17,14 +18,16 @@ export default function AccountComponent(props) {
     const [search, setSearch] = useState("");
     const [ordering, setOrdering] = useState("");
     const [count, setCount] = useState(0);
+    const [filter, setFilter] = useState('');
     const accessToken = useSelector((state) => state.token.accessToken);
 
-
-    const getAccounts = async () => {
+    //get account api call funtion
+    const getAccountModelApiCall = async () => {
         try {
             setLoading(true);
-            const response = await getAllAccountDetail(accessToken, search, currentPage, pageSize, ordering);
+            const response = await getAllAccountDetail({ accessToken, search, currentPage, pageSize, ordering, filter });
             setAccounts(response.data.data.results);
+            console.log('response =>', response);
             setTotalPage(response.data.data.pagination.total_pages);
             setCount(response.data.data.pagination.count);
         } catch (error) {
@@ -34,29 +37,26 @@ export default function AccountComponent(props) {
         }
     };
 
-
     useEffect(() => {
-        getAccounts();
-        props.setApiCall(false);
+        getAccountModelApiCall();
+        if (props.apiCall === true) { props.setApiCall(false); }
     }, [props.apiCall, pageSize, currentPage, ordering, search]);
-
-
-
 
     return (
         <>
-            <div className='flex flex-wrap justify-start gap-4 mb-2 items-center'>
-                <CustomInput
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="search"
-                    size="medium"
-                    className="input"
-                />
-            </div>
             {loading ? (
                 <div className="flex justify-center items-center h-64">
                     <Loader />
-                </div>) : (
+                </div>
+            ) : (<>
+                <div className='flex flex-wrap justify-start gap-4 mb-2 items-center'>
+                    <CustomInput
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="search"
+                        size="medium"
+                        className="input"
+                    />
+                </div>
                 <AccountTable
                     accounts={accounts}
                     ordering={ordering}
@@ -64,18 +64,15 @@ export default function AccountComponent(props) {
                     apiCall={props?.apiCall}
                     setApiCall={props?.setApiCall}
                 />
-            )}
-            <Pagination
-                nPages={totalPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                total={count}
-                count={pageSize}
-                setPageSize={setPageSize}
-            />
-
-
-
+                <Pagination
+                    nPages={totalPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    total={count}
+                    count={pageSize}
+                    setPageSize={setPageSize}
+                />
+            </>)}
         </>
     )
 }

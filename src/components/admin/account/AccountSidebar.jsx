@@ -3,21 +3,24 @@ import React, { useEffect, useState, useRef } from "react";
 import Select from "react-select";
 import CustomButton from "../../common/CustomButton";
 import { AddUserAccount, getAccountUsers, RemoveUserAccount } from "../../../api/api";
+import { useSelector } from "react-redux";
+import { SidebarClose } from "lucide-react";
 
 export default function AccountSidebar(props) {
   const [search, setSearch] = useState("");
-  const [boolean, setBoolean] = useState(true);
+  const [apiCall, setApiCall] = useState(true);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [unSelectedUsers, setUnSelectedUsers] = useState([]);
   const [unSelectedUsersList, setUnSelectedUsersList] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
-
+  const accessToken = useSelector((state) => state.token.accessToken);
   const selectRef = useRef(null);
 
   const getSelectedUsers = async (account) => {
-    const response = await getAccountUsers(account.id);
-    setSelectedUsers(response.data.connected_users);
-    setUnSelectedUsers(response.data.unconnected_users);
+    const response = await getAccountUsers(accessToken,account.id);
+    console.log('response in account sidebar=>',response);
+    setSelectedUsers(response.data.data.connected_users);
+    setUnSelectedUsers(response.data.data.unconnected_users);
   };
   /*Function to redender the data in the option of the select box*/
   useEffect(() => {
@@ -33,23 +36,23 @@ export default function AccountSidebar(props) {
   // }
 
   const handleAddUserToAccount = async (id) => {
-    const response = await AddUserAccount(props?.selectedAccount.id, selectedOptions);
+    const response = await AddUserAccount(accessToken,props?.selectedAccount.id, selectedOptions);
     // console.log(response);
     setSelectedOptions([]);
-    setBoolean(true);
+    setApiCall(true);
   };
 
   const handleRemoveUserFromAccount = async (id) => {
-    const response = await RemoveUserAccount(id);
+    const response = await RemoveUserAccount(accessToken,id);
     // alert(response.data.message);
-    setBoolean(true);
+    setApiCall(true);
   };
   useEffect(() => {
     if(props?.selectedAccount){
       getSelectedUsers(props?.selectedAccount);
-      setBoolean(false);
+      setApiCall(false);
     }
-  }, [props?.isOpen, boolean]);
+  }, [props?.isOpen, apiCall]);
 
   const getSelectOptions = () => {
     return unSelectedUsers.map((user) => ({
@@ -77,18 +80,18 @@ export default function AccountSidebar(props) {
 
   return (
     <div
-      className={`fixed inset-y-0 right-0 w-80 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+      className={`fixed inset-y-0 right-0 w-80 bg-white shadow-lg  h-[calc(100vh-7rem)] mt-14 mb-14 z-50 transform transition-transform duration-1000 ease-in-out ${
         props?.isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
       <div className="p-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg text-[#039a77] font-semibold">Manage Users</h2>
+          <h2 className="text-lg text_theme_color font-semibold">Manage Users</h2>
           <button
             onClick={props?.onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className=" text-xl font-bold "
           >
-            ×
+            <SidebarClose className="text_theme_color"/>
           </button>
         </div>
 

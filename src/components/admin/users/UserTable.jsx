@@ -1,29 +1,36 @@
 import CustomButton from "../../common/CustomButton";
 import { Delete, LetterText, Trash, ChevronDown, ChevronUp } from "lucide-react";
-import DateFormat from "../DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { deleteUser, updateUser } from "../../../api/api";
 import UserModelForm from "../modelforms/UserModelForm";
 import Loader from "../../common/Loader";
 import { useSelector } from "react-redux";
+import DeleteDialog from "../../common/DeleteDialog";
+import Toast from "../../common/Toast";
 
 export default function UserTable(props) {
     const [isOpen, setIsOpen] = useState(false)
     const [updateUser, setUpdateUser] = useState({})
     const accessToken = useSelector((state) => state.token.accessToken);
     const [loading, setLoading] = useState(false)
+    const [deleteOpen, setDeleteOpen] = useState(false)
+
+    const [deleteData, setDeleteData] = useState("")
     const handleUserUpdate = (user) => {
         setUpdateUser(user)
         setIsOpen(true)
     }
 
     //user delete apiFunction Call
-    const handleUserDelete = async (id) => {
+    const deleteUserModelApiCall = async (id) => {
         try {
             setLoading(true);
-            const response = await deleteUser(accessToken, id);
+            const response = await deleteUser(accessToken, deleteData?.id);
+            Toast(response)
             console.log("res=>", response);
+            setDeleteData('')
+            setDeleteOpen(false)
             props?.setApiCall(true);
         } catch (error) {
             console.log(error);
@@ -31,7 +38,10 @@ export default function UserTable(props) {
             setLoading(false);
         }
     };
-
+    const handleOpenDeleteDialog = (e, data) => {
+        setDeleteData(data)
+        setDeleteOpen(true)
+    }
 
     const SortDropdown = ({ field }) => (
         <button
@@ -39,7 +49,7 @@ export default function UserTable(props) {
                 const newDirection = props?.ordering === field ? `-${field}` : field;
                 props?.setOrdering(newDirection);
             }}
-            className="inline-flex items-center"
+            className="inline-flex capitalize items-center"
         >
             {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
         </button>
@@ -48,29 +58,29 @@ export default function UserTable(props) {
     return (
         <>
             {loading ? <><Loader /></> : <>
-                <div className="  border-2 w-full my-1 overflow-auto ">
+                <div className="  border-2 w-full my-1  overflow-auto ">
                     <table className="table table-auto border-collapse">
-                        <thead className="">
-                            <tr className="h-10">
-                                <th className="leading-none text-sm" scope="col">
+                        <thead className="align-middle ">
+                            <tr className="h-12  btn_theme_color">
+                                <th className="leading-none" scope="col">
                                     s.no
                                 </th>
-                                <th className="leading-none text-sm" scope="col">
+                                <th className="leading-none " scope="col">
                                     <SortDropdown field="name" />
                                 </th>
-                                <th className="leading-none text-sm" scope="col">
+                                <th className="leading-none " scope="col">
                                     <SortDropdown field="email" />
                                 </th>
-                                <th className="leading-none text-sm" scope="col">
+                                <th className="leading-none " scope="col">
                                     <SortDropdown field="phone" />
                                 </th>
-                                <th className="leading-none text-sm" scope="col">
+                                <th className="leading-none " scope="col">
                                     <SortDropdown field="user_type" />
                                 </th>
-                                <th className="leading-none text-sm" scope="col">
+                                <th className="leading-none " scope="col">
                                     <SortDropdown field="language" />
                                 </th>
-                                <th className="leading-none text-sm" scope="col">
+                                <th className="leading-none" scope="col">
                                     <SortDropdown field="status" />
                                 </th>
                                 {/* <th className="leading-none text-sm" scope="col">
@@ -86,7 +96,7 @@ export default function UserTable(props) {
                         </thead>
                         <tbody className="text-sm">
                             {props?.users.map((user, index) => (
-                                <tr key={user?.id} className="border-collapse">
+                                <tr key={user?.id} className={`border-collapse ${(index + 1) % 2 == 0 ? 'bg_secondary_color' : null}`}>
                                     <td> <Link to={`/profile/${user?.id}`}> {index + 1}</Link></td>
                                     <td>{user?.name}</td>
                                     <td>{user?.email}</td>
@@ -104,7 +114,7 @@ export default function UserTable(props) {
                                                 variant="outline"
                                                 size="small"
                                                 onClick={() => handleUserUpdate(user)}
-                                                className="border   border-r-0 rounded-none "
+                                                className="border-gray-400  border-r-0 rounded-none "
                                             >
                                                 {" "}
                                                 <LetterText className="w-4 h-4 m-0" />
@@ -113,10 +123,9 @@ export default function UserTable(props) {
                                                 id={user.id}
                                                 variant="outline"
                                                 size="small"
-                                                onClick={(e) => handleUserDelete(user?.id)}
-                                                className="border border-r-0 rounded-none  "
+                                                onClick={(e) => handleOpenDeleteDialog(e, user)}
+                                                className="border-gray-400  rounded-none  "
                                             >
-                                                {" "}
                                                 <Trash className="w-4 h-4 m-0" />
                                             </CustomButton>
                                         </div>
@@ -130,10 +139,16 @@ export default function UserTable(props) {
             <UserModelForm
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
-                apicall={props?.apiCall}
                 setApiCall={props?.setApiCall}
                 updateUser={updateUser}
                 setUpdateUser={setUpdateUser}
+            />
+            <DeleteDialog
+                name={deleteData.name}
+                isOpen={deleteOpen}
+                loading={loading}
+                setIsOpen={setDeleteOpen}
+                handleDelete={deleteUserModelApiCall}
             />
 
         </>

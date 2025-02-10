@@ -10,27 +10,37 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux"; 
 import ActivityActionTypeModelForm from "../modelforms/ActivityActionTypeModelForm";
+import DeleteDialog from "../../common/DeleteDialog";
+import { deleteActivityType } from "../../../api/api";
+import Toast from "../../common/Toast";
 
 export default function ActivityActionTypeTable(props) {
   const [updateActivityActionType, setUpdateActivityActionType] = useState(null)
   const accessToken = useSelector((state) => state.token.accessToken);
   const [isOpen, setIsOpen] = useState(false)
+  const [deleteOpen,setDeleteOpen]=useState(false)
+  const [deleteData,setDeleteData]=useState("")
+  const [loading,setLoading]=useState(false)
 
 
-  const handleDeleteActivityActionType = async (e,id) => {
-    e.preventDefault()
+  const handleDeleteActivityActionType = async () => {
     try {
       setLoading(true);
-      console.log("e in type delete =>", id);
-      const response = await deleteActivityType(accessToken, id);
-      console.log("res=>", response);
+      const response = await deleteActivityType(accessToken, deleteData?.id);
+      Toast(response)
+      setDeleteOpen(false)
+      setDeleteData('')
       props?.setApiCall(true)
     } catch (error) {
-      console.log(error);
+      console.log(error); 
     } finally {
       setLoading(false);
     }
   };
+  const handleOpenDeleteDialog=(e,data)=>{
+    setDeleteData(data)
+    setDeleteOpen(true)
+  }
 
   const handleUpdateActivityActionType = (e,activityActionType) => {
     e.preventDefault()
@@ -46,7 +56,7 @@ export default function ActivityActionTypeTable(props) {
             const newDirection = props?.ordering === field ? `-${field}` : field;
             props?.setOrdering(newDirection);
         }}
-        className="inline-flex items-center"
+        className="inline-flex capitalize items-center"
     >
         {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
     </button>
@@ -57,7 +67,7 @@ export default function ActivityActionTypeTable(props) {
       <div className="  border-2 w-full my-1 overflow-auto ">
         <table className="table table-auto border-collapse">
           <thead className="">
-            <tr className="h-10">
+            <tr className="h-10 capitalize">
               <th className="leading-none text-sm" scope="col">
                   s.no
               </th>
@@ -77,7 +87,7 @@ export default function ActivityActionTypeTable(props) {
                 <SortDropdown field="key_activity" />
               </th>
               <th className="leading-none text-sm" scope="col">
-                <SettingsIcon />
+                Actions
               </th>
             </tr>
           </thead>
@@ -108,7 +118,7 @@ export default function ActivityActionTypeTable(props) {
                       id={activityType?.id}
                       variant="outline"
                       size="small"
-                      onClick={(e) => handleDeleteActivityActionType(e, activityType?.id)}
+                      onClick={(e) => handleOpenDeleteDialog(e,activityType)}
                       className="border border-r-0 rounded-none  "
                     >
                       {" "}
@@ -126,6 +136,13 @@ export default function ActivityActionTypeTable(props) {
             setApiCall={props?.setApiCall}
             updateActivityActionType={updateActivityActionType}
           />
+          <DeleteDialog
+              name={deleteData.activity}
+              isOpen={deleteOpen}
+              loading={loading}
+              setIsOpen={setDeleteOpen}
+              handleDelete={handleDeleteActivityActionType}
+              />
       </div>
     </>
   );

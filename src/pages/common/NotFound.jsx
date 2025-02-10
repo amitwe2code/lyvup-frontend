@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 const NotFound = (props) => {
   let navigate = useNavigate();
-  useEffect(() => {
-    if (props.token) {
-      navigate(`/profile/${props.user?.id}`);
-    }
-  }, [props.token]);
+  // useEffect(() => {
+  //   if (props.token) {
+  //     navigate(`/profile/${props.user?.id}`);
+  //   }
+  // }, [props.token]);
 
   return (
     <div className="page_not_found p-6 text-center">

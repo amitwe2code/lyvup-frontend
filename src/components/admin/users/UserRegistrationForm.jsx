@@ -3,8 +3,12 @@ import CustomButton from "../../common/CustomButton";
 import { addUser, updateUser } from "../../../api/api";
 import useValidation from '../../common/UseValidation'
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import Toast from "../../common/Toast";
+import LoadingButton from "../../common/LoadingButton";
 export default function UserRegistrationForm(props) {
   const accessToken = useSelector((state) => state.token.accessToken);
+  const [loading, setLoading] = useState(false)
   const initialFormState = {
     name: "",
     email: "",
@@ -25,10 +29,10 @@ export default function UserRegistrationForm(props) {
     name: [
       (value) =>
         value === null || value.trim() === ""
-          ? "Name is required" 
-          :value.length<3
-          ?'name must be atleast 3 character '
-           : null,
+          ? "Name is required"
+          : value.length < 3
+            ? 'name must be atleast 3 character '
+            : null,
     ],
     phone: [
       (value) =>
@@ -69,38 +73,40 @@ export default function UserRegistrationForm(props) {
   };
 
   //newUser add apifunction Call
-  const handleUserAddAndUpdate = async (e,id) => {
+  const createAndUpdateUserModelApiCall = async (e, id) => {
+    e.preventDefault();
     try {
-     
-      e.preventDefault();
+      setLoading(true);
       if (validate()) {
         if (id) {
           const response = await updateUser(accessToken, state, id);
-         
+          Toast(response)
         } else {
-          console.log("add call");
           const response = await addUser(accessToken, state);
+          Toast(response)
         }
         props.setApiCall(true);
         close()
       }
     } catch (error) {
-      console.log(error);
+      console.log('error=>', error);
+      Toast(error.response)
     } finally {
+      setLoading(false);
     }
   };
 
-  const close=()=>{
+  const close = () => {
     setState(initialFormState)
     props?.setIsOpen(false)
   }
 
-  useEffect(()=>{
-    if(props.updateUser){
+  useEffect(() => {
+    if (props.updateUser) {
       handleUserUpdate(props.updateUser)
     }
 
-  },[props?.isOpen])
+  }, [props?.isOpen])
 
 
   return (
@@ -112,7 +118,7 @@ export default function UserRegistrationForm(props) {
       <form className="p-4 space-y-3 bg_secondary_color">
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label 
+            <label
               htmlFor="name"
               className="form_label"
             >
@@ -125,8 +131,8 @@ export default function UserRegistrationForm(props) {
               value={state.name}
               onChange={onInputChange}
               placeholder="enter name"
-            
-              className={`w-full input text-sm ${errors.name?'border-danger':''}`}
+
+              className={`w-full input text-sm ${errors.name ? 'border-danger' : ''}`}
             />
             {errors.name && (
               <span
@@ -152,7 +158,7 @@ export default function UserRegistrationForm(props) {
               value={state.email}
               onChange={onInputChange}
               required
-              className={`w-full input text-sm ${errors.email?'border-danger':''}`}
+              className={`w-full input text-sm ${errors.email ? 'border-danger' : ''}`}
             />
             {errors.email && (
               <span
@@ -180,7 +186,7 @@ export default function UserRegistrationForm(props) {
               value={state.phone}
               onChange={onInputChange}
               required
-              className={`w-full input text-sm ${errors.phone?'border-danger':''}`}
+              className={`w-full input text-sm ${errors.phone ? 'border-danger' : ''}`}
             />
             {errors.phone && (
               <span
@@ -204,7 +210,7 @@ export default function UserRegistrationForm(props) {
               value={state.language_preference}
               onChange={onInputChange}
               required
-              className={`w-full input text-sm ${errors.language_preference?'border-danger':''}`}
+              className={`w-full input text-sm ${errors.language_preference ? 'border-danger' : ''}`}
             >
               <option value="">Select</option>
               <option value="en">English</option>
@@ -234,7 +240,7 @@ export default function UserRegistrationForm(props) {
               value={state.user_type}
               onChange={onInputChange}
               required
-              className={`w-full input text-sm ${errors.user_type?'border-danger':''}`}
+              className={`w-full input text-sm ${errors.user_type ? 'border-danger' : ''}`}
             >
               <option value="">Select</option>
               <option value="admin">Admin</option>
@@ -266,7 +272,7 @@ export default function UserRegistrationForm(props) {
                   value={state.password}
                   onChange={onInputChange}
                   required
-                  className={`w-full input text-sm ${errors.password?'border-danger':''}`}
+                  className={`w-full input text-sm ${errors.password ? 'border-danger' : ''}`}
                 />
                 {errors.password && (
                   <span
@@ -289,13 +295,22 @@ export default function UserRegistrationForm(props) {
           >
             Cancel
           </CustomButton>
+          {/* <LoadingButton/> */}
           <CustomButton
             type="submit"
             id={state?.id}
-            onClick={(e)=>handleUserAddAndUpdate(e,state?.id)}
+            onClick={(e) => createAndUpdateUserModelApiCall(e, state?.id)}
             className=" "
           >
-            {state?.id ? 'Update' : 'Add'}
+            {loading ?
+              <span
+                className="spinner-border spinner-border-sm "
+                role="status"
+                aria-hidden="true"
+              ></span> : <>
+                {state?.id ? 'Update' : 'Add'}
+              </>
+            }
           </CustomButton>
         </div>
       </form>

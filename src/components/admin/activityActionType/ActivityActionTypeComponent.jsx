@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import ActivityActionTypeTable from './ActivityActionTypeTable';
-import { Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import CustomInput from '../../common/CustomInput';
 import Pagination from '../../common/Pagination';
 import { getActivityTypes } from '../../../api/api';
+import DeleteDialog from '../../common/DeleteDialog';
+import Loader from '../../common/Loader';
 
 export default function ActivityActionTypeComponent(props) {
   const { t } = useTranslation();
@@ -19,13 +20,10 @@ export default function ActivityActionTypeComponent(props) {
   const [count, setCount] = useState(0);
   const accessToken = useSelector((state) => state.token.accessToken);
 
-
-
-
   const getActivityActionTypes = async () => {
     try {
       setLoading(true);
-      const response = await getActivityTypes(accessToken, search, currentPage, pageSize, ordering);
+      const response = await getActivityTypes({ accessToken, search, currentPage, pageSize, ordering });
       console.log("activitytypes =>", response.data.data)
       setActivityTypes(response.data.data.results);
       setCount(response.data.data.pagination.count);
@@ -39,50 +37,42 @@ export default function ActivityActionTypeComponent(props) {
     }
   };
 
-
-
-
-
-
   useEffect(() => {
     getActivityActionTypes();
     props?.setApiCall(false);
   }, [props?.apiCall, pageSize, currentPage, ordering, search]);
 
-
-
-
   return (
     <>
-      <div className='flex flex-wrap justify-start gap-4 mb-2 items-center'>
-        <CustomInput
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="search"
-          size="medium"
-          className="input"
-        />
-      </div>
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <Loader />
-        </div>) : (
-        <ActivityActionTypeTable
-          activityTypes={activityTypes}
-          ordering={ordering}
-          setOrdering={setOrdering}
-          apiCall={props?.apiCall}
-          setApiCall={props?.setApiCall}
-        />
-      )}
-      <Pagination
-        nPages={totalPage}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        total={count}
-        count={pageSize}
-        setPageSize={setPageSize}
-      />
+        </div>) : (<>
+          <div className='flex flex-wrap justify-start gap-4 mb-2 items-center'>
+            <CustomInput
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="search"
+              size="medium"
+              className="input"
+            />
+          </div>
+          <ActivityActionTypeTable
+            activityTypes={activityTypes}
+            ordering={ordering}
+            setOrdering={setOrdering}
+            apiCall={props?.apiCall}
+            setApiCall={props?.setApiCall}
+          />
 
+          <Pagination
+            nPages={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            total={count}
+            count={pageSize}
+            setPageSize={setPageSize}
+          />
+        </>)}
     </>
   )
 }

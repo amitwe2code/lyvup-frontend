@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getSingleAccountDetail, updateAccount } from "../../api/api";
-import TopBar from "./TobBar";
-import BottomNavbar from "../user/BottomNavbar";
+import { getSingleAccountDetail, updateAccount } from "../../../api/api";
+import TopBar from "../TobBar";
+import BottomNavbar from "../../user/BottomNavbar";
 import AccountForm from "./AccountForm";
-import CustomButton from "../common/CustomButton";
-import DateFormat from "./DateFormat";
+import CustomButton from "../../common/CustomButton";
+import DateFormat from "../DateFormat";
 export default function ActivityDetail() {
   const [account, setAccount] = useState({});
   const [formData, setFormData] = useState({});

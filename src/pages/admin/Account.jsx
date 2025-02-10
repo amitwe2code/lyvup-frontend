@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import AccountTable from "../../components/admin/account/AccountTable";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import TopBar from "../../components/admin/TobBar";
+import TopBar from "../../components/admin/TopBar";
 import BottomNavbar from "../../components/user/BottomNavbar";
 import CustomInput from "../../components/common/CustomInput";
 import CustomButton from "../../components/common/CustomButton";
@@ -18,8 +18,8 @@ export default function Account() {
   return (
     <div className="flex">
       <TopBar />
-      <BottomNavbar />
-      <div className="mt-14 mb-14 h-[calc(100vh-112px)] scroll-none overflow-auto w-full border p-3 ">
+      <BottomNavbar activeTab='account' />
+      <div className="mt-14 mb-14 h-[calc(100vh-112px)] scroll_none overflow-auto w-full border p-3 ">
         <div className=" w-full mb-4">
           <Header heading='Accounts' setIsOpen={setIsOpen} btnLabel='add Account' />
         </div>

@@ -53,7 +53,7 @@ export default function TaskTable() {
 
     return (
         <div>
-            <div className=" flex flex-wrap justify-end m-1 my-2 gap-1  items-center">
+            <div className=" flex flex-wrap relative justify-start m-1 my-2 gap-1  items-center">
                 <div className="inline-flex rounded-md" role="group">
                     <CustomButton
                         className={`  capitalize rounded-none border-r-0 `}
@@ -70,34 +70,34 @@ export default function TaskTable() {
                         patient
                     </CustomButton>
                 </div>
-                <div className="flex flex-wrap justify-end sm:gap-1 ">
+                <div className="flex flex-wrap justify-end gap-1 ">
                     <CustomInput
                         //   onChange={(e) => setSearch(e.target.value)}
                         placeholder="search"
                         size="medium"
                         className="border    rounded-md "
                     />
-                    <div className="relative">  
+                    <div className=" ">  
 
                         <CustomButton  className="btn_theme_color h-auto   rounded-md" onClick={()=>setIsFilterDropdown(!isFilterDropdown)} >
                             Filters
                         </CustomButton>
                         {isFilterDropdown && (
-                            <div className="absolute top-10 right-0  mt-2 w-60 h-60 bg-gray-400 rounded-md overflow-auto p-3 shadow-lg py-1 z-50">
-                                <div className="my-1 w-full flex flex-col gap-0">
-                                    <label htmlFor="intervention" className="text_theme_color">select intervention</label>
+                            <div className="absolute top-30 right-0 sm:right-auto mt-2 w-full sm:w-96 h-60 bg-gray-400 rounded-md overflow-auto p-3 shadow-lg py-1 z-50">
+                                <div className="my-2 w-full flex flex-col gap-0">
+                                    <label htmlFor="intervention" className="text_theme_color m-0">select intervention</label>
                                     <select id="intervention" className="w-full input p-2 rounded-md">
                                         <option value="all">all</option>
                                     </select>
                                 </div>
-                                <div className="my-1 w-full flex flex-col gap-0">
-                                    <label htmlFor="intervention" className="text_theme_color">select intervention</label>
+                                <div className="my-2 w-full flex flex-col gap-0">
+                                    <label htmlFor="intervention" className="text_theme_color m-0">select intervention</label>
                                     <select id="intervention" className="w-full input p-2 rounded-md">
                                         <option value="all">all</option>
                                     </select>
                                 </div>
-                                <div className="my-1 w-full flex flex-col gap-0">
-                                    <label htmlFor="intervention" className="text_theme_color">select intervention</label>
+                                <div className="my-2 w-full flex flex-col  gap-0">
+                                    <label htmlFor="intervention" className="text_theme_color m-0">select intervention</label>
                                     <select id="intervention" className="w-full input p-2 rounded-md">
                                         <option value="all">all</option>
                                     </select>

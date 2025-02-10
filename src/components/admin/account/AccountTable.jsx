@@ -1,12 +1,13 @@
 import CustomButton from "../../common/CustomButton";
 import { LetterText, Trash, ChevronDown, Users, ChevronUp, Loader } from "lucide-react";
-import DateFormat from "../DateFormat";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import AccountSidebar from "./AccountSidebar";
 import { deleteAccount } from "../../../api/api";
 import AccountModelForm from "../modelforms/AccountModelForm";
 import { useSelector } from "react-redux";
+import DeleteDialog from "../../common/DeleteDialog";
+import Toast from "../../common/Toast";
 
 export default function AccountTable(props) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,18 +15,28 @@ export default function AccountTable(props) {
   const [updateAccount, setUpdateAccount] = useState()
   const accessToken = useSelector((state) => state.token.accessToken);
   const [isOpen, setIsOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [deleteData, setDeleteData] = useState("")
   const [loading, setLoading] = useState(false)
-  const handleAccountDelete = async (id) => {
+  const handleAccountDelete = async () => {
     try {
       setLoading(true);
-      const response = await deleteAccount(accessToken, id);
-      props.setApicall(true)
+      const response = await deleteAccount(accessToken, deleteData?.id);
+      Toast(response)
+      console.log('response=>', response);
+      setDeleteData('')
+      setDeleteOpen(false)
+      props.setApiCall(true)
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+  const handleOpenDeleteDialog = (e, data) => {
+    setDeleteData(data)
+    setDeleteOpen(true)
+  }
   const handleUpdateAccount = (account) => {
     setUpdateAccount(account)
     setIsOpen(true)
@@ -46,7 +57,7 @@ export default function AccountTable(props) {
         const newDirection = props?.ordering === field ? `-${field}` : field;
         props?.setOrdering(newDirection);
       }}
-      className="inline-flex items-center"
+      className="inline-flex capitalize items-center"
     >
       {field} {(props?.ordering === field) ? (<ChevronUp className="w-4 h-4 ml-1" />) : (<ChevronDown className="w-4 h-4 ml-1" />)}
     </button>
@@ -59,24 +70,24 @@ export default function AccountTable(props) {
         <div className="  border-2 w-full my-1 overflow-auto ">
           <table className="table table-auto border-collapse">
             <thead className="">
-              <tr className="h-10">
-                <th className="leading-none text-sm" scope="col">
+              <tr className="h-10 capitalize">
+                <th className="leading-none " scope="col">
                   s.no
                 </th>
-                <th className="leading-none text-sm" scope="col">
+                <th className="leading-none " scope="col">
                   <SortDropdown field="account_type" />
                 </th>
-                <th className="leading-none text-sm" scope="col">
+                <th className="leading-none " scope="col">
                   <SortDropdown field="account_name" />
                 </th>
-                <th className="leading-none text-sm" scope="col">
+                <th className="leading-none " scope="col">
                   <SortDropdown field="team_leader_id" />
                 </th>
-                <th className="leading-none text-sm" scope="col">
+                <th className="leading-none " scope="col">
                   <SortDropdown field="language" />
                 </th>
-                <th className="leading-none text-sm" scope="col">
-                  setting
+                <th className="leading-none " scope="col">
+                  Action
                 </th>
               </tr>
             </thead>
@@ -106,7 +117,7 @@ export default function AccountTable(props) {
                         id={account.id}
                         variant="outline"
                         size="small"
-                        onClick={(e) => handleAccountDelete(account?.id)}
+                        onClick={(e) => handleOpenDeleteDialog(e, account)}
                         className="border border-r-0 rounded-none  "
                       >
                         {" "}
@@ -141,6 +152,13 @@ export default function AccountTable(props) {
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         selectedAccount={selectedAccount}
+      />
+      <DeleteDialog
+        name={deleteData.account_name}
+        isOpen={deleteOpen}
+        loading={loading}
+        setIsOpen={setDeleteOpen}
+        handleDelete={handleAccountDelete}
       />
 
     </>
