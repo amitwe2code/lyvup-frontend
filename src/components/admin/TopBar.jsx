@@ -75,14 +75,14 @@ export default function TopBar() {
   return (
     <>
       <nav className="fixed top-0 left-0 h-14 w-full  border-b z-10  text-black">
-        <div className=" mx-auto px-4 sm:px-6 lg:px-8">
+        <div className=" mx-auto px-2 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center">
               <Link to="/" className="text-xl font-bold">
                 <img
                   src="https://app.lyvup.com/images/lyvupLogo.png"
                   alt="Logo"
-                  className="h-10 w-20  object-contain"
+                  className="h-8 min-w-20 "
                 />
               </Link>
             </div>
@@ -99,7 +99,7 @@ export default function TopBar() {
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="flex items-center justify-center space-x-2"
                 >
-                  <span className="pt-1 capitalize text-[#17686d] px-2">
+                  <span className="pt-1 capitalize hidden sm:block text-[#17686d] px-2">
                     hey {user?.name}
                   </span>
                   <img
